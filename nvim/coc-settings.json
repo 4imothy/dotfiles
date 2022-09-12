@@ -1,0 +1,5 @@
+{
+    "python.linting.enabled": true,
+    "workspace.workspaceFolderCheckCwd": false,
+    "diagnostic.virtualText": true
+}
