@@ -1,1 +1,1 @@
-These are my dotfiles for zsh and nvim.
+These are my dotfiles for zsh, nvim and obsidian.
