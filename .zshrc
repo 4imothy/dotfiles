@@ -30,14 +30,13 @@ PROMPT="${firstLine}${NEWLINE}${secondLine} "
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
-alias vim='nvim'
 alias vi='nvim'
 
-alias galgo='cd ~/School/Algorithms/'
-alias gline='cd ~/School/Linear'
-alias glogi='cd ~/School/LogicDesign'
-alias gmicr='cd ~/School/Micro/'
-alias gcalc='cd ~/School/Calc3/'
+alias galgo='cd ~/Documents/School/Algorithms/'
+alias gline='cd ~/Documents/School/Linear'
+alias glogi='cd ~/Documents/School/LogicDesign'
+alias gmicr='cd ~/Documents/School/Micro/'
+alias gcalc='cd ~/Documents/School/Calc3/'
 alias zshrc='vi ~/.zshrc'
 alias ghome='cd ~/'
 alias groot='cd /'
