@@ -62,6 +62,12 @@ pushDotfiles() {
     git -C /Users/tcron/.config/dotfiles push -u origin main
 }
 
+pushNotes() { 
+    git -C ~/Documents/School/Notes add .
+    git -C ~/Documents/School/Notes commit -m $1
+    git -C ~/Documents/School/Notes push -u origin main
+}
+
 # cursor switching for vim
  # Remove mode switching delay.
  KEYTIMEOUT=5
