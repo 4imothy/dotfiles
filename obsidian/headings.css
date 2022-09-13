@@ -1,0 +1,42 @@
+:root {
+    --blueish: #81b9be;
+    --green: #a3be8c;
+    --purple: #b48ead;
+    --orange:  #d29c84;
+}
+ 
+body{ 
+    /* these are obsidian app.css variables */
+    --h1: 2.20rem;
+    --h2: 2.00rem;
+    --h3: 1.80rem;
+    --h4: 1.60rem;
+    --h5: 1.40rem;
+    --h6: 1.20rem;
+}
+
+.cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4,
+.markdown-preview-section h1, .markdown-preview-section h2, 
+.markdown-preview-section h3, .markdown-preview-section h4 {
+    font-family: "Times New Roman", Georgia, serif;
+}
+.cm-header-1,    
+.markdown-preview-section h1 {
+    color: var(--purple);
+}                   
+
+.cm-header-2,
+.markdown-preview-section h2 {
+    color: var(--blueish);                                     
+}                                    
+
+.cm-header-3,                          
+.markdown-preview-section h3 {             
+    color: var(--green);           
+}
+
+.cm-header-4,                          
+.markdown-preview-section h4 {
+    color: var(--orange);
+}
+
