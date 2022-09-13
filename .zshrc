@@ -51,6 +51,7 @@ alias fir='open /Applications/Firefox.app'
 alias spo='open /Applications/Spotify.app'
 alias mai='open /System/Applications/Mail.app'
 alias mes='open /System/Applications/Messages.app'
+alias cal='open /System/Applications/Calendar.app'
 
 # git for dotfiles repo
 pushDotfiles() {
