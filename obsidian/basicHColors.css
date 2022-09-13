@@ -1,0 +1,37 @@
+:root {
+    --blueish: #81b9be;
+    --green: #a3be8c;
+    --purple: #b48ead;
+}
+
+.theme-dark,
+.theme-light {
+    --text-title-h1: var(--purple);
+    --text-title-h2: var(--blueish);
+    --text-title-h3: var(--green);
+}
+
+
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3{
+    margin: 24px 0;
+}
+
+.cm-header-1,    
+.markdown-preview-section h1 {
+    font-size: 34px;  
+    color: var(--text-title-h1);
+}                   
+
+.cm-header-2,
+.markdown-preview-section h2 {
+    font-size: 26px;
+    color: var(--text-title-h2);                                     
+}                                    
+
+.cm-header-3,                          
+.markdown-preview-section h3 {             
+    font-size: 22px;             
+    color: var(--text-title-h3);           
+}
