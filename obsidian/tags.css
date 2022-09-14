@@ -1,5 +1,10 @@
+.kanban-plugin__item-tags .kanban-plugin__item-tag {
+    padding: 1px 4px;
+    margin: 3px 3px 0 0;
+}
 .tag {
     font-size: 0;
+    padding: 0;
 }
 
 .tag:after{
@@ -7,9 +12,8 @@
     color: none;
     font-size: .75rem;
     font-weight: 700;
-    padding: 7% 10%;
-    margin-left: -10%;
-    border-radius: 20%;
+    padding: 3px 5px;
+    border-radius: 10px;
 }
 
 .tag[href="#calculus"]:after {
