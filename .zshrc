@@ -37,6 +37,7 @@ alias gline='cd ~/Documents/School/Linear'
 alias glogi='cd ~/Documents/School/LogicDesign'
 alias gmicr='cd ~/Documents/School/Micro/'
 alias gcalc='cd ~/Documents/School/Calc3/'
+alias gnote='cd ~/Documents/Vault/🏫\ SchoolNotes'
 alias zshrc='vi ~/.zshrc'
 alias ghome='cd ~/'
 alias groot='cd /'
@@ -64,9 +65,9 @@ pushDotfiles() {
 }
 
 pushSchoolNotes() { 
-    git -C ~/Documents/Vault/🏫\ School\ Notes add .
-    git -C ~/Documents/Vault/🏫\ School\ Notes commit -m $1
-    git -C  ~/Documents/Vault/🏫\ School\ Notes  push -u origin main
+    git -C ~/Documents/Vault/🏫\ SchoolNotes add .
+    git -C ~/Documents/Vault/🏫\ SchoolNotes commit -m $1
+    git -C ~/Documents/Vault/🏫\ SchoolNotes  push -u origin main
 }
 
 # cursor switching for vim

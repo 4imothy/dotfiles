@@ -1,0 +1,43 @@
+.tag {
+    font-size: 0;
+}
+
+.tag:after{
+    background-color: none;
+    color: none;
+    font-size: .75rem;
+    font-weight: 700;
+    padding: 7% 10%;
+    margin-left: -10%;
+    border-radius: 20%;
+}
+
+.tag[href="#calculus"]:after {
+    background-color: rgb(255, 227, 171);
+    color: rgb(187, 121, 29);
+    content: "calculus";
+}
+
+.tag[href="#linear"]:after {
+    background-color: rgb(191, 244, 197);
+    color: rgba(22, 117, 30, 1);
+    content: "linear";
+}
+
+.tag[href="#algorithms"]:after {
+    background-color: rgb(207, 194, 237);
+    color: rgb(68, 35, 145);
+    content: "algorithms";
+}
+
+.tag[href="#logic"]:after {
+    background-color: rgb(240, 211, 242);
+    color: rgb(152, 34, 161);
+    content: "logic";
+}
+
+.tag[href="#microecon"]:after {
+    background-color: #b9d0f0;
+    color: #28528a;
+    content: "microecon";
+}
