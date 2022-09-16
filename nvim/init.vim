@@ -1,11 +1,11 @@
 set number relativenumber
-filetype indent on
 set ai
 set si
 :set shiftwidth=4
 set nocompatible
 
 filetype off
+filetype indent on
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-fugitive'
