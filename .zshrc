@@ -31,6 +31,8 @@ export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
 alias vi='nvim'
+alias siftop='sudo iftop -i en0'
+alias c="clear"
 
 alias galgo='cd ~/Documents/School/Algorithms/'
 alias gline='cd ~/Documents/School/Linear'
@@ -54,7 +56,6 @@ alias mai='open /System/Applications/Mail.app'
 alias mes='open /System/Applications/Messages.app'
 alias cal='open /System/Applications/Calendar.app'
 
-# git for dotfiles repo
 pushDotfiles() {
     cp /Users/tcron/.zshrc /Users/tcron/.config/dotfiles
     cp -Rf /Users/tcron/.config/nvim /Users/tcron/.config/dotfiles
@@ -70,6 +71,12 @@ pushSchoolNotes() {
     git -C ~/Documents/Vault/🏫\ SchoolNotes  push -u origin main
 }
 
+pushMushroomDriverScripts() { 
+    cp -r ~/Projects/Mushroom\ Driver/Mushroom\ Driver/Assets/Scripts ~/Projects/SeperateGitRepos/Mushroom\ Driver
+    git -C ~/Projects/SeperateGitRepos/Mushroom\ Driver add .
+    git -C ~/Projects/SeperateGitRepos/Mushroom\ Driver commit -m $1
+    git -C ~/Projects/SeperateGitRepos/Mushroom\ Driver push -u origin main 
+}
 # cursor switching for vim
  # Remove mode switching delay.
  KEYTIMEOUT=5
