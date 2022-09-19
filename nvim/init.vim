@@ -16,6 +16,8 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
+Plug 'pangloss/vim-javascript' " javascript syntax
+Plug 'MaxMEllon/vim-jsx-pretty' " jsx
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
