@@ -3,11 +3,6 @@ alias siftop='sudo iftop -i en0'
 alias c="clear"
 alias sexit="tmux kill-server"
 
-function quit(){
-    tmux kill-server
-    killall Terminal
-}
-
 alias galgo='cd ~/Documents/School/Algorithms/'
 alias algotext='open ~/Documents/School/Algorithms/AlgorithmsTextbook.pdf'
 
