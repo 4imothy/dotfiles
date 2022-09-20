@@ -17,7 +17,7 @@ function zle-keymap-select {
 
 zle -N zle-keymap-select                                                                                         
 
-precmd() {                                                                  
-    # Use beam shape cursor for each new prompt.                           
-    echo -ne '\e[5 q'                                                      
+precmd() {                                                    
+    # use beam on new prompt
+    echo -ne '\e[5 q'
 }
