@@ -99,6 +99,9 @@ pushMushroomDriverScripts() {
 precmd() {
     # Use beam shape cursor for each new prompt.
     echo -ne '\e[5 q'
+}
+
+preexec(){
     # change back to normal color 
     print -Pn "%f" 
 }
