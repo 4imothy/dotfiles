@@ -3,11 +3,13 @@ set ai
 set si
 :set shiftwidth=4
 set nocompatible
+set noshowmode
 
 filetype off
 filetype indent on
 
 call plug#begin('~/.config/nvim/plugged')
+
 Plug 'tpope/vim-fugitive'
 
 Plug 'preservim/nerdtree'
@@ -19,6 +21,7 @@ Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
 Plug 'pangloss/vim-javascript' " javascript syntax
 Plug 'MaxMEllon/vim-jsx-pretty' " jsx
 Plug 'dense-analysis/ale'
+Plug 'vim-airline/vim-airline'
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
@@ -27,6 +30,9 @@ Plug 'morhetz/gruvbox'
 call plug#end()
 
 colorscheme gruvbox
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
 
 nnoremap <C-n> :NERDTreeFocus<CR>
 
@@ -61,10 +67,3 @@ function! ShowDocumentation()
     call feedkeys('K', 'in')
   endif
 endfunction
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-
