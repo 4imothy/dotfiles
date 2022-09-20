@@ -39,9 +39,14 @@ set updatetime=100
 " diagnostics appear/become resolved.
 set signcolumn=yes
 " Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice.
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+if has("autocmd")
+    " au VimLeave * silent execute '!echo -ne #"\e[5 q"' | redraw!
+    " au VimLeave * silent !echo -ne #"\e[5 q"
+    au VimLeave * silent execute 'echo "\e[5 q"' | redraw!
+endif
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
