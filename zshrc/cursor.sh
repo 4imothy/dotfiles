@@ -2,7 +2,7 @@
 # Remove mode switching delay.                         
 KEYTIMEOUT=5                                                     
 
-	# Change cursor shape for different vi modes.
+# Change cursor shape for different vi modes.
 function zle-keymap-select {                        
     if [[ ${KEYMAP} == vicmd ]] ||                          
 	[[ $1 = 'block' ]]; then

@@ -1,6 +1,7 @@
 alias vi='nvim'
 alias siftop='sudo iftop -i en0'
 alias c="clear"
+alias sexit="tmux kill-server"
 
 alias galgo='cd ~/Documents/School/Algorithms/'
 alias gline='cd ~/Documents/School/Linear'

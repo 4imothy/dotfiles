@@ -1,5 +1,6 @@
 pushDotfiles() {                                        
     cp /Users/tcron/.zshrc /Users/tcron/.config/dotfiles          
+    cp ~/.tmux.conf ~/.config/dotfiles
     cp -R /Users/tcron/zshrc /Users/tcron/.config/dotfiles          
     cp -Rf /Users/tcron/.config/nvim /Users/tcron/.config/dotfiles          
     cp -Rf ~/Documents/Vault/.obsidian/snippets/ ~/.config/dotfiles/obsidian
