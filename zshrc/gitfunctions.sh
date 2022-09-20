@@ -1,12 +1,12 @@
 pushDotfiles() {                                        
-    cp /Users/tcron/.zshrc /Users/tcron/.config/dotfiles          
+    cp ~/.zshrc ~/.config/dotfiles          
     cp ~/.tmux.conf ~/.config/dotfiles
-    cp -R /Users/tcron/zshrc /Users/tcron/.config/dotfiles          
-    cp -Rf /Users/tcron/.config/nvim /Users/tcron/.config/dotfiles          
+    cp -R ~/zshrc ~/.config/dotfiles          
+    cp -Rf ~/.config/nvim ~/.config/dotfiles          
     cp -Rf ~/Documents/Vault/.obsidian/snippets/ ~/.config/dotfiles/obsidian
-    git -C /Users/tcron/.config/dotfiles add .                              
-    git -C /Users/tcron/.config/dotfiles commit -m $1                       
-    git -C /Users/tcron/.config/dotfiles push -u origin main
+    git -C ~/.config/dotfiles add .                              
+    git -C ~/.config/dotfiles commit -m $1                       
+    git -C ~/.config/dotfiles push -u origin main
 }                                                           
 
 pushSchoolNotes() {                               
