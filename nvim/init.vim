@@ -8,6 +8,10 @@ set nohlsearch
 set scrolloff=7
 set signcolumn=yes
 set colorcolumn=80
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+set updatetime=100
 
 filetype off
 filetype indent on
@@ -40,23 +44,17 @@ let g:lightline = {
 
 nnoremap <C-n> :NERDTreeFocus<CR>
 
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-set updatetime=100
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=yes
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-if has("autocmd")
-    " au VimLeave * silent execute '!echo -ne #"\e[5 q"' | redraw!
-    " au VimLeave * silent !echo -ne #"\e[5 q"
-    au VimLeave * silent execute 'echo "\e[5 q"' | redraw!
-endif
+function TrimWhiteSpace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfunction
+
+autocmd BufWritePre * :call TrimWhiteSpace()
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
