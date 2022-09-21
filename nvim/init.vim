@@ -4,6 +4,10 @@ set si
 :set shiftwidth=4
 set nocompatible
 set noshowmode
+set nohlsearch
+set scrolloff=7
+set signcolumn=yes
+set colorcolumn=80
 
 filetype off
 filetype indent on
