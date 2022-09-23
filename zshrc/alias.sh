@@ -18,7 +18,6 @@ alias gmicr='cd ~/Documents/School/Micro/'
 alias gcalc='cd ~/Documents/School/Calc3/'
 alias gnote='cd ~/Documents/Vault/🏫\ SchoolNotes'
 
-
 alias pu='pushd'
 alias po='popd'
 alias ll='ls -l'
