@@ -5,6 +5,16 @@ alias sexit="tmux kill-server"
 alias dt="tmux detach"
 alias at="tmux attach"
 
+alias pu='pushd'
+alias po='popd'
+alias ll='ls -l'
+alias la='ls -a'
+
+alias zr="source ~/.zshrc"
+
+alias -s {js,ts,html,java,sh,md,py}="nvim"
+
+# go to locations
 alias galgo='cd ~/Documents/School/Algorithms/'
 alias algotext='open ~/Documents/School/Algorithms/AlgorithmsTextbook.pdf'
 
@@ -17,11 +27,6 @@ alias logitext='open ~/Documents/School/LogicDesign/LogicTextbook.pdf';
 alias gmicr='cd ~/Documents/School/Micro/'
 alias gcalc='cd ~/Documents/School/Calc3/'
 alias gnote='cd ~/Documents/Vault/🏫\ SchoolNotes'
-
-alias pu='pushd'
-alias po='popd'
-alias ll='ls -l'
-alias la='ls -a'
 
 # open common apps
 alias obs='open /Applications/Obsidian.app'
