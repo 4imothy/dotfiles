@@ -16,6 +16,8 @@ set updatetime=100
 filetype off
 filetype indent on
 
+au BufNewFile,BufRead *.ejs set filetype=html
+
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-fugitive'
