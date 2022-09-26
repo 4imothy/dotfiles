@@ -27,6 +27,9 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'vim-airline/vim-airline-themes'
+
 Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
 Plug 'pangloss/vim-javascript' " javascript syntax
 Plug 'MaxMEllon/vim-jsx-pretty' " jsx
@@ -39,10 +42,8 @@ Plug 'morhetz/gruvbox'
 
 call plug#end()
 
-colorscheme gruvbox
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
+colorscheme catppuccin
+let g:airline_theme='solarized'
 
 nnoremap <C-n> :NERDTreeFocus<CR>
 
