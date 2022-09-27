@@ -1,3 +1,9 @@
+pushTennisGame() {
+    git -C ~/Projects/TennisGame add .
+    git -C ~/Projects/TennisGame commit -m $1
+    git -C ~/Projects/TennisGame push -u origin main
+}
+
 pushDotfiles() {
     cp ~/.zshrc ~/.config/dotfiles
     cp ~/.tmux.conf ~/.config/dotfiles
