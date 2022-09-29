@@ -3,7 +3,7 @@ for FILE in ~/zshrc/*; do
 done
 
 #boot into tmux
-# if [ -z "$TMUX" ]
-# then
-#    tmux attach -t TMUX || tmux new -s TMUX
-# fi
+if [ -z "$TMUX" ]
+then
+   tmux attach -t tim|| tmux new -s tim
+fi

@@ -1,9 +1,9 @@
 alias vi='nvim'
 alias siftop='sudo iftop -i en0'
 alias c="clear"
+
 alias sexit="tmux kill-server"
-alias dt="tmux detach"
-alias at="tmux attach"
+alias switch="tmux switch -t"
 
 alias pu='pushd'
 alias po='popd'
