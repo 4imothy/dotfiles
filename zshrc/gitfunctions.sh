@@ -5,14 +5,14 @@ pushTennisGame() {
 }
 
 pushDotfiles() {
-    cp ~/.zshrc ~/.config/dotfiles
-    cp ~/.tmux.conf ~/.config/dotfiles
-    cp -R ~/zshrc ~/.config/dotfiles
-    cp -Rf ~/.config/nvim ~/.config/dotfiles
-    cp -Rf ~/Documents/Vault/.obsidian/snippets/ ~/.config/dotfiles/obsidian
-    git -C ~/.config/dotfiles add .
-    git -C ~/.config/dotfiles commit -m $1
-    git -C ~/.config/dotfiles push -u origin main
+    cp ~/.zshrc ~/Projects/SeperateGitRepos/dotfiles
+    cp ~/.tmux.conf ~/Projects/SeperateGitRepos/dotfiles
+    cp -R ~/zshrc ~/Projects/SeperateGitRepos/dotfiles
+    cp -Rf ~/.config/nvim ~/Projects/SeperateGitRepos/dotfiles
+    cp -Rf ~/Documents/Vault/.obsidian/snippets/ ~/Projects/SeperateGitRepos/dotfiles/obsidian
+    git -C ~/Projects/SeperateGitRepos/dotfiles add .
+    git -C ~/Projects/SeperateGitRepos/dotfiles commit -m $1
+    git -C ~/Projects/SeperateGitRepos/dotfiles push -u origin main
 }
 
 pushSchoolNotes() {
