@@ -17,20 +17,22 @@
     border-radius: 0;
 }
 
-.tag {
+.tag{
     font-size: 0;
     padding: 0;
 }
 
 .tag:after{
-    background-color: none;
-    color: none;
+    background-color: rgb(207, 194, 237);
+    color: rgb(68, 35, 145);
     font-size: .75rem;
     font-weight: 700;
     padding: 3px 5px;
     border-radius: 10px;
+    content: ""attr(href)"";
 }
 
+/* For School*/
 .tag[href="#calculus"]:after {
     background-color: rgb(255, 227, 171);
     color: rgb(187, 121, 29);
