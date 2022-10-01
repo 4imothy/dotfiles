@@ -2,11 +2,15 @@ alias vi='nvim'
 alias siftop='sudo iftop -i en0'
 alias c="clear"
 
-alias sexit="tmux kill-server"
+# git
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+
+# tmux
 alias switch="tmux switch -t"
 
-alias pu='pushd'
-alias po='popd'
 alias ll='ls -l'
 alias la='ls -a'
 
@@ -15,17 +19,17 @@ alias reload="source ~/.zshrc"
 alias -s {js,ts,html,java,sh,md,py}="nvim"
 
 # go to locations
-alias galgo='cd ~/Documents/School/Algorithms/'
+alias algor='cd ~/Documents/School/Algorithms/'
 alias algotext='open ~/Documents/School/Algorithms/AlgorithmsTextbook.pdf'
 
-alias gline='cd ~/Documents/School/Linear'
+alias linea='cd ~/Documents/School/Linear'
 alias linetext='open ~/Documents/School/Linear/LinearTextbook.pdf'
 
-alias glogi='cd ~/Documents/School/LogicDesign'
+alias logic='cd ~/Documents/School/LogicDesign'
 alias logitext='open ~/Documents/School/LogicDesign/LogicTextbook.pdf';
 
-alias gmicr='cd ~/Documents/School/Micro/'
-alias gcalc='cd ~/Documents/School/Calc3/'
+alias micro='cd ~/Documents/School/Micro/'
+alias calcu='cd ~/Documents/School/Calc3/'
 alias gnote='cd ~/Documents/Vault/🏫\ SchoolNotes'
 
 # open common apps

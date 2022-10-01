@@ -20,7 +20,6 @@ firstLine="%F{135}╭─%f%F{075}%/%f%k"
 secondLine="%F{169}╰─%f%F{168}❱%f%F{167}❱%f%F{166}❱%f%F{173}"
 
 PROMPT="${firstLine}${NEWLINE}${secondLine} "
-
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
