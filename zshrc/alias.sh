@@ -10,7 +10,7 @@ alias po='popd'
 alias ll='ls -l'
 alias la='ls -a'
 
-alias zr="source ~/.zshrc"
+alias reload="source ~/.zshrc"
 
 alias -s {js,ts,html,java,sh,md,py}="nvim"
 
