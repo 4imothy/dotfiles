@@ -61,14 +61,3 @@ autocmd BufWritePre * :call TrimWhiteSpace()
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
-
-" Use K to show documentation in preview window.
-" inoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
