@@ -15,7 +15,7 @@ pushDotfiles() {
     git -C ~/Projects/SeperateGitRepos/dotfiles push -u origin main
 }
 
-pushSchoolNotes() {
+pushKnowledgeBase() {
     git -C ~/Documents/Vault/🏫\ SchoolNotes add .
     git -C ~/Documents/Vault/🏫\ SchoolNotes commit -m $1
     git -C ~/Documents/Vault/🏫\ SchoolNotes  push -u origin main
