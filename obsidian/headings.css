@@ -3,7 +3,7 @@
     --green: #a3be8c;
     --purple: #b48ead;
     --orange:  #d29c84;
-    --pink: #E187E3;
+    --yellow: #eab12c;
 }
 
 body{
@@ -42,5 +42,5 @@ body{
 
 .cm-header-5,
 .markdown-preview-section h5 {
-    color: var(--pink);
+    color: var(--yellow);
 }
