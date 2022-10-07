@@ -3,10 +3,10 @@
     --green: #a3be8c;
     --purple: #b48ead;
     --orange:  #d29c84;
-    --teal: #8BC7BD;
+    --pink: #E187E3;
 }
- 
-body{ 
+
+body{
     /* these are obsidian app.css variables */
     --h1: 2.20rem;
     --h2: 2.00rem;
@@ -17,31 +17,30 @@ body{
 }
 
 .cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4, .cm-header-5,
-.markdown-preview-section h1, .markdown-preview-section h2, 
+.markdown-preview-section h1, .markdown-preview-section h2,
 .markdown-preview-section h3, .markdown-preview-section h4, .markdown-preview-section h5 {
     font-family: "Times New Roman", Georgia, serif;
 }
-.cm-header-1,    
+.cm-header-1,
 .markdown-preview-section h1 {
     color: var(--purple);
-}                   
+}
 
 .cm-header-2,
 .markdown-preview-section h2 {
-    color: var(--blueish);                                     
-}                                    
-
-.cm-header-3,                          
-.markdown-preview-section h3 {             
-    color: var(--green);           
+    color: var(--blueish);
 }
 
-.cm-header-4,                          
+.cm-header-3,
+.markdown-preview-section h3 {
+    color: var(--green);
+}
+.cm-header-4,
 .markdown-preview-section h4 {
     color: var(--orange);
 }
 
 .cm-header-5,
 .markdown-preview-section h5 {
-    color: var(--teal);
+    color: var(--pink);
 }
