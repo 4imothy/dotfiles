@@ -8,7 +8,6 @@ set nohlsearch
 set scrolloff=7
 set signcolumn=yes
 set colorcolumn=80
-" Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
 set updatetime=100
