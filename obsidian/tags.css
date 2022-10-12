@@ -34,32 +34,32 @@
 }
 
 /* For School*/
-.tag[href="#calculus"]:after {
+.tag[href="#calc"]:after {
     background-color: rgb(255, 227, 171);
     color: rgb(187, 121, 29);
-    content: "calculus";
+    content: "Calculus-3";
 }
 
-.tag[href="#linear"]:after {
+.tag[href="#line"]:after {
     background-color: rgb(191, 244, 197);
     color: rgba(22, 117, 30, 1);
-    content: "linear";
+    content: "Linear-Algebra";
 }
 
-.tag[href="#algorithms"]:after {
+.tag[href="#algo"]:after {
     background-color: rgb(207, 194, 237);
     color: rgb(68, 35, 145);
-    content: "algorithms";
+    content: "Algorithms";
 }
 
-.tag[href="#logic"]:after {
+.tag[href="#logi"]:after {
     background-color: rgb(240, 211, 242);
     color: rgb(152, 34, 161);
-    content: "logic";
+    content: "Logic-and-Design";
 }
 
-.tag[href="#microecon"]:after {
+.tag[href="#econ"]:after {
     background-color: #b9d0f0;
     color: #28528a;
-    content: "microecon";
+    content: "Micro-Economics";
 }
