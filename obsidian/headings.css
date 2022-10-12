@@ -17,9 +17,9 @@ body{
     --h6: 1.20rem;
 }
 
-.cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4, .cm-header-5,
+.cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4, .cm-header-5, .cm-header-6,
 .markdown-preview-section h1, .markdown-preview-section h2,
-.markdown-preview-section h3, .markdown-preview-section h4, .markdown-preview-section h5 {
+.markdown-preview-section h3, .markdown-preview-section h4, .markdown-preview-section h5, .markdown-preview-section h6 {
     font-family: "Times New Roman", Georgia, serif;
 }
 .cm-header-1,
