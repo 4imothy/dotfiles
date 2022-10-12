@@ -1,3 +1,6 @@
+.status-bar {
+    display: none;
+}
 .workspace-ribbon.mod-right.is-collapsed {
     display: none;
 }
