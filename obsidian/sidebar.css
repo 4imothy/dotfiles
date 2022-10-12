@@ -1,3 +1,7 @@
 .workspace-ribbon {
     display: none;
 }
+
+.modal.mod-settings {
+    width: 50vw;
+}
