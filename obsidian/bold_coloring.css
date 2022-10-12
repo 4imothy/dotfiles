@@ -1,0 +1,12 @@
+/* working with individual themes is only changing the colors of the settings sidebar
+.theme-light, .markdown-preview-view, .cm-s-obsidian, .cm-strong{
+    color: #3f6deb;
+}
+*/
+
+/* for both themes*/
+.markdown-preview-view, .cm-strong{
+    color: #5e9ca6;
+}
+
+
