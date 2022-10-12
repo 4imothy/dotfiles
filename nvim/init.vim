@@ -45,6 +45,7 @@ colorscheme catppuccin
 let g:airline_theme='solarized'
 
 nnoremap <C-n> :NERDTreeFocus<CR>
+nnoremap <C-q> :NERDTreeClose<CR>
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
