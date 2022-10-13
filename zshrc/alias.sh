@@ -11,6 +11,7 @@ alias gp='git push'
 # tmux
 alias switch="tmux switch -t"
 
+alias l='ls'
 alias ll='ls -l'
 alias la='ls -a'
 
