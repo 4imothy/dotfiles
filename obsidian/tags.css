@@ -1,26 +1,12 @@
-.kanban-plugin__item-tags .kanban-plugin__item-tag {
-    --interactive-accent-rgb: rgb(0,0,0);
-    padding: 0;
-    margin: 0;
-    background: none;
-    background-color: transparent;
-    border-radius: 0;
-}
-
-.kanban-plugin__item-tags,
-.kanban-plugin__item-tag {
-    --interactive-accent-rgb: rgb(0,0,0);
-    padding: 0;
-    margin: 0;
-    background: none;
-    background-color: transparent;
-    border-radius: 0;
-}
-
-.tag{
+a.tag{
     font-size: 0;
-    padding: 0;
     text-decoration: none;
+    --interactive-accent-rgb: rgb(0,0,0);
+    padding: 0;
+    margin: 0;
+    background: none;
+    background-color: transparent;
+    border-radius: 0;
 }
 
 .tag:after{
@@ -31,6 +17,7 @@
     padding: 3px 5px;
     border-radius: 10px;
     content: ""attr(href)"";
+    line-height: 2;
 }
 
 /* For School*/
@@ -62,4 +49,8 @@
     background-color: #b9d0f0;
     color: #28528a;
     content: "Micro_Economics";
+}
+
+.kanban-plugin__item-prefix-button-wrapper {
+    display: none;
 }

@@ -10,18 +10,3 @@ div.CodeMirror-cursor,
 .status-bar {
     display: none;
 }
-.workspace-ribbon.mod-right.is-collapsed {
-    display: none;
-}
-
-.side-dock-actions {
-    display: none;
-}
-
-.side-dock-settings {
-    display: none;
-}
-
-.modal.mod-settings {
-    width: 50vw;
-}
