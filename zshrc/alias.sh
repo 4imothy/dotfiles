@@ -8,6 +8,8 @@ alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
 
+alias py='python3'
+
 # tmux
 alias switch="tmux switch -t"
 
