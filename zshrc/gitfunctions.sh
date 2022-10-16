@@ -1,10 +1,10 @@
-gpthistomain() {
+gpushthistomain() {
     git add .
     git commit -m $1
     git push -u origin main
 }
 
-gpdotfiles() {
+gpushdotfiles() {
     cp ~/.zshrc ~/Projects/SeperateGitRepos/dotfiles
     cp ~/.tmux.conf ~/Projects/SeperateGitRepos/dotfiles
     cp -R ~/zshrc ~/Projects/SeperateGitRepos/dotfiles
@@ -21,7 +21,7 @@ gpushknowledgebase() {
     git -C ~/Documents/Vault/🏫\ SchoolNotes  push -u origin main
 }
 
-gpmushroomdriverscripts() {
+gpushmushroomdriverscripts() {
     cp -r ~/Projects/Mushroom\ Driver/Mushroom\ Driver/Assets/Scripts ~/Projects/SeperateGitRepos/Mushroom\ Driver
     git -C ~/Projects/SeperateGitRepos/Mushroom\ Driver add .
     git -C ~/Projects/SeperateGitRepos/Mushroom\ Driver commit -m $1
