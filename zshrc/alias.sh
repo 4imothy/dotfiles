@@ -9,6 +9,7 @@ alias gc='git commit'
 alias gp='git push'
 
 alias py='python3'
+alias pip='pip3'
 
 # tmux
 alias switch="tmux switch -t"
