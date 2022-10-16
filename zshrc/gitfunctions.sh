@@ -1,7 +1,7 @@
-pushTennisGame() {
-    git -C ~/Projects/TennisGame add .
-    git -C ~/Projects/TennisGame commit -m $1
-    git -C ~/Projects/TennisGame push -u origin main
+pushThisToMain() {
+    git add .
+    git commit -m $1
+    git push -u origin main
 }
 
 pushDotfiles() {
