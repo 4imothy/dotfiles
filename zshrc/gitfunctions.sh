@@ -5,7 +5,7 @@ gpushthistomain() {
 }
 
 gpushdotfiles() {
-    cp -R ~/zshrc ~/Projects/SeperateGitRepos/dotfiles
+    cp -r ~/zshrc ~/Projects/SeperateGitRepos/dotfiles/loaded_scripts
     cp ~/.zshrc ~/Projects/SeperateGitRepos/dotfiles/zshrc
     cp ~/.tmux.conf ~/Projects/SeperateGitRepos/dotfiles/zshrc
     cp ~/.hushlogin ~/Projects/SeperateGitRepos/dotfiles/zshrc
