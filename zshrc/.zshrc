@@ -1,4 +1,4 @@
-for FILE in ~/zshrc/*; do
+for FILE in ~/loaded_scripts/*; do
     source $FILE
 done
 
