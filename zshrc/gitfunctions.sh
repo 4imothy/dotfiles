@@ -5,9 +5,9 @@ gpushthistomain() {
 }
 
 gpushdotfiles() {
-    cp ~/.zshrc ~/Projects/SeperateGitRepos/dotfiles
-    cp ~/.tmux.conf ~/Projects/SeperateGitRepos/dotfiles
     cp -R ~/zshrc ~/Projects/SeperateGitRepos/dotfiles
+    cp ~/.zshrc ~/Projects/SeperateGitRepos/dotfiles/zshrc
+    cp ~/.tmux.conf ~/Projects/SeperateGitRepos/dotfiles/zshrc
     cp -Rf ~/.config/nvim ~/Projects/SeperateGitRepos/dotfiles
     cp -Rf ~/Documents/Vault/.obsidian/snippets/ ~/Projects/SeperateGitRepos/dotfiles/obsidian
     git -C ~/Projects/SeperateGitRepos/dotfiles add .
