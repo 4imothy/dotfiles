@@ -1,3 +1,4 @@
+### Dotfiles
 These are my dotfiles for zsh, nvim and obsidian.
 
 #### Shell Prompt
