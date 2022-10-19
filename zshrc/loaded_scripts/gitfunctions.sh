@@ -5,12 +5,13 @@ gpushthistomain() {
 }
 
 gpushdotfiles() {
-    cp -r ~/loaded_scripts / ~/Projects/SeperateGitRepos/dotfiles/zshrc/
+    cp -r ~/loaded_scripts ~/Projects/SeperateGitRepos/dotfiles/zshrc/
     cp ~/.zshrc ~/Projects/SeperateGitRepos/dotfiles/zshrc
     cp ~/.tmux.conf ~/Projects/SeperateGitRepos/dotfiles/zshrc
     cp ~/.hushlogin ~/Projects/SeperateGitRepos/dotfiles/zshrc
     cp -Rf ~/.config/nvim ~/Projects/SeperateGitRepos/dotfiles
     cp -Rf ~/Documents/Vault/.obsidian/snippets/ ~/Projects/SeperateGitRepos/dotfiles/obsidian
+
     git -C ~/Projects/SeperateGitRepos/dotfiles add .
     git -C ~/Projects/SeperateGitRepos/dotfiles commit -m $1
     git -C ~/Projects/SeperateGitRepos/dotfiles push -u origin main
