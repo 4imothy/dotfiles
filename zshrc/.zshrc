@@ -3,10 +3,10 @@ for FILE in ~/loaded_scripts/*; do
 done
 
 #boot into tmux
-if [ -z "$TMUX" ]
-then
-   tmux attach -t def || tmux new -s def
-fi
+# if [ -z "$TMUX" ]
+# then
+  # tmux attach -t def || tmux new -s def
+# fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'

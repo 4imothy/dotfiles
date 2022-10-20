@@ -16,13 +16,10 @@ NEWLINE=$'\n'
 # secondLine="%F{214}╰─%f%F{166}❱%f%F{167}❱%f%F{168}❱%f%F{191}"
 
 # sunset
-# firstLine="%F{135}╭─%f%F{075}%/%f%k"
-# secondLine="%F{169}╰─%f%F{168}❱%f%F{167}❱%f%F{166}❱%f%F{173}"
+firstLine="%F{135}╭─%f%F{075}%/%f%k"
+secondLine="%F{169}╰─%f%F{168}❱%f%F{167}❱%f%F{166}❱%f%F{173}"
 
-# p="${firstLine}${NEWLINE}${secondLine} "
-
-# single line
-# PROMPT="%F{169}%~%f%F{168}❱%f%F{167}❱%f%F{166}❱%f%F{173} "
+# PROMPT="${firstLine}${NEWLINE}${secondLine} "
 
 
 local host_name="💿"
@@ -37,10 +34,15 @@ PROMPT="${host_name} ${path_string} ${return_status} %F{173}"
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
-autoload -Uz vcs_info
-zstyle ':vcs_info:git*' formats "%b (%F{160}%u%f%F{141}%c%f%F{229})"
-zstyle ':vcs_info:*' check-for-changes true
-precmd() {
-    vcs_info
+preexec(){
+    # change back to normal color
+    print -Pn "%f"
 }
-RPROMPT='%F{229}${vcs_info_msg_0_} %f'
+
+# autoload -Uz vcs_info
+# zstyle ':vcs_info:git*' formats "%b (%F{160}%u%f%F{141}%c%f%F{229})%f"
+# zstyle ':vcs_info:*' check-for-changes true
+# precmd() {
+#     vcs_info
+# }
+# RPROMPT="%f %F{229}${vcs_info_msg_0_}%f"

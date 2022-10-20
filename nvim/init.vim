@@ -26,14 +26,13 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-Plug 'vim-airline/vim-airline-themes'
 
 Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
 Plug 'pangloss/vim-javascript' " javascript syntax
 Plug 'MaxMEllon/vim-jsx-pretty' " jsx
 Plug 'dense-analysis/ale'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
@@ -41,8 +40,8 @@ Plug 'morhetz/gruvbox'
 
 call plug#end()
 
-colorscheme catppuccin
-let g:airline_theme='solarized'
+colorscheme gruvbox
+let g:airline_theme='tomorrow'
 
 nnoremap <C-n> :NERDTreeFocus<CR>
 nnoremap <C-q> :NERDTreeClose<CR>
