@@ -1,4 +1,4 @@
-NEWLINE=$'\n'
+# NEWLINE=$'\n'
 # teal colors
 # firstLine="%F{049}╭─%/%f"
 # secondLine="%F{043}╰─❱%f%F{037}❱%f%F{031}❱%f %F{111}"
@@ -16,7 +16,7 @@ NEWLINE=$'\n'
 # secondLine="%F{214}╰─%f%F{166}❱%f%F{167}❱%f%F{168}❱%f%F{191}"
 
 # sunset
-firstLine="%F{135}╭─%f%F{075}%/%f%k"
+# firstLine="%F{135}╭─%f%F{075}%/%f%k"
 secondLine="%F{169}╰─%f%F{168}❱%f%F{167}❱%f%F{166}❱%f%F{173}"
 
 # PROMPT="${firstLine}${NEWLINE}${secondLine} "
@@ -38,7 +38,6 @@ preexec(){
     # change back to normal color
     print -Pn "%f"
 }
-
 # autoload -Uz vcs_info
 # zstyle ':vcs_info:git*' formats "%b (%F{160}%u%f%F{141}%c%f%F{229})%f"
 # zstyle ':vcs_info:*' check-for-changes true
