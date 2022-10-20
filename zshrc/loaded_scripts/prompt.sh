@@ -39,8 +39,8 @@ preexec(){
     print -Pn "%f"
 }
 # autoload -Uz vcs_info
-# zstyle ':vcs_info:git*' formats "%b (%F{160}%u%f%F{141}%c%f%F{229})%f"
 # zstyle ':vcs_info:*' check-for-changes true
+# zstyle ':vcs_info:git*' formats "%b (%F{160}%u%f%F{141}%c%f%F{229})%f"
 # precmd() {
 #     vcs_info
 # }
