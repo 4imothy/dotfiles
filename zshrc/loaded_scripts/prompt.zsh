@@ -39,7 +39,7 @@ precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git*' formats "%b (%F{160}%u%f%F{141}%c%f%F{229})%f"
+zstyle ':vcs_info:git*' formats "%s  %r/%S %b (%a) %m%u%c "
 # zstyle ':vcs_info:git*' formats "%b %u %c"
 RPROMPT="%f %F{229}${vcs_info_msg_0_}%f"
 
