@@ -5,7 +5,7 @@ done
 # boot into tmux
 if [ -z "$TMUX" ]
     then
-#	tmux attach -t def || tmux new -s def
+	# tmux attach -t def || tmux new -s def
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
