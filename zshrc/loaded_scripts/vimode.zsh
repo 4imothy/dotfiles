@@ -17,9 +17,12 @@ function zle-keymap-select {
     RPS1="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
     RPS2=$RPS1
     zle reset-prompt
-    }
-vim_ins_mode="%{$fg[white]%}%{$fg_bold[blue]$bg[white]%} INSERT %{$reset_color%}"
-vim_cmd_mode="%{$fg[green]%}%{$fg_bold[black]$bg[green]%} COMMAND %{$reset_color%}"
+}
+autoload color
+# vim_ins_mode="%{$fg[white]%}%{$fg_bold[blue]$bg[white]%} INSERT %{$reset_color%}"
+# vim_cmd_mode="%{$fg[green]%}%{$fg_bold[black]$bg[green]%} COMMAND %{$reset_color%}"
+vim_ins_mode=" INSERT "
+vim_cmd_mode=" COMMAND "
 vim_mode=$vim_ins_mode
 function zle-line-init {
     RPS1="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"

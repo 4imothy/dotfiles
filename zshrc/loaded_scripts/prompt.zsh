@@ -34,23 +34,15 @@ PROMPT="${host_name} ${path_string} ${return_status} %F{173}"
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
-autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git*' formats "%s  %r/%S %b (%a) %m%u%c "
-# zstyle ':vcs_info:git*' formats "%b %u %c"
-RPROMPT="%f %F{229}${vcs_info_msg_0_}%f"
-
 preexec(){
     # change back to normal color
     print -Pn "%f"
 }
 # autoload -Uz vcs_info
-#  zstyle ':vcs_info:git*' formats "%{$fg[grey]%}%s %{$reset_color%}%r/%S%{$fg[grey]%} %{$fg[blue]%}%b%{$reset_color%}%m%u%c%{$reset_color%} "
+# precmd_vcs_info() { vcs_info }
+# precmd_functions+=( precmd_vcs_info )
+# setopt prompt_subst
 # zstyle ':vcs_info:*' check-for-changes true
-# precmd() {
-  #  vcs_info
-# }
-#RPROMPT="%f %F{229}${vcs_info_msg_0_}%f"
+# zstyle ':vcs_info:git*' formats "%s  %r/%S %b (%a) %m%u%c "
+# zstyle ':vcs_info:git*' formats "%b %u %c"
+# RPROMPT="%f %F{229}${vcs_info_msg_0_}%f"
