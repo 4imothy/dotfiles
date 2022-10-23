@@ -26,11 +26,12 @@
 local prefix=""
 local path_string="%F{075}%~%f"
 local prompt_string="»❱"
+local line_indicator="%F{229}⦿%f"
 
 # Make prompt_string red if the previous command failed.
 local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
 
-full="${prefix} ${path_string} ${return_status}%F{177}"
+full="${prefix} ${path_string} ${line_indicator} ${return_status}%F{177}"
 PROMPT="%B${full} "
 
 export CLICOLOR=1
@@ -42,7 +43,7 @@ preexec(){
 }
 del-prompt-accept-line() {
     OLD_PROMPT="$PROMPT"
-    PROMPT="${full} "
+    PROMPT="${prefix} ${path_string} ${return_status}%F{177}"
     zle reset-prompt
     PROMPT="$OLD_PROMPT"
     zle accept-line
