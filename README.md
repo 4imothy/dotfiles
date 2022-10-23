@@ -2,7 +2,7 @@
 These are my dotfiles for zsh, nvim and obsidian.
 
 #### Shell Prompt
-<img style="width:40%;" src="./images/Prompt.jpg" />
+<img style="width:40%;" src="./images/prompt.jpg" />
 - error text is red
 - indicator on the current line
 
