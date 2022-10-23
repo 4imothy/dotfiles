@@ -1,4 +1,4 @@
-export COLOR_RED="$(tput setaf 1)"
+export COLOR_RED="$(tput setaf 197)"
 export COLOR_RESET="$(tput sgr0)"
 
 exec 9>&2

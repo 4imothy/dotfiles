@@ -1,4 +1,4 @@
 # matrix multiplication
 matmul() {
-    py ~/Projects/MathScripts/Scripts/matrix_multiplication.py
+    py ~/Projects/Math_Scripts/Scripts/matrix_multiplication.py
 }

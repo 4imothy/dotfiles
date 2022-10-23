@@ -43,7 +43,7 @@ preexec(){
 }
 del-prompt-accept-line() {
     OLD_PROMPT="$PROMPT"
-    PROMPT="${prefix} ${path_string} ${return_status}%F{177}"
+    PROMPT="${prefix} ${path_string} ${return_status}%F{177} "
     zle reset-prompt
     PROMPT="$OLD_PROMPT"
     zle accept-line
