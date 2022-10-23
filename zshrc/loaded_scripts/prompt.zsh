@@ -43,7 +43,7 @@ preexec(){
 }
 del-prompt-accept-line() {
     OLD_PROMPT="$PROMPT"
-    PROMPT="${full} "
+    PROMPT="${full}%k "
     zle reset-prompt
     PROMPT="$OLD_PROMPT"
     zle accept-line
