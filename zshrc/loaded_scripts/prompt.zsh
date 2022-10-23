@@ -31,7 +31,7 @@ local prompt_string="»❱"
 local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
 
 full="${prefix} ${path_string} ${return_status}%F{177}"
-PROMPT="%K{239}%B${full} "
+PROMPT="%B${full} "
 
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
@@ -42,7 +42,7 @@ preexec(){
 }
 del-prompt-accept-line() {
     OLD_PROMPT="$PROMPT"
-    PROMPT="${full}%k "
+    PROMPT="${full} "
     zle reset-prompt
     PROMPT="$OLD_PROMPT"
     zle accept-line
