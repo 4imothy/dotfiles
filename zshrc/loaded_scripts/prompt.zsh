@@ -17,27 +17,39 @@
 
 # sunset
 # firstLine="%F{135}╭─%f%F{075}%/%f%k"
-secondLine="%F{169}╰─%f%F{168}❱%f%F{167}❱%f%F{166}❱%f%F{173}"
+# secondLine="%F{169}╰─%f%F{168}❱%f%F{167}❱%f%F{166}❱%f%F{173}"
 
 # PROMPT="${firstLine}${NEWLINE}${secondLine} "
 
 
-local host_name="💿"
-local path_string="%F{229}%~%f"
-local prompt_string="»"
+# local prefix="%F{073}%f%F{074}❱%f"
+local prefix=""
+local path_string="%F{075}%~%f"
+local prompt_string="»❱"
+# »
 
 # Make prompt_string red if the previous command failed.
-local return_status="%(?:%F{114}$prompt_string%f:%F{169}$prompt_string%f)"
+local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
 
-PROMPT="${host_name} ${path_string} ${return_status} %F{173}"
+full="${prefix} ${path_string} ${return_status}%F{177}"
+PROMPT="%K{239}%B${full} "
 
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
 preexec(){
     # change back to normal color
-    print -Pn "%f"
+    print -Pn "%f%b"
 }
+del-prompt-accept-line() {
+    OLD_PROMPT="$PROMPT"
+    PROMPT="${full} "
+    zle reset-prompt
+    PROMPT="$OLD_PROMPT"
+    zle accept-line
+}
+zle -N del-prompt-accept-line
+bindkey "^M" del-prompt-accept-line
 # autoload -Uz vcs_info
 # precmd_vcs_info() { vcs_info }
 # precmd_functions+=( precmd_vcs_info )

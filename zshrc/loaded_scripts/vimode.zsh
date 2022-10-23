@@ -14,23 +14,24 @@ function zle-keymap-select {
 	[[ $1 = 'beam' ]]; then
 	    echo -ne '\e[5 q'
 	fi
-    RPS1="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
-    RPS2=$RPS1
+    setRP
     zle reset-prompt
 }
-autoload color
-# vim_ins_mode="%{$fg[white]%}%{$fg_bold[blue]$bg[white]%} INSERT %{$reset_color%}"
-# vim_cmd_mode="%{$fg[green]%}%{$fg_bold[black]$bg[green]%} COMMAND %{$reset_color%}"
+
 vim_ins_mode=" INSERT "
 vim_cmd_mode=" COMMAND "
 vim_mode=$vim_ins_mode
 function zle-line-init {
-    RPS1="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
-    RPS2=$RPS1
+    setRP
     zle reset-prompt
 }
-zle -N zle-line-init
+function setRP {
+    RPS1="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}} "
+    RPS2=$RPS1
+}
 zle -N zle-keymap-select
+zle -N zle-line-init
+setRP
 
 resetcursor() {
     # use beam on new prompt
