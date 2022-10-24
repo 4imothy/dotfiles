@@ -1,7 +1,7 @@
 ### Dotfiles
 These are my dotfiles for zsh, nvim and obsidian.
 
-#### Shell Prompt
+#### Shell Prompt (no [oh-my-zsh](https://ohmyz.sh))
 <img style="width:40%;" src="./images/prompt.jpg" />
 
 - error text is red
