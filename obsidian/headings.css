@@ -9,12 +9,12 @@
 
 body{
     /* these are obsidian app.css variables */
-    --h1: 2.20rem;
-    --h2: 2.05rem;
-    --h3: 1.90rem;
-    --h4: 1.75rem;
-    --h5: 1.60rem;
-    --h6: 1.35rem;
+    --h1: 2.35rem;
+    --h2: 2.20rem;
+    --h3: 2.05rem;
+    --h4: 1.90rem;
+    --h5: 1.75rem;
+    --h6: 1.60rem;
 }
 
 .cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4, .cm-header-5, .cm-header-6,
