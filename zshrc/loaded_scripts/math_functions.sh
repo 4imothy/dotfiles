@@ -6,3 +6,7 @@ matmul() {
 nullspace() {
     py ~/Projects/Math_Scripts/Scripts/Null_Space.py
 }
+
+inverse() {
+    py ~/Projects/Math_Scripts/Scripts/Inverse.py
+}
