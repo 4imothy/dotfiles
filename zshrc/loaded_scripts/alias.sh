@@ -1,6 +1,7 @@
 alias vi='nvim'
 alias siftop='sudo iftop -i en0'
 alias c="clear"
+alias ch="history -p; clear"
 
 # git
 alias gs='git status'
