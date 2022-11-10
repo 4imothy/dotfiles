@@ -10,3 +10,7 @@ nullspace() {
 inverse() {
     py ~/Projects/Math_Scripts/Scripts/Inverse.py
 }
+
+eigen() {
+    py ~/Projects/Math_Scripts/Scripts/Eigen.py
+}
