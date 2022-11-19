@@ -14,3 +14,7 @@ inverse() {
 eigen() {
     py ~/Projects/Math_Scripts/Scripts/Eigen.py
 }
+
+det() {
+    py ~/Projects/Math_Scripts/Scripts/Determinant.py
+}
