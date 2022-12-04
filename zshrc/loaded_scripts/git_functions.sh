@@ -5,16 +5,16 @@ gpushthistomain() {
 }
 
 gpushdotfiles() {
-    cp -r ~/loaded_scripts ~/Projects/SeperateGitRepos/dotfiles/zshrc/
-    cp ~/.zshrc ~/Projects/SeperateGitRepos/dotfiles/zshrc
-    cp ~/.tmux.conf ~/Projects/SeperateGitRepos/dotfiles/zshrc
-    cp ~/.hushlogin ~/Projects/SeperateGitRepos/dotfiles/zshrc
-    cp -Rf ~/.config/nvim ~/Projects/SeperateGitRepos/dotfiles
-    cp -Rf ~/Documents/Vault/.obsidian/snippets/ ~/Projects/SeperateGitRepos/dotfiles/obsidian
+    cp -r ~/loaded_scripts ~/Projects/seperate_git_repos/dotfiles/zshrc/
+    cp ~/.zshrc ~/Projects/seperate_git_repos/dotfiles/zshrc
+    cp ~/.tmux.conf ~/Projects/seperate_git_repos/dotfiles/zshrc
+    cp ~/.hushlogin ~/Projects/seperate_git_repos/dotfiles/zshrc
+    cp -Rf ~/.config/nvim ~/Projects/seperate_git_repos/dotfiles
+    cp -Rf ~/Documents/Vault/.obsidian/snippets/ ~/Projects/seperate_git_repos/dotfiles/obsidian
 
-    git -C ~/Projects/SeperateGitRepos/dotfiles add .
-    git -C ~/Projects/SeperateGitRepos/dotfiles commit -m $1
-    git -C ~/Projects/SeperateGitRepos/dotfiles push -u origin main
+    git -C ~/Projects/seperate_git_repos/dotfiles add .
+    git -C ~/Projects/seperate_git_repos/dotfiles commit -m $1
+    git -C ~/Projects/seperate_git_repos/dotfiles push -u origin main
 }
 
 gpushknowledgebase() {

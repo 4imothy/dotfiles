@@ -36,6 +36,6 @@ setRP
 
 resetcursor() {
     # use beam on new prompt
-    echo -ne '\e[5 q'
+    echo -ne '\e[6 q'
 }
 precmd_functions+=( resetcursor )

@@ -26,7 +26,7 @@
 local prefix=""
 local path_string="%F{075}%~%f"
 local prompt_string="»❱"
-local line_indicator="%F{229}⦿%f"
+local line_indicator="%F{217}⦿%f"
 
 # Make prompt_string red if the previous command failed.
 local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
