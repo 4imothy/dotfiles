@@ -1,4 +1,4 @@
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/loaded_scripts/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh ] && source ~/loaded_scripts/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND="fd --type f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND";
