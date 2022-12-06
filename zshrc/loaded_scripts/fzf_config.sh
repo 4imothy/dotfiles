@@ -3,6 +3,7 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND="fd --type f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND";
 
+# find and go to dir
 d() {
   DIR=`find * -maxdepth 0 -type d -print 2> /dev/null | fzf-tmux ` \
     && cd "$DIR"
@@ -13,13 +14,13 @@ find_dir_a() {
   dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
 }
 
-# navigate through the current directory
+# navigate through the current directory to directories
 nd(){
     cd $( ls | fzf)
 }
 
-search_for_dir(){
-    cd $( find . \( -path '*/Library/*' -prune -o -path '*/node_modules/*' -prune -o -path '*/Pictures/*' -prune -o -path '*/.*' -prune \) -o type -d | fzf )
-    # dir = `find . \( -path '*/Library/*' -prune -o -path '*/node_modules/*' -prune -o -path '*/Pictures/*' -prune -o -path '*/.*' -prune \) -o type -d | fzf ` \
-    # && cd "$dir"
+# search for a directory then go to it
+sd(){
+  local dir
+  dir=$(find ${1:-.} . \( -path '*/Library/*' -prune -o -path '*/node_modules/*' -prune -o -path '*/Pictures/*' -prune -o -path '*/.*' -prune \) -o -type d | fzf ) && cd "$dir"
 }
