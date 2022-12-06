@@ -9,8 +9,8 @@ d() {
     && cd "$DIR"
 }
 
-# navigate this directory (not called f so it doesn't overide fzf)
-n() {
+# get something in this directory (not called f so it doesn't overide fzf)
+g() {
     sels=( "${(@f)$(fd "${fd_default[@]}" "${@:2}"| fzf)}" )
    test -n "$sels" && print -z -- "$1 ${sels[@]:q:q}"
 }
