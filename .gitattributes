@@ -1,2 +1,2 @@
 # ignore this file in language stats
-nvim/autoload/plug.vim -linguist-vendored
+nvim/autoload/plug.vim linguist-vendored

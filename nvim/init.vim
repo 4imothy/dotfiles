@@ -50,6 +50,9 @@ nnoremap <C-q> :NERDTreeClose<CR>
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+" show dot files
+let NERDTreeShowHidden=1
+
 function TrimWhiteSpace()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
