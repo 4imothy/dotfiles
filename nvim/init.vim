@@ -53,6 +53,9 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 " show dot files
 let NERDTreeShowHidden=1
 
+" use the system clipboard
+set clipboard=unnamed
+
 function TrimWhiteSpace()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
