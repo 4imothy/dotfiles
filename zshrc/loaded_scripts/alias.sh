@@ -21,4 +21,4 @@ alias la='ls -a'
 
 alias reload="source ~/.zshrc"
 
-alias -s {js,ts,html,java,sh,md,py}="nvim"
+# alias -s {js,ts,html,java,sh,md,py}="nvim"
