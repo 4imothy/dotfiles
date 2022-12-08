@@ -1,4 +1,7 @@
 for FILE in ~/loaded_scripts/*; do
+    case $FILE in ~/loaded_scripts/error_colors.zsh)
+	continue
+    esac
     source $FILE
 done
 
