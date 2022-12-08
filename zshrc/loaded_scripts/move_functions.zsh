@@ -13,6 +13,10 @@ add_math_scripts_to_path() {
 	    cp $file ~/bin/
 	    continue
 	esac
+	case $file in ~/bin/Math_Scripts/Strassen.py)
+	    cp $file ~/bin/
+	    continue
+	esac
 	 perl -pi -e 'print "#! /usr/bin/env python3\n" if $. == 1' $file
 	 chmod +x $file
 	 new_name=$(basename -s .py $file)
