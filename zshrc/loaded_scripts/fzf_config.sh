@@ -1,7 +1,15 @@
-[ -f ~/loaded_scripts/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh ] && source ~/loaded_scripts/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND="fd --type f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND";
+
+local FZF_PATH=~/.fzf
+# Auto-completion
+# ---------------
+[[ $- == *i* ]] && source "${FZF_PATH}/shell/completion.zsh" 2> /dev/null
+
+# Key bindings
+# ------------
+source "${FZF_PATH}/shell/key-bindings.zsh"
 
 # find and go to dir
 d() {
