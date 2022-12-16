@@ -66,3 +66,8 @@ autocmd BufWritePre * :call TrimWhiteSpace()
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
+
+function DeleteSpans()
+    :%s/<span[^/>]*>
+    :%s/<\/span>
+endfunction
