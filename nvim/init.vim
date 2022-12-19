@@ -71,3 +71,7 @@ function DeleteSpans()
     :%s/<span[^/>]*>
     :%s/<\/span>
 endfunction
+
+function DeleteStyling()
+    :%s/style="[^>]*
+endfunction
