@@ -1,8 +1,6 @@
 set number relativenumber
 set ai
 set si
-:set shiftwidth=4
-set nocompatible
 set noshowmode
 set nohlsearch
 set scrolloff=7
@@ -11,6 +9,8 @@ set colorcolumn=80
 set nobackup
 set nowritebackup
 set updatetime=100
+set nocompatible
+set shiftwidth=4
 
 filetype off
 filetype indent on
