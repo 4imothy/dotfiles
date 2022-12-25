@@ -1,3 +1,4 @@
+# initialize the completion
 autoload -U compinit; compinit
 zstyle ':completion:*' completer _extensions _complete _approximate group-name ''
 zstyle ':completion:*' menu yes select
