@@ -50,6 +50,51 @@ del-prompt-accept-line() {
 }
 zle -N del-prompt-accept-line
 bindkey "^M" del-prompt-accept-line
+
+# Function to truncate the current directory name
+truncate_dir() {
+  # Get the current directory name
+  local dir=$(pwd)
+
+  if [[ "$dir" == "$HOME" ]]; then
+    local prompt="~"
+    echo $prompt
+    return
+  fi
+  # Split the directory name into an array using '/' as the delimiter
+  local dirs=(${(s:/:)dir})
+
+  if [[ $dir == $HOME/* ]]; then
+      local prompt="~"
+      shift dirs
+      shift dirs
+  else
+      # Initialize the prompt string
+      local prompt=""
+  fi
+  # Iterate over the array of directory names
+  for d in "${dirs[@]:0:-1}"; do
+      # Truncate the directory name to the first four letters
+      local truncated=${d[1,4]}
+      # Append the truncated directory name to the prompt string
+      prompt="$prompt/$truncated"
+  done
+
+  prompt="$prompt/${dirs[-1]}"
+  # Return the prompt string
+  echo $prompt
+}
+
+# Function to update the prompt
+update_prompt() {
+  # Set the PROMPT variable to the truncated version of the current directory
+  PROMPT="$(truncate_dir)"
+}
+
+# Set the precmd function to update_prompt
+if [[ ! "$precmd_functions" == *update_prompt* ]]; then
+    precmd_functions+=(update_prompt)
+fi
 # autoload -Uz vcs_info
 # precmd_vcs_info() { vcs_info }
 # precmd_functions+=( precmd_vcs_info )
