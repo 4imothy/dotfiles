@@ -34,8 +34,10 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 setRP
 
-resetcursor() {
+reset_cursor() {
     # use beam on new prompt
     echo -ne '\e[6 q'
 }
-precmd_functions+=( resetcursor )
+if [[ ! "$precmd_functions" == *reset_cursor* ]]; then
+    precmd_functions+=(reset_cursor)
+fi
