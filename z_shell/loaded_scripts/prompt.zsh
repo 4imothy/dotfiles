@@ -21,36 +21,6 @@
 
 # PROMPT="${firstLine}${NEWLINE}${secondLine} "
 
-
-# local prefix="%F{073}%f%F{074}❱%f"
-local prefix=""
-local path_string="%F{075}%~%f"
-local prompt_string="»❱"
-local line_indicator="%F{217}⦿%f"
-
-# Make prompt_string red if the previous command failed.
-local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
-
-full="${prefix} ${path_string} ${line_indicator} ${return_status}%F{177}"
-PROMPT="%B${full} "
-
-export CLICOLOR=1
-export LSCOLORS=fxfxcxdxbxegedabagacfx
-
-preexec(){
-    # change back to normal color
-    print -Pn "%f%b"
-}
-del-prompt-accept-line() {
-    OLD_PROMPT="$PROMPT"
-    PROMPT="${prefix} ${path_string} ${return_status}%F{177} "
-    zle reset-prompt
-    PROMPT="$OLD_PROMPT"
-    zle accept-line
-}
-zle -N del-prompt-accept-line
-bindkey "^M" del-prompt-accept-line
-
 # Function to truncate the current directory name
 truncate_dir() {
   # Get the current directory name
@@ -85,16 +55,45 @@ truncate_dir() {
   echo $prompt
 }
 
-# Function to update the prompt
+
 update_prompt() {
-  # Set the PROMPT variable to the truncated version of the current directory
-  PROMPT="$(truncate_dir)"
+    # Set the PROMPT variable to the truncated version of the current directory
+    local prefix=""
+    local path_string="%F{075}$(truncate_dir)%f"
+    local prompt_string="»❱"
+    local line_indicator="%F{217}⦿%f"
+
+    # Make prompt_string red if the previous command failed.
+    local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
+
+    full="${prefix} ${path_string} ${line_indicator} ${return_status}%F{177}"
+    PROMPT="%B${full} "
 }
+
+export CLICOLOR=1
+export LSCOLORS=fxfxcxdxbxegedabagacfx
+
+preexec(){
+    # change back to normal color
+    print -Pn "%f%b"
+}
+
+del-prompt-accept-line() {
+    path_string="%F{075}$(truncate_dir)%f"
+    OLD_PROMPT="$PROMPT"
+    PROMPT="${prefix} ${path_string} ${return_status}%F{177} "
+    zle reset-prompt
+    PROMPT="$OLD_PROMPT"
+    zle accept-line
+}
+zle -N del-prompt-accept-line
+bindkey "^M" del-prompt-accept-line
 
 # Set the precmd function to update_prompt
 if [[ ! "$precmd_functions" == *update_prompt* ]]; then
     precmd_functions+=(update_prompt)
 fi
+
 # autoload -Uz vcs_info
 # precmd_vcs_info() { vcs_info }
 # precmd_functions+=( precmd_vcs_info )
