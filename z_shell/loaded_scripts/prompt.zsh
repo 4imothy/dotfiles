@@ -21,6 +21,11 @@
 
 # PROMPT="${firstLine}${NEWLINE}${secondLine} "
 
+# return virtual enviornment if it exists
+function virtualenv_info {
+    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+}
+
 # Function to truncate the current directory name
 truncate_dir() {
   # Get the current directory name
@@ -56,7 +61,7 @@ truncate_dir() {
       prompt="$prompt/$truncated"
   done
 
-  prompt="$prompt/${dirs[-1]}"
+  prompt="$(virtualenv_info)$prompt/${dirs[-1]}"
   # Return the prompt string
   echo $prompt
 }
