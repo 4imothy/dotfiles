@@ -6,7 +6,7 @@ These are my dotfiles for zsh, nvim and obsidian.
 
 **Features**
 - parent directories are truncated to four characters
-    - the above image has the working directory $HOME/Projects/personal_website/src/components
+    - the above image has the working directory *$HOME/Projects/personal_website/src/components*
 - arrow becomes red if previous command raised an error
 - indicator on the current line
 - current prompt is bolded previous aren't
