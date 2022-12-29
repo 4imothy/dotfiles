@@ -61,7 +61,7 @@ truncate_dir() {
       prompt="$prompt/$truncated"
   done
 
-  prompt="$(virtualenv_info)$prompt/${dirs[-1]}"
+  prompt="$prompt/${dirs[-1]}"
   # Return the prompt string
   echo $prompt
 }
@@ -69,7 +69,7 @@ truncate_dir() {
 
 update_prompt() {
     # Set the PROMPT variable to the truncated version of the current directory
-    local prefix=""
+    local prefix="%F{073}$(virtualenv_info)%f"
     # local path_string="%F{075}~%f"
     local path_string="%F{075}$(truncate_dir)%f"
     local prompt_string="»❱"
@@ -91,6 +91,7 @@ preexec(){
 }
 
 del-prompt-accept-line() {
+    local prefix="%F{073}$(virtualenv_info)%f"
     local prompt_string="»❱"
     local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
     local path_string="%F{075}$(truncate_dir)%f"
