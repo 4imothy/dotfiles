@@ -86,8 +86,10 @@ preexec(){
 }
 
 del-prompt-accept-line() {
-    path_string="%F{075}$(truncate_dir)%f"
-    OLD_PROMPT="$PROMPT"
+    local prompt_string="»❱"
+    local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
+    local path_string="%F{075}$(truncate_dir)%f"
+    local OLD_PROMPT="$PROMPT"
     PROMPT="${prefix} ${path_string} ${return_status}%F{177} "
     zle reset-prompt
     PROMPT="$OLD_PROMPT"
