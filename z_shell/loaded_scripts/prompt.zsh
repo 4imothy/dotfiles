@@ -26,6 +26,12 @@ truncate_dir() {
   # Get the current directory name
   local dir=$(pwd)
 
+  if [[ "$dir" == "/" ]]; then
+    local prompt="/"
+    echo $prompt
+    return
+  fi
+
   if [[ "$dir" == "$HOME" ]]; then
     local prompt="~"
     echo $prompt
@@ -59,6 +65,7 @@ truncate_dir() {
 update_prompt() {
     # Set the PROMPT variable to the truncated version of the current directory
     local prefix=""
+    # local path_string="%F{075}~%f"
     local path_string="%F{075}$(truncate_dir)%f"
     local prompt_string="»❱"
     local line_indicator="%F{217}⦿%f"
