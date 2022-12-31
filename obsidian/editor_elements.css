@@ -1,12 +1,3 @@
-.CodeMirror-cursor,
-div.CodeMirror-cursor,
-.cm-fat-cursor,
-.cm-animate-fat-cursor,
-.cm-fat-cursor-mark,
-.cm-cursor {
-    visibility: visible !important;
-}
-
 .status-bar {
     display: none;
 }
