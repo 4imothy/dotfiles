@@ -36,12 +36,19 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+
+Plug 'ishan9299/nvim-solarized-lua'
 Plug 'morhetz/gruvbox'
 
 call plug#end()
 
+set t_Co=256
+let g:gruvbox_contrast_light='soft'
+let g:gruvbox_contrast_dark='soft'
+set background=light
 colorscheme gruvbox
-let g:airline_theme='tomorrow'
+highlight Normal ctermbg=NONE
+let g:airline_theme='base16'
 
 nnoremap <C-n> :NERDTreeFocus<CR>
 nnoremap <C-q> :NERDTreeClose<CR>
