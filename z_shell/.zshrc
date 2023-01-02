@@ -1,3 +1,4 @@
+# so that the correct update_prompt function is always added no matter the color scheme
 export precmd_functions=()
 
 for FILE in ~/loaded_scripts/*; do
