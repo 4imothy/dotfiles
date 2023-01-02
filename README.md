@@ -26,3 +26,7 @@ These are my dotfiles for zsh, nvim and obsidian.
 **Light Mode**
 
 <img style="width:40%;" src="./readme_images/light_python.jpg" />
+
+#### ANSI Color Settings
+
+<img style="width:40%;" src="./readme_images/ansi_colors.jpg" />
