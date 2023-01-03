@@ -17,7 +17,6 @@ else
     done
 fi
 
-
 # enter default tmux server on start
 if [ -z "$TMUX" ]
     then
