@@ -46,7 +46,7 @@ let g:gruvbox_contrast_dark='soft'
 set background=light
 colorscheme gruvbox
 highlight Normal ctermbg=NONE
-let g:airline_theme='base16'
+let g:airline_theme='silver'
 
 nnoremap <C-n> :NERDTreeFocus<CR>
 nnoremap <C-q> :NERDTreeClose<CR>
