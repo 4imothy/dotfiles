@@ -4,8 +4,6 @@ set si
 set noshowmode
 set nohlsearch
 set scrolloff=7
-set signcolumn=yes
-set colorcolumn=80
 set nobackup
 set nowritebackup
 set updatetime=100
