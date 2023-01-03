@@ -9,6 +9,7 @@ set nowritebackup
 set updatetime=100
 set nocompatible
 set shiftwidth=4
+set signcolumn=yes
 
 filetype off
 filetype indent on
@@ -16,7 +17,6 @@ filetype indent on
 au BufNewFile,BufRead *.ejs set filetype=html
 
 call plug#begin('~/.config/nvim/plugged')
-
 Plug 'tpope/vim-fugitive'
 
 Plug 'preservim/nerdtree'
