@@ -15,3 +15,9 @@ change_colors(){
     export colors=$1
     source ~/.zshrc
 }
+
+# make a directory and cd to it
+mcd()
+{
+    test -d "$1" || mkdir "$1" && cd "$1"
+}
