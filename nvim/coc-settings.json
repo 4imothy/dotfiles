@@ -1,5 +1,11 @@
 {
     "python.linting.enabled": true,
+    "python.linting.mypyArgs": [
+    	"--no-pretty",
+    	"--ignore-missing-imports",
+    	"--follow-imports=silent",
+    	"--show-column-numbers"
+    ],
     "workspace.workspaceFolderCheckCwd": false,
     "diagnostic.virtualText": true
 }
