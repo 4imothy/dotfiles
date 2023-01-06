@@ -6,6 +6,7 @@
     	"--follow-imports=silent",
     	"--show-column-numbers"
     ],
+
     "workspace.workspaceFolderCheckCwd": false,
     "diagnostic.virtualText": true
 }
