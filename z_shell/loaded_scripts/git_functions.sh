@@ -6,6 +6,7 @@ gpushthistomain() {
 
 gpushdotfiles() {
     cp -r ~/loaded_scripts ~/Projects/seperate_git_repos/dotfiles/z_shell/
+    cp -r ~/.qutebrowser/ ~/Projects/seperate_git_repos/dotfiles/qutebrowser
     cp ~/.zshrc ~/Projects/seperate_git_repos/dotfiles/z_shell
     cp ~/.tmux.conf ~/Projects/seperate_git_repos/dotfiles/z_shell
     cp ~/.hushlogin ~/Projects/seperate_git_repos/dotfiles/z_shell
