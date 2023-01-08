@@ -1,9 +1,9 @@
 nvim/plugged
 .DS_Store
 z_shell/loaded_scripts/fzf-zsh-plugin
-qutebrowser/qutebrowser.html
-qutebrowser/greasemonkey/
-qutebrowser/specific_cookies.py
-qutebrowser/startpage/
-qutebrowser/bookmarks/
-qutebrowser/quickmarks
+browsers/qutebrowser/qutebrowser.html
+browsers/qutebrowser/greasemonkey/
+browsers/qutebrowser/specific_cookies.py
+browsers/qutebrowser/startpage/
+browsers/qutebrowser/bookmarks/
+browsers/qutebrowser/quickmarks

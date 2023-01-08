@@ -4,7 +4,8 @@ listening_ports() {
 
 copytodotfiles(){
     cp -r ~/loaded_scripts ~/Projects/seperate_git_repos/dotfiles/z_shell/
-    cp -r ~/.qutebrowser/ ~/Projects/seperate_git_repos/dotfiles/qutebrowser
+    cp -r ~/.qutebrowser/ ~/Projects/seperate_git_repos/dotfiles/browsers/qutebrowser
+    cp ~/Library/Application\ Support/Firefox/Profiles/ry1zhwm6.default-release/chrome/userChrome.css ~/Projects/seperate_git_repos/dotfiles/browsers/firefox/
     cp ~/.zshrc ~/Projects/seperate_git_repos/dotfiles/z_shell
     cp ~/.tmux.conf ~/Projects/seperate_git_repos/dotfiles/z_shell
     cp ~/.hushlogin ~/Projects/seperate_git_repos/dotfiles/z_shell
