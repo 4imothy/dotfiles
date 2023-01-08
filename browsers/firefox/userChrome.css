@@ -14,6 +14,7 @@
  font-size:13px !important;
 }
 
+/* change the size of bookmarks */
 #personal-bookmarks .bookmark-item > .toolbarbutton-icon {
     height:10px !important;
 }
