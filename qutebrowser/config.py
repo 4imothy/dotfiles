@@ -12,7 +12,10 @@
 
 # Change the argument to True to still load settings configured via autoconfig.yml
 config.load_autoconfig(False)
-config.source("./solarized_light.py")
+# solarized light
+config.source("./colorschemes/solarized_light.py")
+# catpuccion
+# config.source("./colorschemes/catpuccin.py")
 config.source("./specific_cookies.py")
 config.source("./fonts.py")
 config.source("./binds.py")
