@@ -5,6 +5,7 @@ listening_ports() {
 copytodotfiles(){
     cp -r ~/loaded_scripts ~/Projects/seperate_git_repos/dotfiles/z_shell/
     cp -r ~/.qutebrowser/ ~/Projects/seperate_git_repos/dotfiles/browsers/qutebrowser
+    cp -r ~/.config/helix ~/Projects/seperate_git_repos/dotfiles/
     cp ~/Library/Application\ Support/Firefox/Profiles/ry1zhwm6.default-release/chrome/userChrome.css ~/Projects/seperate_git_repos/dotfiles/browsers/firefox/
     cp ~/.zshrc ~/Projects/seperate_git_repos/dotfiles/z_shell
     cp ~/.config/alacritty/alacritty.yml ~/Projects/seperate_git_repos/dotfiles/terminals/
