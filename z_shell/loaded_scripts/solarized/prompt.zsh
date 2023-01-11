@@ -50,8 +50,8 @@ update_prompt() {
     # local path_string="%F{075}~%f"
     local path_string="%F{14}$(truncate_dir)%f"
     local prompt_string="»❱"
-    local line_indicator="%F{5}⦿%f"
-
+    local line_indicator="%F{5}✼%f"
+    #㊀⚛
     # Make prompt_string red if the previous command failed.
     local return_status="%(?:%F{10}$prompt_string%f:%F{9}$prompt_string%f)"
 
