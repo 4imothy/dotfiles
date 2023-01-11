@@ -1,0 +1,36 @@
+theme = "solarized_light"
+
+[editor]
+line-number = "relative"
+mouse = false
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+esc = ["collapse_selection", "keep_primary_selection"]
+minus = "repeat_last_motion" # - to repeat
+
+# install location /opt/homebrew/cellar/helix
+# how installed languages (https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers)
+# JavaScript
+#   npm install -g typescript typescript-language-server
+#   put the typescript-language-server in /usr/local/bin
+#   to use create jsconfig.json or tsconfig.json
+# Python3
+#   pip3 install 'python-lsp-server[all]
+#   put the pylsp in /opt/homebrew/bin
+# Markdown
+#   brew install marksman
+#   installed to /opt/homebrew/Cellar/marksman
+# Rust (https://www.rust-lang.org/learn/get-started)
+#   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # this placed file in ~/.cargo/
+#   To uninstall run: rustup self uninstall # from https://rust-lang.github.io/rustup/installation/index.html
+#   for lsp: rustup component add rust-analyzer
+#   locate its location with: rustup which rust-analyzer
+#   add that path to $PATH I created rust_start() function in ~/loaded_scripts/path_config.zsh to do this
