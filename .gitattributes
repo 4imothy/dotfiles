@@ -1,3 +1,4 @@
 # ignore this file in language stats
 nvim/autoload/plug.vim linguist-vendored
 nvim/unused_lua_config/plugin/packer_compiled.lua linguist-vendored
+browsers/qutebrowser/ linguist-vendored
