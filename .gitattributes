@@ -2,3 +2,8 @@
 nvim/autoload/plug.vim linguist-vendored
 nvim/unused_lua_config/plugin/packer_compiled.lua linguist-vendored
 browsers/qutebrowser/* linguist-vendored
+browsers/qutebrowser/binds.py linguist-vendored
+browsers/qutebrowser/fonts.py linguist-vendored
+browsers/qutebrowser/config.py linguist-vendored
+browsers/qutebrowser/colorschemes/catpuccin.py linguist-vendored
+browsers/qutebrowser/colorschemes/solarized_light.py linguist-vendored
