@@ -21,34 +21,34 @@ a.tag{
 }
 
 /* For School*/
-.tag[href="#calc"]:after {
+.tag[href="#engr"]:after {
     background-color: rgb(255, 227, 171);
     color: rgb(187, 121, 29);
-    content: "Calculus_3";
+    content: "ENGR";
 }
 
-.tag[href="#line"]:after {
+.tag[href="#stat"]:after {
     background-color: rgb(191, 244, 197);
     color: rgba(22, 117, 30, 1);
-    content: "Linear_Algebra";
+    content: "Stat_R";
 }
 
-.tag[href="#algo"]:after {
+.tag[href="#ai"]:after {
     background-color: rgb(207, 194, 237);
     color: rgb(68, 35, 145);
-    content: "Algorithms";
+    content: "Artificial_Intelligence";
 }
 
-.tag[href="#logi"]:after {
+.tag[href="#engl"]:after {
     background-color: rgb(240, 211, 242);
     color: rgb(152, 34, 161);
-    content: "Logic_and_Design";
+    content: "ENGL";
 }
 
-.tag[href="#econ"]:after {
+.tag[href="#alge"]:after {
     background-color: #b9d0f0;
     color: #28528a;
-    content: "Micro_Economics";
+    content: "Abstract_Algebra";
 }
 
 .kanban-plugin__item-prefix-button-wrapper {
