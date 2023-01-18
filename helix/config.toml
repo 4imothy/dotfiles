@@ -13,7 +13,7 @@ select = "underline"
 hidden = false
 
 [keys.normal]
-esc = ["collapse_selection", "keep_primary_selection"]
+# esc = ["collapse_selection", "keep_primary_selection"]
 minus = "repeat_last_motion" # - to repeat
 
 # install location /opt/homebrew/cellar/helix
