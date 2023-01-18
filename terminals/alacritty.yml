@@ -8,6 +8,11 @@ mouse:
       program: open
       args: []
 
+window:
+  dimensions:
+    columns: 100
+    lines: 35
+
 # font
 font:
   size: 16.0
