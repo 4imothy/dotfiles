@@ -15,9 +15,11 @@ alias py='python3'
 # tmux
 alias switch="tmux switch -t"
 
+# directory info
 alias l='ls'
 alias ll='ls -l'
 alias la='ls -a'
+alias wds='du -sh' # working directory size
 
 alias reload="source ~/.zshrc"
 
