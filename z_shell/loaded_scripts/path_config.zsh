@@ -16,5 +16,4 @@ start_rust() {
   if [[ ! "$PATH" == *$HOME/.rustup/toolchains/stable-aarch64-apple-darwin/bin* ]]; then
     export PATH="$HOME/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
   fi
-}
-
+}  
