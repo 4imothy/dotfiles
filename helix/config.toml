@@ -1,4 +1,6 @@
-theme = "solarized_light"
+#theme = "solarized_light"
+theme = "everforest_light"
+#theme = "papercolor-light"  
 
 [editor]
 line-number = "relative"

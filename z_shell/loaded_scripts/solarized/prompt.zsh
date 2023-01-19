@@ -55,7 +55,7 @@ update_prompt() {
     # Make prompt_string red if the previous command failed.
     local return_status="%(?:%F{10}$prompt_string%f:%F{9}$prompt_string%f)"
 
-    full="${prefix} ${path_string} ${line_indicator} ${return_status}%F{13}"
+    full="${prefix} ${path_string} ${line_indicator} ${return_status}%F{4}"
     PROMPT="%B${full} "
 }
 
@@ -73,7 +73,7 @@ del-prompt-accept-line() {
     local return_status="%(?:%F{10}$prompt_string%f:%F{9}$prompt_string%f)"
     local path_string="%F{6}$(truncate_dir)%f"
     local OLD_PROMPT="$PROMPT"
-    PROMPT="${prefix} ${path_string} ${return_status}%F{13} "
+    PROMPT="${prefix} ${path_string} ${return_status}%F{4} "
     zle reset-prompt
     PROMPT="$OLD_PROMPT"
     zle accept-line
