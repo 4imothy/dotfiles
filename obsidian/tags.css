@@ -51,6 +51,12 @@ a.tag{
     content: "Abstract_Algebra";
 }
 
+.tag[href="#os"]:after {
+    background-color: #FFBACE;
+    color: #C71B4E;
+    content: "Operating Systems";
+}
+
 .kanban-plugin__item-prefix-button-wrapper {
     display: none;
 }
