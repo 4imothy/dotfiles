@@ -6,6 +6,7 @@ theme = "everforest_light"
 line-number = "relative"
 mouse = false
 cursorline = true
+auto-pairs = false
 
 [editor.cursor-shape]
 insert = "bar"
@@ -14,6 +15,7 @@ select = "underline"
 
 [editor.file-picker]
 hidden = false
+
 
 [keys.normal]
 # esc = ["collapse_selection", "keep_primary_selection"]
