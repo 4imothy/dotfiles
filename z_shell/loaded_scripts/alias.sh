@@ -1,4 +1,5 @@
-alias vi='nvim'
+alias v='nvim' 
+alias h='hx'
 alias siftop='sudo iftop -i en0'
 alias c="clear"
 alias ch="history -p; clear"
