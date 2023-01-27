@@ -25,3 +25,19 @@ mcd()
 {
     test -d "$1" || mkdir "$1" && cd "$1"
 }
+
+batt() 
+{
+pmset -g batt | grep -E "([0-9]+\%).*" -o --colour=auto | cut -f1 -d';'
+} 
+
+modified_bin() {
+    ls -tl /bin | head -2 | tail +2 | awk '{print "/bin last modified: " substr($0,30)}'
+    ls -tl /bin | awk '{sum+=$5}END{print "total bytes in /bin = " sum}'
+    ls -tl /usr/bin | head -2 | tail +2 | awk '{print "/usr/bin last modified: " substr($0,30)}'
+    ls -tl /usr/bin | awk '{sum+=$5}END{print "total bytes in /usr/bin = " sum}'
+}
+
+brew_deps() {
+    brew deps --tree --installed
+}
