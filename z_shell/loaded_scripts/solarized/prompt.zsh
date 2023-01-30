@@ -49,7 +49,7 @@ update_prompt() {
     local prefix="%F{12}$(virtualenv_info)%f"
     # local path_string="%F{075}~%f"
     local path_string="%F{14}$(truncate_dir)%f"
-    local prompt_string="»❱ "
+    local prompt_string="»❱"
     # »❱ 
     local line_indicator="%F{5}✼%f"
     #㊀⚛
