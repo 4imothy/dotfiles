@@ -41,3 +41,27 @@ modified_bin() {
 brew_deps() {
     brew deps --tree --installed
 }
+
+# search duck duck go
+sddg() {
+    query="$*" 
+    open "https://www.duckduckgo.com/?q=${query}"
+}
+
+# search git hub
+sgh() {
+    query="$*"
+    open "https://github.com/search?q=${query}"
+} 
+
+# search youtube
+syt() {
+    query="$*"
+    open "https://www.youtube.com/results?search_query=$query{}"
+}
+
+# search wikipedia
+swk() {
+    query="$*"
+    open "https://en.wikipedia.org/wiki/${query}"
+}
