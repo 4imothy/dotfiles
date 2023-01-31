@@ -1,18 +1,18 @@
 # so that the correct update_prompt function is always added no matter the color scheme
 export precmd_functions=()
 
-for FILE in ~/loaded_scripts/*; do
+for FILE in ~/sourced/*; do
     source $FILE
 done
 
 if [[ "$colors" == "bubblegum" ]]; then
     echo "Bubblegum Colors"
-    for FILE in ~/loaded_scripts/bubblegum/*; do
+    for FILE in ~/sourced/bubblegum/*; do
 	source $FILE
     done
 else
     echo "Solarized Colors"
-    for FILE in ~/loaded_scripts/solarized/*; do
+    for FILE in ~/sourced/solarized/*; do
 	source $FILE
     done
 fi
