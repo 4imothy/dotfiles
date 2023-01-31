@@ -1,0 +1,5 @@
+.kanban-plugin__item-postfix-button-wrapper {
+    width: 0;
+    position: absolute;
+    left: 80%;
+}
