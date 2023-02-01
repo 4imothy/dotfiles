@@ -11,6 +11,7 @@ alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
 
+# python
 alias py='python3'
 
 # tmux
@@ -22,9 +23,13 @@ alias ll='ls -l'
 alias la='ls -a'
 alias wds='du -sh' # working directory size
 
-alias reload="source ~/.zshrc"
+# sleep the system
+alias schleep="pmset displaysleepnow"
 
-alias -s {js,ts,html,java,md,py}="nvim"
+alias reload="source ~/.zshrc" 
+
+# start helix when files ending in this are entered
+alias -s {js,ts,html,java,md,py,rs}="hx"
 
 # other functions
 alias amtp="add_math_scripts_to_path"
