@@ -9,11 +9,11 @@ if [[ ! "$PATH" == */opt/homebrew/opt/qt5/bin* ]]; then
 fi
 
 # to initialize for rust development
-start_rust() { 
+start_rust() {
   if [[ ! "$PATH" == *$HOME/.cargo/bin* ]]; then
     source $HOME/.cargo/env
-  fi 
+  fi
   if [[ ! "$PATH" == *$HOME/.rustup/toolchains/stable-aarch64-apple-darwin/bin* ]]; then
     export PATH="$HOME/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
   fi
-}  
+}
