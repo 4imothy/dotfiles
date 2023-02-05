@@ -17,8 +17,10 @@ function zle-keymap-select {
     setRP
     zle reset-prompt
 }
-vim_ins_mode="%F{037}❮%f%F{140}INSERT%f%F{037}❯%f"
-vim_cmd_mode="%F{037}❮%f%F{140}COMMAND%f%F{037}❯%f"
+# vim_ins_mode="%F{037}❮%f%F{140}INS%f%F{037}❯%f"
+# vim_cmd_mode="%F{037}❮%f%F{140}NOR%f%F{037}❯%f"
+vim_ins_mode="%F{7}❮%f%F{7}INS%f%F{7}❯%f"
+vim_cmd_mode="%F{7}❮%f%F{7}NOR%f%F{7}❯%f"
 # vim_ins_mode=" INSERT "
 # vim_cmd_mode=" COMMAND "
 vim_mode=$vim_ins_mode
