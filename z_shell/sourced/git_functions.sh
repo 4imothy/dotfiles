@@ -21,6 +21,13 @@ gpushdotfiles() {
     git -C ~/Projects/seperate_git_repos/dotfiles push -u origin main
 }
 
+gac() {
+    if [ -n "$1" -a -n "$2" ]; then
+        git add $1
+        git commit -m "$2"
+    fi
+}
+
 gpushknowledgebase() {
     git -C ~/Documents/Vault/🏫\ SchoolNotes add .
     git -C ~/Documents/Vault/🏫\ SchoolNotes commit -m $1
