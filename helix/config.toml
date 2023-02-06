@@ -14,8 +14,15 @@ normal = "block"
 select = "underline"
 
 [editor.file-picker]
-hidden = false
+hidden = false 
 
+[editor.statusline]
+left = ["spacer","mode", "spinner"]
+center = ["file-name", "file-type", "file-line-ending"]
+right = ["diagnostics", "position", "position-percentage", "spacer"]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
 
 [keys.normal]
 # esc = ["collapse_selection", "keep_primary_selection"]
