@@ -11,7 +11,10 @@ mouse:
 window:
   dimensions:
     columns: 100
-    lines: 35
+    lines: 35 
+  padding: 
+    x: 0
+    y: 0 
 
 # font
 font:
