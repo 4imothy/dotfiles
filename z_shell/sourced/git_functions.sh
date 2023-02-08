@@ -4,6 +4,13 @@ gacp() {
     git push -u origin main
 }
 
+gac() {
+    if [ -n "$1" -a -n "$2" ]; then
+        git add $1
+        git commit -m "$2"
+    fi
+}
+
 gpushdotfiles() {
     cp -r ~/sourced ~/Projects/seperate_git_repos/dotfiles/z_shell/
     cp -r ~/.qutebrowser/ ~/Projects/seperate_git_repos/dotfiles/browsers/qutebrowser
@@ -19,13 +26,6 @@ gpushdotfiles() {
     git -C ~/Projects/seperate_git_repos/dotfiles add .
     git -C ~/Projects/seperate_git_repos/dotfiles commit -m $1
     git -C ~/Projects/seperate_git_repos/dotfiles push -u origin main
-}
-
-gac() {
-    if [ -n "$1" -a -n "$2" ]; then
-        git add $1
-        git commit -m "$2"
-    fi
 }
 
 gpushknowledgebase() {
