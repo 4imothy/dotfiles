@@ -63,7 +63,7 @@ fetch(){
   echo -e "      .'------------------'.          CPU Architecture: $(arch)"
   echo -e "      | __________________ |          Chip: $chip"
   echo -e "      | |$black$red$green$yellow$blue$magenta$cyan$white$black$red$green$yellow$blue$magenta$cyan$white| |          # Cores:$cores"
-  echo -e "      | |$white$black$red$green$yellow$blue$magenta$cyan$white$black$red$green$yellow$blue$magenta$cyan| |         Shell: $shell"
+  echo -e "      | |$white$black$red$green$yellow$blue$magenta$cyan$white$black$red$green$yellow$blue$magenta$cyan| |          Shell: $shell"
   echo -e "      | |$cyan$white$black$red$green$yellow$blue$magenta$cyan$white$black$red$green$yellow$blue$magenta| |          Kernel: $kern"
   echo -e "      | |$magenta$cyan$white$black$red$green$yellow$blue$magenta$cyan$white$black$red$green$yellow$blue| |          Os Type:$OSTYPE"
   echo -e "      | |$blue$magenta$cyan$white$black$red$green$yellow$blue$magenta$cyan$white$black$red$green$yellow| |          Resolution: $resolution"
