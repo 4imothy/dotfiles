@@ -1,12 +1,13 @@
 #theme = "solarized_light"
 theme = "everforest_light"
-#theme = "papercolor-light"  
+# theme = "papercolor-light"  
 
 [editor]
 line-number = "relative"
 mouse = false
 cursorline = true
 auto-pairs = false # turn off auto closing paren and brack
+bufferline = "multiple"
 
 [editor.cursor-shape]
 insert = "bar"
