@@ -2,6 +2,10 @@ listening_ports() {
   sudo lsof -P -i -n | grep LISTEN
 }
 
+update_simple_mac_fetch() {
+    cp ~/sourced/fetch.sh ~/Projects/seperate_git_repos/simple_mac_fetch
+}
+
 copytodotfiles(){
     cp -r ~/sourced ~/Projects/seperate_git_repos/dotfiles/z_shell/
     cp -r ~/.qutebrowser/ ~/Projects/seperate_git_repos/dotfiles/browsers/qutebrowser
