@@ -10,7 +10,7 @@ gac() {
         git commit -m "$2"
     fi
 }
-
+ 
 gpushdotfiles() {
     cp -r ~/sourced ~/Projects/seperate_git_repos/dotfiles/z_shell/
     cp -r ~/.qutebrowser/ ~/Projects/seperate_git_repos/dotfiles/browsers/qutebrowser
