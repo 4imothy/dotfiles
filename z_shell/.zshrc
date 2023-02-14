@@ -10,4 +10,5 @@ done
 if [ -z "$TMUX" ] 
 	then
 	 tmux attach -t def || tmux new -s def
-fi
+fi    
+setopt inc_append_history 
