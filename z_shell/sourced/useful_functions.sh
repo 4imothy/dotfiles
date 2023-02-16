@@ -43,7 +43,7 @@ modified_bin() {
 }
 
 brew_deps() {
-    brew deps --tree --installed
+    brew deps --tree --installed $1
 }
 
 add_math_scripts_to_path() {
