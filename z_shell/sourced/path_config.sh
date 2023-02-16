@@ -17,3 +17,12 @@ start_rust() {
     export PATH="$HOME/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
   fi
 }
+
+# to initialize go development
+start_go() {
+  if [[ ! "$PATH" == *$HOME/go/bin* ]]; then
+    export PATH="$HOME/go/bin:$PATH"
+  fi
+}
+
+
