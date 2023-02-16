@@ -47,3 +47,7 @@ minus = "repeat_last_motion" # - to repeat
 #   for lsp: rustup component add rust-analyzer
 #   locate its location with: rustup which rust-analyzer
 #   add that path to $PATH I created rust_start() function in ~/loaded_scripts/path_config.zsh to do this
+# Go
+#   brew install go
+#   go install golang.org/x/tools/gopls@latest
+#   add $HOME/bin/go to $PATH
