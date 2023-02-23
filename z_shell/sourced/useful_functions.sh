@@ -32,7 +32,7 @@ mcd()
 
 batt() 
 {
-pmset -g batt | grep -E "([0-9]+\%).*" -o --colour=auto | cut -f1 -d';'
+    pmset -g batt | grep -E "([0-9]+\%).*" -o --colour=auto | cut -f1 -d';'
 } 
 
 modified_bin() {
