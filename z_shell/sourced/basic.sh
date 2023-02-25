@@ -1,4 +1,4 @@
-export EDITOR='nvim'
+export EDITOR='hx'
 bindkey -v
 bindkey "^?" backward-delete-char
 # setopt autocd
