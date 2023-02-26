@@ -1,0 +1,3 @@
+[[language]]
+name = "python"
+config = {pylsp={plugins={pycodestyle={enabled=false},flake8={enabled=true,maxLineLength=120},pyflakes={enabled=false}}}}
