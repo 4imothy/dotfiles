@@ -51,3 +51,5 @@ minus = "repeat_last_motion" # - to repeat
 #   brew install go
 #   go install golang.org/x/tools/gopls@latest
 #   add $HOME/bin/go to $PATH
+# Latex
+#   brew install texlab
