@@ -7,8 +7,9 @@ for FILE in ~/sourced/*; do
 done
  
 # enter default tmux server on start
-if [ -z "$TMUX" ] 
+if [ -z "$TMUX" ]
 	then
 	 tmux attach -t def || tmux new -s def
-fi    
-setopt inc_append_history 
+fi
+
+setopt inc_append_history
