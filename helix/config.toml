@@ -1,5 +1,6 @@
 #theme = "solarized_light"
-theme = "everforest_light"
+# theme = "everforest_light"
+theme = "everforest_dark"
 # theme = "papercolor-light"  
 
 [editor]
@@ -53,3 +54,5 @@ minus = "repeat_last_motion" # - to repeat
 #   add $HOME/bin/go to $PATH
 # Latex
 #   brew install texlab
+# wgsl
+#   cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer
