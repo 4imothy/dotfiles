@@ -8,6 +8,13 @@ if [[ ! "$PATH" == */opt/homebrew/opt/qt5/bin* ]]; then
   export PATH="$PATH:/opt/homebrew/opt/qt5/bin"
 fi
 
+# to initialize using wgsl, and other cargo installed bins
+start_wgsl() { 
+  if [[ ! "$PATH" == *$HOME/.cargo/bin* ]]; then
+    source $HOME/.cargo/env
+  fi
+}
+
 # to initialize for rust development
 start_rust() {
   if [[ ! "$PATH" == *$HOME/.cargo/bin* ]]; then
