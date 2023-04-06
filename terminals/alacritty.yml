@@ -262,4 +262,4 @@ schemes:
       white:   '0x3c3836'
 
 # Apply
-colors: *everforest_dark_soft
+colors: *everforest_light_soft

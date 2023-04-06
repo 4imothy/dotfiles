@@ -1,6 +1,6 @@
 # return virtual enviornment if it exists
 function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`')'
 }
 
 # Function to truncate the current directory name
