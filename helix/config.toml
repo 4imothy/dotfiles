@@ -1,4 +1,4 @@
-#theme = "solarized_light"
+# theme = "solarized_light"
 # theme = "everforest_light"
 theme = "everforest_dark"
 # theme = "papercolor-light"  
@@ -11,11 +11,9 @@ auto-pairs = false # turn off auto closing paren and brack
 bufferline = "multiple"
 
 [editor.cursor-shape]
-# insert = "bar"
+insert = "bar"
 normal = "block"
-insert = "block"
-select = "block"
-# select = "underline"
+select = "underline"
 
 [editor.file-picker]
 hidden = false 
@@ -35,6 +33,7 @@ character = "|"
 [editor.soft-wrap]
 enable = true
 wrap-indicator = ""
+ 
 [keys.normal]
 # esc = ["collapse_selection", "keep_primary_selection"]
 minus = "repeat_last_motion" # - to repeat
@@ -46,8 +45,10 @@ minus = "repeat_last_motion" # - to repeat
 #   put the typescript-language-server in /usr/local/bin
 #   to use create jsconfig.json or tsconfig.json
 # Python3
-#   pip3 install 'python-lsp-server[all]
+#   pip3 install python-lsp-server[all]
 #   put the pylsp in /opt/homebrew/bin
+#   or pip install ruff
+#   pip install ruff-lsp
 # Markdown
 #   brew install marksman
 #   installed to /opt/homebrew/Cellar/marksman

@@ -1,6 +1,9 @@
 [[language]]
 name = "python"
-config = {pylsp={plugins={pycodestyle={enabled=false},flake8={enabled=true,maxLineLength=120},pyflakes={enabled=false}}}}
+language-server = { command = "ruff-lsp" }
+# In case you'd like to use ruff alongside black for code formatting:
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
 
 [[language]]
 name = "latex"
