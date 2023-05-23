@@ -8,6 +8,8 @@ gac() {
     if [ -n "$1" -a -n "$2" ]; then
         git add $1
         git commit -m "$2"
+    else
+        echo "Not enough args"
     fi
 }
  
