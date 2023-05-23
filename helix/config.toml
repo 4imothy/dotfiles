@@ -1,6 +1,6 @@
-# theme = "solarized_light"
+# theme = "solarized_dark"
 # theme = "everforest_light"
-theme = "everforest_dark"
+theme = "everforest_dark_no_italics"
 # theme = "papercolor-light"  
 
 [editor]
