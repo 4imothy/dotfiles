@@ -66,3 +66,7 @@ minus = "repeat_last_motion" # - to repeat
 #   brew install texlab
 # wgsl
 #   cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer
+# zig
+#   brew install zig
+#   LSP:
+#     brew install zls
