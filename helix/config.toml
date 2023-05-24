@@ -2,6 +2,7 @@
 # theme = "everforest_light"
 theme = "everforest_dark_no_italics"
 # theme = "papercolor-light"  
+# theme = "adwaita-dark"
 
 [editor]
 line-number = "relative"
