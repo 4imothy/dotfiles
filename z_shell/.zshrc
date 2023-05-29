@@ -5,3 +5,7 @@ export precmd_functions=()
 for FILE in ~/sourced/*; do
     source $FILE
 done
+
+for FILE in ~/sourced/completions/*; do
+    source $FILE
+done
