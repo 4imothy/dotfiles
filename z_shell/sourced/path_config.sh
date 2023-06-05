@@ -32,4 +32,6 @@ start_go() {
   fi
 }
 
-
+export JAVA_HOME="$(/usr/libexec/java_home)"
+# this line was necessary for python-bioformats
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
