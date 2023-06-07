@@ -1,10 +1,3 @@
 [[language]]
-name = "python"
-language-server = { command = "ruff-lsp" }
-# In case you'd like to use ruff alongside black for code formatting:
-formatter = { command = "black", args = ["--quiet", "-"] }
-auto-format = true
-
-[[language]]
 name = "latex"
 config = { texlab = { build = { onSave = true, forwardSearchAfter = true }, forwardSearch = { executable = "zathura", args = [ "--synctex-forward", "%l:1:%f", "%p" ] }, chktex = { onEdit = true } } }
