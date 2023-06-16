@@ -1,6 +1,5 @@
-nvim/plugged
 .DS_Store
-z_shell/sourced/fetch.sh
+zsh/sourced/fetch.sh
 browsers/qutebrowser/qutebrowser.html
 browsers/qutebrowser/greasemonkey/
 browsers/qutebrowser/specific_cookies.py

@@ -1,0 +1,51 @@
+#!/bin/sh
+
+current_path=$(pwd)
+# -s for symbolic links
+# -f to force creation
+# If a directory, or symlink to a directory, already exists
+# with the target name, the symlink will be created inside it
+# use `-n` to get around this
+ln_flags="-sfn"
+
+link_with_flags () {
+	ln "$ln_flags" "$1" "$2"
+}
+
+# for when path relative to this folder is the same as path relative to $HOME
+link_same() {
+  path=$1
+  link_with_flags "$current_path/$path" "$HOME/$path"
+}
+
+# things that have the same path relative to this
+# directory and $HOME
+link_same ".emacs.d/config.org"
+link_same ".emacs.d/init.el"
+link_same ".config/alacritty"
+link_same ".config/iterm2"
+link_same ".config/helix"
+link_same ".config/nvim/init.vim"
+link_same ".config/nvim/coc-settings.json"
+link_same ".config/nvim/.eslintrc.js"
+
+# for when path relative to this folder is different from path relative to $HOME
+link_dif() {
+  organize_path=$1
+  path=$2
+  link_with_flags "$current_path/$organize_path/$path" "$HOME/$path"
+}
+org_path="/zsh"
+link_dif $org_path ".zshrc"
+link_dif $org_path ".hushlogin"
+link_dif $org_path "sourced"
+org_path="/tmux"
+link_dif $org_path ".tmux.conf"
+
+org_path="browsers/firefox/"
+file="userChrome.css"
+
+# more complex ones do directly
+link_with_flags "$current_path/$org_path/$file" "$HOME/Library/Application Support/Firefox/Profiles/ry1zhwm6.default-release/chrome/$file"
+link_with_flags "$current_path/browsers/qutebrowser" "$HOME/.qutebrowser"
+link_with_flags "$current_path/obsidian" "$HOME/Documents/Vault/.obsidian/snippets"
