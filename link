@@ -20,14 +20,20 @@ link_same() {
 
 # things that have the same path relative to this
 # directory and $HOME
-link_same ".emacs.d/config.org"
-link_same ".emacs.d/init.el"
-link_same ".config/alacritty"
-link_same ".config/iterm2"
-link_same ".config/helix"
-link_same ".config/nvim/init.vim"
-link_same ".config/nvim/coc-settings.json"
-link_same ".config/nvim/.eslintrc.js"
+emacs_dir=".emacs.d"
+link_same "$emacs_dir/config.org"
+link_same "$emacs_dir/init.el"
+# this has to be an actual file telling emacs to automatically
+# follow git controlled symlinks
+cp "$current_path/$emacs_dir/early-init.el" "$HOME/$emacs_dir/early-init.el" 
+
+config_dir=".config"
+link_same "$config_dir/alacritty"
+link_same "$config_dir/iterm2"
+link_same "$config_dir/helix"
+link_same "$config_dir/nvim/init.vim"
+link_same "$config_dir/nvim/coc-settings.json"
+link_same "$config_dir/nvim/.eslintrc.js"
 
 # for when path relative to this folder is different from path relative to $HOME
 link_dif() {
