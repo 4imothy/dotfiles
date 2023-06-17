@@ -3,40 +3,69 @@
 #+STARTUP: overview
 #+DESCRIPTION: Timothy's GNU Emacs configuration
 
-* Styling First
-** Frame
+* Initialize Package
+
 #+begin_src emacs-lisp
-                                          ; start in full screen
-  (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
+  ;; set up packages
+  (require 'package)
 
-                                          ;(setq frame-resize-pixelwise t)
-                                          ;(set-frame-size (selected-frame) 1024 600 t)
-
-                                          ;(defun my/frame-center ()
-                                          ; (let* ((dw (display-pixel-width))
-                                          ;       (dh (display-pixel-height))
-                                          ;      (f  (selected-frame))
-                                          ;     (fw (frame-pixel-width f))
-                                          ;    (fh (frame-pixel-height f))
-                                          ;   (x  (- (/ dw 2) (/ fw 2)))
-                                          ;  (y  (- (/ dh 2) (/ fh 2))))
-                                          ;(set-frame-position f x y)))
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
+  (package-initialize)
+  ;; initialize use-package on non-Linux platforms
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+  (require 'use-package)
+  (setq use-package-always-ensure t)
 #+end_src
-** Enables
-#+begin_src emacs-lisp
 
-  ;; load theme
-  ;; (load-theme 'misterioso t)
+* Styling
+** Colors 
+
+#+begin_src emacs-lisp
+  ;; (use-package timu-spacegrey-theme
+  ;;   :config
+  ;;   (load-theme 'timu-spacegrey t))
+
+  (use-package zenburn-theme
+    :config
+    (load-theme 'zenburn t))
 
   ;; change cursor color to white
   (set-cursor-color "#9a82b5")
+#+end_src
 
+** Frame Size
+
+#+begin_src emacs-lisp
+  ;; start in full screen
+  (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
+
+  ;; (setq frame-resize-pixelwise t)
+  ;; (set-frame-size (selected-frame) 1024 600 t)
+
+  ;; (defun my/frame-center ()
+  ;;   (let* ((dw (display-pixel-width))
+  ;;          (dh (display-pixel-height))
+  ;;          (f  (selected-frame))
+  ;;          (fw (frame-pixel-width f))
+  ;;          (fh (frame-pixel-height f))
+  ;;          (x  (- (/ dw 2) (/ fw 2)))
+  ;;          (y  (- (/ dh 2) (/ fh 2))))
+  ;;     (set-frame-position f x y)))
+  #+end_src
+
+  ** 
+** Font
+#+begin_src emacs-lisp
   ;; select a nerd font
   (set-face-attribute 'default nil :font "MesloLGS NF" :height 160)
 #+end_src
-** Disables
-#+begin_src emacs-lisp
 
+** UI Disables 
+
+#+begin_src emacs-lisp
   ;; disable the me
   (menu-bar-mode -1)
 
@@ -62,22 +91,25 @@
   ;; center frame after finishing customizing things that
   ;; can change the size of the window
   ;(my/frame-centerI)
-
 #+end_src
-* Editor Config
-** Keybindings
+* Keybindings
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
 #+end_src
+* Buffer
 ** Tabs
+
 #+begin_src emacs-lisp
   ;; set some editing config
   (setq-default indent-tabs-mode t)
   (setq-default tab-width 4)
   (setq-default evil-shift-width tab-width)
 #+end_src
+
 ** Line and Column Numbers
+
 #+begin_src emacs-lisp
   ;; enable line and column numbers
   (column-number-mode)
@@ -95,8 +127,8 @@
   ;; make typed things show up fast
   (setq echo-keystrokes 0.01)
 #+end_src
-* Cleanup
-** Change Backups Location
+
+* Change Backups Location
 #+begin_src emacs-lisp
   ;; backup files in another directory
   (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -107,52 +139,15 @@
         kept-old-versions 5    ; and how many of the old
         )
 #+end_src
-** Coding Things
-#+begin_src emacs-lisp
-  (setq compile-command nil)
-#+end_src
-* Issues to Fix
-#+begin_src emacs-lisp
-  ;; fix svg display issue on macos: https://github.com/caldwell/build-emacs/issues/126
-  (add-to-list 'image-types 'svg)
-#+end_src
-* Packages
-** Initialize
-#+begin_src emacs-lisp
+* Suggestion Engines
+** swiper
 
-  ;; set up packages
-  (require 'package)
-
-  ;; set up packages
-  (require 'package)
-
-  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")
-                           ("elpa" . "https://elpa.gnu.org/packages/")))
-  (package-initialize)
-  ;; initialize use-package on non-Linux platforms
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-  (require 'use-package)
-  (setq use-package-always-ensure t)
-
-#+end_src
-** Themes
-#+begin_src emacs-lisp
-  ;; (use-package timu-spacegrey-theme
-  ;;   :config
-  ;;   (load-theme 'timu-spacegrey t))
-
-  (use-package zenburn-theme
-    :config
-    (load-theme 'zenburn t))
-#+end_src
-** Suggestions/Completion Engines
-*** swiper
 #+begin_src emacs-lisp
   (use-package swiper)
 #+end_src
-*** ivy
+
+** ivy
+
 #+begin_src emacs-lisp
   (use-package ivy
     :diminish
@@ -160,7 +155,9 @@
     :init
     (ivy-mode 1))
 #+end_src
-*** counsel
+
+** counsel
+
 #+begin_src emacs-lisp
   (use-package counsel
     :bind (("M-x" . counsel-M-x)
@@ -169,27 +166,28 @@
            :map minibuffer-local-map
            ("C-r" . 'counsel-minibuffer-history)))
 #+end_src
-*** which-key
-#+begin_src emacs-lisp
 
+** which-key
+
+#+begin_src emacs-lisp
   ;; which-key gives possible completions
   (use-package which-key
     :init (which-key-mode)
     ;; show possibles after 0.2 seconds
     (setq which-key-idle-delay 0.2))
-  :diminish which-key-mode
-  :config
-
 #+end_src
 
-** Modeline
+* Modeline
+
 #+begin_src emacs-lisp
   ;; run M-x nerd-icons-install-fonts to install the necessary fonts
   (use-package doom-modeline
     :init (doom-modeline-mode 1)
     :custom ((doom-modeline-height 15)))
 #+end_src
-** Evil Mode
+
+* Evil Mode
+
 #+begin_src emacs-lisp
   (use-package evil
     :init      ;; tweak evil's configuration before loading it
@@ -203,28 +201,22 @@
     (evil-set-initial-state 'eshell-mode 'emacs)
     (evil-mode))
 #+end_src
-** Magit
+
+* Magit
+
 #+begin_src emacs-lisp
   (use-package magit
     :bind ("C-M-;" . magit-status)
     :commands (magit-status magit-get-current-branch))
 #+end_src
-** Org Mode
+
+* Org Mode
+*** Basic (use-package Statement)
+
 #+begin_src emacs-lisp
   ;; Turn on indentation and auto-fill mode for Org files
   (defun my/org-mode-setup ()
     (org-indent-mode))
-
-  (custom-set-faces
-   '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
-   '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
-   '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
-   '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
-   '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
-   '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
-   '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
-   '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
-   )
 
   (use-package org
     :hook (org-mode . my/org-mode-setup)
@@ -248,6 +240,28 @@
     (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
     )
 
+  (setq org-directory "~/Documents/org")
+
+  #+end_src
+  
+*** Heading Sizes
+
+#+begin_src emacs-lisp
+  (custom-set-faces
+   '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
+   '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
+   '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
+   '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
+   '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
+   '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
+   )
+#+end_src
+
+*** List Config
+
+#+begin_src emacs-lisp
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
@@ -280,30 +294,95 @@
                             (equal num-done "0")) "TODO")
                        (t "DOING"))))
             (org-todo-if-needed "DOING"))))))
+
+
 #+end_src
 
+*** Captures
 
-** Coding
-*** Languages
-**** Python
+#+begin_src emacs-lisp
+
+  (setq org-default-notes-file (concat org-directory "/captures.org"))
+  (setq org-capture-templates
+        '(("t"
+           "Todo List Item"
+           entry
+           (file org-default-notes-file)
+           "* TODO %?\n %i\n %a")))
+#+end_src
+
+* Coding
+** Compile Customization
+
+#+begin_src emacs-lisp
+  (setq compile-command nil)
+#+end_src
+
+** Syntax Reporting
+
+#+begin_src emacs-lisp
+  (use-package flycheck)
+#+end_src
+
+** LSP
+
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :init (add-hook 'rust-mode-hook #'lsp)
+    :commands (lsp lsp-deferred)
+    :hook
+    (lsp-mode . efs/lsp-mode-setup)
+    :config
+    (lsp-enable-which-key-integration t))
+    ; (add-hook 'rust-mode-hook #'lsp)
+
+  (use-package lsp-ui
+    :hook (lsp-mode . lsp-ui-mode)
+    :custom
+    (lsp-ui-doc-position 'bottom))
+#+end_src
+
+** Completions
+
+#+begin_src emacs-lisp
+  (use-package company
+    :after lsp-mode
+    :hook
+    (lsp-mode . company-mode)
+    :bind (:map company-active-map
+                ("<tab>" . company-complete-selection))
+    (:map lsp-mode-map
+          ("<tab>" . company-indent-or-complete-common))
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0))
+  (add-hook 'after-init-hook 'global-company-mode)
+#+end_src
+
+** Languages
+*** Python
+
 [[https://pypi.org/project/python-lsp-server/][*pylsp*]]
 1. *Command:* /pip3 install python-lsp-server[all]/
 2. put the pylsp in path
-   #+begin_src emacs-lisp
-     (use-package python-mode
-       :hook (python-mode . lsp-deferred))
-     (use-package pyvenv
-       :after python-mode
-       :config
-       (pyvenv-mode 1))
-   #+end_src
-**** Rust
+
+#+begin_src emacs-lisp
+  (use-package python-mode
+    :hook (python-mode . lsp-deferred))
+  (use-package pyvenv
+    :after python-mode
+    :config
+    (pyvenv-mode 1))
+#+end_src
+
+*** Rust
 *Rust Analyzer*
    - /curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh/ this placed file in ~/.cargo/
    - To uninstall run: /rustup self uninstall/ from https://rust-lang.github.io/rustup/installation/index.html
    - for lsp: /rustup component add rust-analyzer/
    - locate its location with: rustup which rust-analyzer
    - add that path to /$PATH/
+
 #+begin_src emacs-lisp
   (add-to-list 'exec-path "~/.cargo/bin")
   (use-package rust-mode
@@ -312,6 +391,7 @@
   (add-hook 'rust-mode-hook
             (lambda () (setq indent-tabs-mode nil)))
 #+end_src
+
 **** Other ones not yet setup
  JavaScript
    npm install -g typescript typescript-language-server
@@ -332,40 +412,8 @@
    brew install zig
    LSP:
      brew install zls
-*** LSP-Mode
+* Bug Fixes
 #+begin_src emacs-lisp
-  (use-package flycheck)
-
-  (use-package lsp-mode
-    :init (add-hook 'rust-mode-hook #'lsp)
-    :commands (lsp lsp-deferred)
-    :hook
-    (lsp-mode . efs/lsp-mode-setup)
-    :config
-    (lsp-enable-which-key-integration t))
-    ; (add-hook 'rust-mode-hook #'lsp)
-
-  (use-package lsp-ui
-    :hook (lsp-mode . lsp-ui-mode)
-    :custom
-    (lsp-ui-doc-position 'bottom))
+  ;; fix svg display issue on macos: https://github.com/caldwell/build-emacs/issues/126
+  (add-to-list 'image-types 'svg)
 #+end_src
-*** Completions
-#+begin_src emacs-lisp
-  (use-package company
-    :after lsp-mode
-    :hook
-    (lsp-mode . company-mode)
-    :bind (:map company-active-map
-                ("<tab>" . company-complete-selection))
-    (:map lsp-mode-map
-          ("<tab>" . company-indent-or-complete-common))
-    :custom
-    (company-minimum-prefix-length 1)
-    (company-idle-delay 0.0))
-  (add-hook 'after-init-hook 'global-company-mode)
-#+end_src
-
-
-
-i am in this buffer.
