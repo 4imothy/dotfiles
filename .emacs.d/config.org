@@ -96,9 +96,9 @@
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture)
-  (global-set-key (kbd "C-c r") 'my/recompile)
+  (global-set-key (kbd "C-c r") 'my/compile)
 
-  (defun my/recompile ()
+  (defun my/compile ()
     (interactive)
     (if (not (get-buffer "*compilation*"))
         (call-interactively 'compile)
@@ -391,6 +391,10 @@
    - add that path to /$PATH/
 
 #+begin_src emacs-lisp
+  ;; add cargo to PATH for compile command
+  ; (setenv "PATH" (concat "/Users/tcron/.cargo/bin:" (getenv "PATH")))
+  (setenv "PATH" (concat (expand-file-name "~/.cargo/bin") ":" (getenv "PATH")))
+  ;; add rust-analyzer to exec-path for lsp-mode
   (add-to-list 'exec-path "~/.cargo/bin")
   (use-package rust-mode
   :init
