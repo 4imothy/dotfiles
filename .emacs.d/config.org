@@ -96,11 +96,16 @@
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture)
-  (global-set-key (kbd "C-c r") 'recompile)
+  (global-set-key (kbd "C-c r") 'my/recompile)
+
+  (defun my/recompile ()
+    (interactive)
+    (if (not (get-buffer "*compilation*"))
+        (call-interactively 'compile)
+      (recompile)))
+
+
   (global-set-key (kbd "C-x C-b") 'ibuffer)
-  (eval-after-load 'dired
-    '(progn
-       (define-key dired-mode-map (kbd "C-c r") 'compile)))
 #+end_src
 * Buffer
 ** Tabs
