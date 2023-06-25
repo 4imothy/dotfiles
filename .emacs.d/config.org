@@ -96,6 +96,7 @@
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture)
+  (global-set-key (kbd "C-x g") 'magit-status)
   (global-set-key (kbd "C-c r") 'my/compile)
 
   (defun my/compile ()
@@ -205,8 +206,8 @@
     (setq evil-vsplit-window-right t)
     (setq evil-split-window-below t)
     :config
-    (evil-set-initial-state 'dired-mode 'emacs)
-    (evil-mode))
+    (evil-set-initial-state 'dired-mode 'emacs))
+    ;; (evil-mode))
 #+end_src
 
 * Magit
@@ -402,9 +403,12 @@
   (add-hook 'rust-mode-hook
             (lambda () (setq indent-tabs-mode nil)))
 #+end_src
-
-**** Other ones not yet setup
- JavaScript
+*** C
+#+begin_src emacs-lisp
+(add-hook 'c-mode-hook 'lsp)
+#+end_src
+*** Other ones not yet setup
+JavaScript
    npm install -g typescript typescript-language-server
    put the typescript-language-server in /usr/local/bin
    to use create jsconfig.json or tsconfig.json
