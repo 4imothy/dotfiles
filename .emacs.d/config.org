@@ -21,7 +21,7 @@
 #+end_src
 
 * Styling
-** Colors 
+** Theme
 
 #+begin_src emacs-lisp
   ;; (use-package timu-spacegrey-theme
@@ -32,7 +32,27 @@
     :config
     (load-theme 'zenburn t))
 
-  ;; change cursor color to white
+  ;;  (load-theme 'tango t)
+  
+  ;; (custom-set-faces
+  ;;  '(default ((t (:foreground "#d3b58d" :background "#041818"))))
+  ;;  '(custom-proup-tag-face ((t (:underline t : foreground "liphtblue" ))) t)
+  ;;  '(custom-variable-tag-face ((t (:underline t :foreground "lightblue"))) t)
+  ;;  '(font-lock-builtin-face ((t nil)))
+  ;;  '(font-lock-comment-face ((t (:foreground "#3fdf1f"))))
+  ;;  '(font-lock-function-name-face ((((class color) (background dark)) (:foreground "white"))))
+  ;;  '(font-lock-keyword-face ((t (:foreground "white" ))))
+  ;;  '(font-lock-string-face ((t (:foreground "#Ofdfaf"))))
+  ;;  '(font-lock-variable-name-face ((((class color) (background dark)) (: foreground "#c8d4ec"))))
+  ;;  '(font-lock-warning-face ((t (:foreground "#584038"))))
+  ;;  '(highlight ((t (:foreground "navyblue" :background "darkseagreen2"))))
+  ;;  '(mode-line ((t (:inverse-video t))))
+  ;;  '(region ((t (:background "blue"))))
+  ;;  '(widget-field-face ((t (:foreground "white"))) t)
+  ;;  '(widget-single-line-field-face ((t (:background "darkgray"))) t)
+  ;;  )
+  ;; (set-cursor-color "lightgreen")
+
   (set-cursor-color "#9a82b5")
 #+end_src
 
@@ -426,9 +446,22 @@ JavaScript
  zig
    brew install zig
    LSP:
-     brew install zls
+   brew install z
+* PDF/Latex
+
+#+begin_src emacs-lisp
+(use-package pdf-tools
+  :config
+  (pdf-tools-install))
+#+end_src
+
 * Bug Fixes
 #+begin_src emacs-lisp
   ;; fix svg display issue on macos: https://github.com/caldwell/build-emacs/issues/126
   (add-to-list 'image-types 'svg)
+  (when (string= system-type "darwin")       
+    (setq dired-use-ls-dired nil))
 #+end_src
+
+* Other Things to Remember To Install
+ - /ghostscript/ for /pdf/ viewing
