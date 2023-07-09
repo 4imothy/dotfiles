@@ -6,10 +6,10 @@ alias ch="history -p; clear"
 alias ct='clear; history -p; clear; tmux clear-history; clear' # tmux clear
 
 # git
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
+# alias gs='git status'
+# alias ga='git add'
+# alias gc='git commit'
+# alias gp='git push'
 
 # python
 alias py='python3'
