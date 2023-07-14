@@ -424,14 +424,22 @@
             (lambda () (setq indent-tabs-mode nil)))
 #+end_src
 *** C
+
 #+begin_src emacs-lisp
 (add-hook 'c-mode-hook 'lsp)
 #+end_src
-*** Other ones not yet setup
+
+*** JavaScript
 JavaScript
    npm install -g typescript typescript-language-server
    put the typescript-language-server in /usr/local/bin
    to use create jsconfig.json or tsconfig.json
+#+begin_src emacs-lisp
+  (add-hook 'js-mode-hook 'lsp)
+  (use-package prettier-js)
+  (add-hook 'js-mode-hook 'prettier-js-mode)
+#+end_src
+*** Other ones not yet setup
  Markdown
    brew install marksman
    installed to /opt/homebrew/Cellar/marksman
