@@ -28,12 +28,12 @@
   ;;   :config
   ;;   (load-theme 'timu-spacegrey t))
 
-  (use-package zenburn-theme
-    :config
-    (load-theme 'zenburn t))
+  ;; (use-package zenburn-theme
+  ;;   :config
+  ;;   (load-theme 'zenburn t))
 
-  ;;  (load-theme 'tango t)
-  
+  (load-theme 'tango t)
+
   ;; (custom-set-faces
   ;;  '(default ((t (:foreground "#d3b58d" :background "#041818"))))
   ;;  '(custom-proup-tag-face ((t (:underline t : foreground "liphtblue" ))) t)
@@ -56,6 +56,8 @@
   (set-cursor-color "#9a82b5")
 #+end_src
 
+#+RESULTS:
+
 ** Frame Size
 
 #+begin_src emacs-lisp
@@ -74,9 +76,9 @@
   ;;          (x  (- (/ dw 2) (/ fw 2)))
   ;;          (y  (- (/ dh 2) (/ fh 2))))
   ;;     (set-frame-position f x y)))
-  #+end_src
+#+end_src
 
-  ** 
+** 
 ** Font
 #+begin_src emacs-lisp
   ;; select a nerd font
@@ -110,7 +112,7 @@
 
   ;; center frame after finishing customizing things that
   ;; can change the size of the window
-  ;(my/frame-centerI)
+                                          ;(my/frame-centerI)
 #+end_src
 * Keybindings
 #+begin_src emacs-lisp
@@ -140,6 +142,7 @@
 
 ** Line and Column Numbers
 
+
 #+begin_src emacs-lisp
   ;; enable line and column numbers
   (column-number-mode)
@@ -158,6 +161,10 @@
   (setq echo-keystrokes 0.01)
 #+end_src
 
+** Line-Wrapping
+#+begin_src emacs-lisp
+  (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+#+end_src
 * Change Backups Location
 #+begin_src emacs-lisp
   ;; backup files in another directory
@@ -227,10 +234,10 @@
     (setq evil-split-window-below t)
     :config
     (evil-set-initial-state 'dired-mode 'emacs))
-    ;; (evil-mode))
+  ;; (evil-mode))
 #+end_src
 
-* Magit
+* Git
 
 #+begin_src emacs-lisp
   (use-package magit
@@ -249,7 +256,7 @@
   (use-package org
     :hook (org-mode . my/org-mode-setup)
     :init
-    (setq org-ellipsis " ▾")
+    (setq org-ellipsis "⤵")
 
     (setq org-agenda-files (list "~/Documents/org/"))
 
@@ -270,7 +277,7 @@
 
   (setq org-directory "~/Documents/org")
 
-  #+end_src
+#+end_src
   
 *** Heading Sizes
 
@@ -328,8 +335,8 @@
 
 *** Captures
 
-#+begin_src emacs-lisp
 
+#+begin_src emacs-lisp
   (setq org-default-notes-file (concat org-directory "/captures.org"))
   (setq org-capture-templates
         '(("t"
@@ -337,6 +344,44 @@
            entry
            (file org-default-notes-file)
            "* TODO %?\n %i\n %a")))
+#+end_src
+
+*** PDF Preview
+Commands to install latex:
+- Install /basictex/
+- /sudo tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet//
+- /sudo tlmgr update --self/
+- If needed: /sudo tlmgr install <your_package_name>/
+#+begin_src emacs-lisp
+  (use-package pdf-tools
+    :config
+    (pdf-tools-install))
+  (defun my/org-export-to-pdf-and-open ()
+    "Export the current Org mode buffer to PDF and open it in a window to the right."
+    (interactive)
+    ;; Export to PDF
+    (org-latex-export-to-pdf)
+
+    ;; Define the PDF file name (assuming the same base name as the Org file)
+    (let* ((org-file (buffer-file-name))
+           (pdf-file (concat (file-name-sans-extension org-file) ".pdf")))
+
+      ;; Open the PDF file in a window to the right
+      (if (file-exists-p pdf-file)
+          (progn
+            (delete-other-windows)
+            (split-window-horizontally)
+            (other-window 1)
+            (find-file pdf-file)
+            (other-window 1))
+        (message "PDF export failed."))))
+
+  ;; Bind the function to a key combination if desired (e.g., C-c p)
+  (defun my/setup-org-preview ()
+    "Setup for org-mode."
+    (local-set-key (kbd "C-c p") 'my/org-export-to-pdf-and-open))
+
+  (add-hook 'org-mode-hook 'my/setup-org-preview)
 #+end_src
 
 * Coding
@@ -362,7 +407,7 @@
     (lsp-mode . efs/lsp-mode-setup)
     :config
     (lsp-enable-which-key-integration t))
-    ; (add-hook 'rust-mode-hook #'lsp)
+                                          ; (add-hook 'rust-mode-hook #'lsp)
 
   (use-package lsp-ui
     :hook (lsp-mode . lsp-ui-mode)
@@ -405,64 +450,56 @@
 
 *** Rust
 *Rust Analyzer*
-   - /curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh/ this placed file in ~/.cargo/
-   - To uninstall run: /rustup self uninstall/ from https://rust-lang.github.io/rustup/installation/index.html
-   - for lsp: /rustup component add rust-analyzer/
-   - locate its location with: rustup which rust-analyzer
-   - add that path to /$PATH/
+- /curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh/ this placed file in ~/.cargo/
+- To uninstall run: /rustup self uninstall/ from https://rust-lang.github.io/rustup/installation/index.html
+- for lsp: /rustup component add rust-analyzer/
+- locate its location with: rustup which rust-analyzer
+- add that path to /$PATH/
 
 #+begin_src emacs-lisp
   ;; add cargo to PATH for compile command
-  ; (setenv "PATH" (concat "/Users/tcron/.cargo/bin:" (getenv "PATH")))
+                                          ; (setenv "PATH" (concat "/Users/tcron/.cargo/bin:" (getenv "PATH")))
   (setenv "PATH" (concat (expand-file-name "~/.cargo/bin") ":" (getenv "PATH")))
   ;; add rust-analyzer to exec-path for lsp-mode
   (add-to-list 'exec-path "~/.cargo/bin")
   (use-package rust-mode
-  :init
-  (setq rust-format-on-save t))
+    :init
+    (setq rust-format-on-save t))
   (add-hook 'rust-mode-hook
             (lambda () (setq indent-tabs-mode nil)))
 #+end_src
 *** C
 
 #+begin_src emacs-lisp
-(add-hook 'c-mode-hook 'lsp)
+  (add-hook 'c-mode-hook 'lsp)
 #+end_src
 
 *** JavaScript
 JavaScript
-   npm install -g typescript typescript-language-server
-   put the typescript-language-server in /usr/local/bin
-   to use create jsconfig.json or tsconfig.json
+npm install -g typescript typescript-language-server
+put the typescript-language-server in /usr/local/bin
+to use create jsconfig.json or tsconfig.json
 #+begin_src emacs-lisp
   (add-hook 'js-mode-hook 'lsp)
   (use-package prettier-js)
   (add-hook 'js-mode-hook 'prettier-js-mode)
 #+end_src
 *** Other ones not yet setup
- Markdown
-   brew install marksman
-   installed to /opt/homebrew/Cellar/marksman
- Go
-   brew install go
-   go install golang.org/x/tools/gopls@latest
-   add $HOME/bin/go to $PATH
- Latex
-   brew install texlab
- wgsl
-   cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer
- zig
-   brew install zig
-   LSP:
-   brew install z
-* PDF/Latex
-
-#+begin_src emacs-lisp
-(use-package pdf-tools
-  :config
-  (pdf-tools-install))
-#+end_src
-
+Markdown
+brew install marksman
+installed to /opt/homebrew/Cellar/marksman
+Go
+brew install go
+go install golang.org/x/tools/gopls@latest
+add $HOME/bin/go to $PATH
+Latex
+brew install texlab
+wgsl
+cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer
+zig
+brew install zig
+LSP:
+brew install z
 * Bug Fixes
 #+begin_src emacs-lisp
   ;; fix svg display issue on macos: https://github.com/caldwell/build-emacs/issues/126
@@ -472,4 +509,4 @@ JavaScript
 #+end_src
 
 * Other Things to Remember To Install
- - /ghostscript/ for /pdf/ viewing
+- /ghostscript/ for /pdf/ viewing
