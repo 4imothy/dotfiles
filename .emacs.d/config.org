@@ -407,7 +407,6 @@ Commands to install latex:
     (lsp-mode . efs/lsp-mode-setup)
     :config
     (lsp-enable-which-key-integration t))
-                                          ; (add-hook 'rust-mode-hook #'lsp)
 
   (use-package lsp-ui
     :hook (lsp-mode . lsp-ui-mode)
@@ -418,18 +417,30 @@ Commands to install latex:
 ** Completions
 
 #+begin_src emacs-lisp
-  (use-package company
-    :after lsp-mode
-    :hook
-    (lsp-mode . company-mode)
-    :bind (:map company-active-map
-                ("<tab>" . company-complete-selection))
-    (:map lsp-mode-map
-          ("<tab>" . company-indent-or-complete-common))
+  ;; (use-package company
+  ;;   :after lsp-mode
+  ;;   :hook
+  ;;   (lsp-mode . company-mode)
+  ;;   :bind (:map company-active-map
+  ;;               ("<tab>" . company-complete-selection))
+  ;;   (:map lsp-mode-map
+  ;;         ("<tab>" . company-indent-or-complete-common))
+  ;;   :custom
+  ;;   (company-minimum-prefix-length 1)
+  ;;   (company-idle-delay 0.0))
+  ;; (add-hook 'after-init-hook 'global-company-mode)
+
+  (use-package corfu
     :custom
-    (company-minimum-prefix-length 1)
-    (company-idle-delay 0.0))
-  (add-hook 'after-init-hook 'global-company-mode)
+    (corfu-cycle t)
+    (corfu-auto t)
+    (corfu-auto-prefix 2)
+    (corfu-auto-delay 0.0)
+    (corfu-popupinfo-delay '(0.5 . 0.2))
+    :init
+    (global-corfu-mode)
+    (corfu-history-mode)
+    (corfu-popupinfo-mode)) 
 #+end_src
 
 ** Languages
