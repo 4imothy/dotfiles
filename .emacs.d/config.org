@@ -78,14 +78,14 @@
   ;;     (set-frame-position f x y)))
 #+end_src
 
-** 
+**
 ** Font
 #+begin_src emacs-lisp
   ;; select a nerd font
   (set-face-attribute 'default nil :font "MesloLGS NF" :height 160)
 #+end_src
 
-** UI Disables 
+** UI Disables
 
 #+begin_src emacs-lisp
   ;; disable the me
@@ -135,8 +135,10 @@
 
 #+begin_src emacs-lisp
   ;; set some editing config
-  (setq-default indent-tabs-mode t)
-  (setq-default tab-width 4)
+  (setq-default tab-width 4
+                indent-tabs-mode nil)
+  (setq-default c-basic-offset 4)
+  (setq-default python-indent-offset 4)
   (setq-default evil-shift-width tab-width)
 #+end_src
 
@@ -165,16 +167,9 @@
 #+begin_src emacs-lisp
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 #+end_src
-* Change Backups Location
+** Whitespace
 #+begin_src emacs-lisp
-  ;; backup files in another directory
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-        backup-by-copying t    ; Don't delink hardlinks
-        version-control t      ; Use version numbers on backups
-        delete-old-versions t  ; Automatically delete excess backups
-        kept-new-versions 20   ; how many of the newest versions to keep
-        kept-old-versions 5    ; and how many of the old
-        )
+  (add-hook 'before-save-hook 'whitespace-cleanup)
 #+end_src
 * Suggestion Engines
 ** swiper
@@ -278,7 +273,7 @@
   (setq org-directory "~/Documents/org")
 
 #+end_src
-  
+
 *** Heading Sizes
 
 #+begin_src emacs-lisp
@@ -440,7 +435,7 @@ Commands to install latex:
     :init
     (global-corfu-mode)
     (corfu-history-mode)
-    (corfu-popupinfo-mode)) 
+    (corfu-popupinfo-mode))
 #+end_src
 
 ** Languages
@@ -515,9 +510,26 @@ brew install z
 #+begin_src emacs-lisp
   ;; fix svg display issue on macos: https://github.com/caldwell/build-emacs/issues/126
   (add-to-list 'image-types 'svg)
-  (when (string= system-type "darwin")       
+  (when (string= system-type "darwin")
     (setq dired-use-ls-dired nil))
 #+end_src
 
 * Other Things to Remember To Install
 - /ghostscript/ for /pdf/ viewing
+
+* Miscellaneous
+** Yes-or-No -> Y-or-N
+#+begin_src emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
+** Change Backups Location
+#+begin_src emacs-lisp
+  ;; backup files in another directory
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+        backup-by-copying t    ; Don't delink hardlinks
+        version-control t      ; Use version numbers on backups
+        delete-old-versions t  ; Automatically delete excess backups
+        kept-new-versions 20   ; how many of the newest versions to keep
+        kept-old-versions 5    ; and how many of the old
+        )
+#+end_src
