@@ -506,6 +506,12 @@ zig
 brew install zig
 LSP:
 brew install z
+* Term
+Need to install /glibtool/ and /cmake/
+#+begin_src emacs-lisp
+  (use-package vterm
+    :ensure t)
+#+end_src
 * Bug Fixes
 #+begin_src emacs-lisp
   ;; fix svg display issue on macos: https://github.com/caldwell/build-emacs/issues/126
