@@ -1,4 +1,5 @@
 .DS_Store
+.emacs.d/ltximg
 zsh/sourced/fetch.sh
 browsers/qutebrowser/qutebrowser.html
 browsers/qutebrowser/greasemonkey/

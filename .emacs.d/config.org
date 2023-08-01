@@ -33,7 +33,12 @@
   ;;   (load-theme 'zenburn t))
 
   (load-theme 'tango t)
+  ;; (use-package solarized-theme
+  ;;   :config
+  ;;   (load-theme 'solarized-light t))
 
+
+  ;; ;;
   ;; (custom-set-faces
   ;;  '(default ((t (:foreground "#d3b58d" :background "#041818"))))
   ;;  '(custom-proup-tag-face ((t (:underline t : foreground "liphtblue" ))) t)
@@ -212,10 +217,10 @@
 * Modeline
 
 #+begin_src emacs-lisp
-  ;; run M-x nerd-icons-install-fonts to install the necessary fonts
-  (use-package doom-modeline
-    :init (doom-modeline-mode 1)
-    :custom ((doom-modeline-height 15)))
+      ;; run M-x nerd-icons-install-fonts to install the necessary fonts
+      (use-package doom-modeline
+        :init (doom-modeline-mode 1)
+        :custom ((doom-modeline-height 15)))
 #+end_src
 
 * Evil Mode
@@ -235,9 +240,7 @@
 * Git
 
 #+begin_src emacs-lisp
-  (use-package magit
-    :bind ("C-M-;" . magit-status)
-    :commands (magit-status magit-get-current-branch))
+  (use-package magit)
 #+end_src
 
 * Org Mode
@@ -264,10 +267,11 @@
               (todo "DONE")
               (agenda))
              ((org-agenda-window-setup 'only-window)))))
-    :config
+   :config
     (set-face-underline 'org-ellipsis nil)
     (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
     (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
+    (setq org-agenda-span 14)
     )
 
   (setq org-directory "~/Documents/org")
@@ -347,6 +351,7 @@ Commands to install latex:
 - /sudo tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet//
 - /sudo tlmgr update --self/
 - If needed: /sudo tlmgr install <your_package_name>/
+- sudo tlmgr install dvipng
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :config
@@ -379,6 +384,13 @@ Commands to install latex:
   (add-hook 'org-mode-hook 'my/setup-org-preview)
 #+end_src
 
+*** Math Equations
+#+begin_src emacs-lisp
+  (use-package org-fragtog
+    :hook
+    (org-mode . org-fragtog-mode))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+#+end_src
 * Coding
 ** Compile Customization
 
