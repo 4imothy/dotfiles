@@ -351,7 +351,7 @@ Commands to install latex:
 - /sudo tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet//
 - /sudo tlmgr update --self/
 - If needed: /sudo tlmgr install <your_package_name>/
-- sudo tlmgr install dvipng
+- sudo tlmgr install dvisvgm
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :config
@@ -390,6 +390,8 @@ Commands to install latex:
     :hook
     (org-mode . org-fragtog-mode))
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+  (setq org-preview-latex-default-process 'dvisvgm)
+  (setq org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
 #+end_src
 * Coding
 ** Compile Customization
@@ -542,12 +544,11 @@ Need to install /glibtool/ and /cmake/
 #+end_src
 ** Change Backups Location
 #+begin_src emacs-lisp
-  ;; backup files in another directory
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-        backup-by-copying t    ; Don't delink hardlinks
-        version-control t      ; Use version numbers on backups
-        delete-old-versions t  ; Automatically delete excess backups
-        kept-new-versions 20   ; how many of the newest versions to keep
-        kept-old-versions 5    ; and how many of the old
-        )
+  (setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+  backup-by-copying t    ; Don't delink hardlinks
+  version-control t      ; Use version numbers on backups
+  delete-old-versions t  ; Automatically delete excess backups
+  kept-new-versions 20   ; how many of the newest versions to keep
+  kept-old-versions 5    ; and how many of the old
+  )
 #+end_src
