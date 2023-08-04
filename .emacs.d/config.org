@@ -270,7 +270,7 @@
         (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
         (setq org-agenda-span 14)
         (setq org-directory "~/Documents/org")
-        (setq org-columns-default-format "%TODO %30ITEM %16SCHEDULED %ALLTAGS")
+        (setq org-columns-default-format "%ALLTAGS %TODO %30ITEM %16SCHEDULED")
         (setq org-startup-with-latex-preview t)
         )
 
@@ -398,6 +398,10 @@ Commands to install latex:
   (setq org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
 #+end_src
 * Coding
+** Compiling
+#+begin_src emacs-lisp
+  (setq compile-command nil)
+#+end_src
 ** Syntax Reporting
 
 #+begin_src emacs-lisp
