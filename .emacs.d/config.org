@@ -2,7 +2,6 @@
 #+AUTHOR: Timothy Cronin
 #+STARTUP: overview
 #+DESCRIPTION: Timothy's GNU Emacs configuration
-
 * Initialize Package
 
 #+begin_src emacs-lisp
@@ -33,12 +32,14 @@
   ;;   (load-theme 'zenburn t))
 
   (load-theme 'tango t)
-  ;; (use-package solarized-theme
+  ;; (use-package poet-theme
   ;;   :config
-  ;;   (load-theme 'solarized-light t))
+  ;;   (load-theme 'poet))
 
+  ;; (use-package solarized-theme
+  ;;    :config
+  ;;    (load-theme 'solarized-light t))
 
-  ;; ;;
   ;; (custom-set-faces
   ;;  '(default ((t (:foreground "#d3b58d" :background "#041818"))))
   ;;  '(custom-proup-tag-face ((t (:underline t : foreground "liphtblue" ))) t)
@@ -57,8 +58,6 @@
   ;;  '(widget-single-line-field-face ((t (:background "darkgray"))) t)
   ;;  )
   ;; (set-cursor-color "lightgreen")
-
-  (set-cursor-color "#9a82b5")
 #+end_src
 
 #+RESULTS:
@@ -85,9 +84,12 @@
 
 **
 ** Font
+
 #+begin_src emacs-lisp
-  ;; select a nerd font
-  (set-face-attribute 'default nil :font "MesloLGS NF" :height 160)
+  ;;(set-face-attribute 'default nil :font "MesloLGS NF" :height 160)
+  (set-face-attribute 'default nil :font "mononoki" :height 200)
+  ;;(set-face-attribute 'default nil :font "DinaRemaster" :height 250)
+  ;;(set-face-attribute 'default nil :font "B612 Mono" :height 200)
 #+end_src
 
 ** UI Disables
@@ -124,15 +126,7 @@
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture)
   (global-set-key (kbd "C-x g") 'magit-status)
-  (global-set-key (kbd "C-c r") 'my/compile)
-
-  (defun my/compile ()
-    (interactive)
-    (if (not (get-buffer "*compilation*"))
-        (call-interactively 'compile)
-      (recompile)))
-
-
+  (global-set-key (kbd "C-c a") 'my/org-agenda-columns)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
 #+end_src
 * Buffer
@@ -247,35 +241,46 @@
 *** Basic (use-package Statement)
 
 #+begin_src emacs-lisp
-  ;; Turn on indentation and auto-fill mode for Org files
-  (defun my/org-mode-setup ()
-    (org-indent-mode))
+      ;; Turn on indentation and auto-fill mode for Org files
+      (defun my/org-mode-setup ()
+        (org-indent-mode))
 
-  (use-package org
-    :hook (org-mode . my/org-mode-setup)
-    :init
-    (setq org-ellipsis "⤵")
+      (use-package org
+        :hook (org-mode . my/org-mode-setup)
+        :init
+        (setq org-ellipsis "⤵")
 
-    (setq org-agenda-files (list "~/Documents/org/"))
+        (setq org-agenda-files (list "~/Documents/org/"))
 
-    (setq org-todo-keywords
-          (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)"))))
-    (setq org-agenda-custom-commands
-          '(("d" "Dashboard"
-             ((todo)
-              (todo "DOING")
-              (todo "DONE")
-              (agenda))
-             ((org-agenda-window-setup 'only-window)))))
-   :config
-    (set-face-underline 'org-ellipsis nil)
-    (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
-    (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
-    (setq org-agenda-span 14)
-    )
+        (setq org-todo-keywords
+              (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)"))))
+        (setq org-agenda-custom-commands
+              '(("d" "Dashboard"
+                 ((todo "TODO"
+                        ((org-agenda-overriding-header "todos")))
+                  (todo "DOING"
+                        ((org-agenda-overriding-header "doings")))
+                  (todo "DONE"
+                        ((org-agenda-overriding-header "dones")))
+                  (agenda))
+                 ((org-agenda-window-setup 'only-window)))))
+        :config
+        (set-face-underline 'org-ellipsis nil)
+        (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
+        (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
+        (setq org-agenda-span 14)
+        (setq org-directory "~/Documents/org")
+        (setq org-columns-default-format "%TODO %30ITEM %16SCHEDULED %ALLTAGS")
+        (setq org-startup-with-latex-preview t)
+        )
 
-  (setq org-directory "~/Documents/org")
+    (defun my/org-agenda-columns ()
+      "Open the agenda and switch to the org-agenda-columns view."
+      (interactive)
+      (org-agenda)
+      (org-agenda-columns))
 
+  (add-hook 'after-init-hook (lambda () (execute-kbd-macro (read-kbd-macro "C-c a d"))))
 #+end_src
 
 *** Heading Sizes
@@ -333,7 +338,6 @@
 #+end_src
 
 *** Captures
-
 
 #+begin_src emacs-lisp
   (setq org-default-notes-file (concat org-directory "/captures.org"))
@@ -394,12 +398,6 @@ Commands to install latex:
   (setq org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
 #+end_src
 * Coding
-** Compile Customization
-
-#+begin_src emacs-lisp
-  (setq compile-command nil)
-#+end_src
-
 ** Syntax Reporting
 
 #+begin_src emacs-lisp
