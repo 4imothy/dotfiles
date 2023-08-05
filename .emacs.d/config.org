@@ -130,7 +130,7 @@
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture)
   (global-set-key (kbd "C-x g") 'magit-status)
-  (global-set-key (kbd "C-c a") 'my/org-agenda-columns)
+  (global-set-key (kbd "C-c a") 'my/open-dashboard)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
 #+end_src
 
@@ -271,7 +271,19 @@ balls
                         ((org-agenda-overriding-header "doings")))
                   (todo "DONE"
                         ((org-agenda-overriding-header "dones")))
-                  (agenda))
+                  (agenda ""
+                          ((org-agenda-span 1)
+                           (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+                           (org-agenda-format-date "%A %-e %B %Y")
+                           (org-agenda-overriding-header "day")
+                           ))
+                  (agenda ""
+                          ((org-agenda-start-day nil)
+                           (org-agenda-start-day "+1d")
+                           (org-agenda-span 10)
+                           (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
+                           (org-agenda-overriding-header "ten days out")
+                           )))
                  ((org-agenda-window-setup 'only-window)))))
         :config
         (set-face-underline 'org-ellipsis nil)
@@ -279,14 +291,15 @@ balls
         (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
         (setq org-agenda-span 14)
         (setq org-directory "~/Documents/org")
-        (setq org-columns-default-format "%ALLTAGS %TODO %30ITEM %16SCHEDULED")
+        (setq org-columns-default-format "%ALLTAGS %TODO %30ITEM %22SCHEDULED")
         (setq org-startup-with-latex-preview t)
         )
 
-    (defun my/org-agenda-columns ()
+    (defun my/open-dashboard ()
       "Open the agenda and switch to the org-agenda-columns view."
       (interactive)
       (org-agenda)
+      (setq org-agenda-columns-active nil) ; Disable the default column view
       (org-agenda-columns))
 
   (add-hook 'after-init-hook (lambda () (execute-kbd-macro (read-kbd-macro "C-c a d"))))
