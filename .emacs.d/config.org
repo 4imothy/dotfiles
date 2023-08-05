@@ -31,16 +31,21 @@
   ;;   :config
   ;;   (load-theme 'zenburn t))
 
-  (load-theme 'tango t)
+  ;; (load-theme 'tango t)
   ;; (use-package poet-theme
-  ;;   :config
-  ;;   (load-theme 'poet))
+  ;;  :config
+  ;;  (load-theme 'poet))
 
-  ;; (use-package solarized-theme
-  ;;    :config
-  ;;    (load-theme 'solarized-light t))
+  (use-package solarized-theme
+    :config
+    (setq solarized-use-variable-pitch nil) ; don't change the fonts
+    (load-theme 'solarized-light t))
 
-  ;; (custom-set-faces
+  ;;(use-package catppuccin-theme
+  ;;  :config
+  ;;  (load-theme 'catppuccin :no-confirm))
+
+  ;; ;; (custom-set-faces
   ;;  '(default ((t (:foreground "#d3b58d" :background "#041818"))))
   ;;  '(custom-proup-tag-face ((t (:underline t : foreground "liphtblue" ))) t)
   ;;  '(custom-variable-tag-face ((t (:underline t :foreground "lightblue"))) t)
@@ -59,8 +64,6 @@
   ;;  )
   ;; (set-cursor-color "lightgreen")
 #+end_src
-
-#+RESULTS:
 
 ** Frame Size
 
@@ -82,14 +85,13 @@
   ;;     (set-frame-position f x y)))
 #+end_src
 
-**
 ** Font
 
 #+begin_src emacs-lisp
-  ;;(set-face-attribute 'default nil :font "MesloLGS NF" :height 160)
+  ;; (set-face-attribute 'default nil :font "MesloLGS NF" :height 160)
   (set-face-attribute 'default nil :font "mononoki" :height 200)
-  ;;(set-face-attribute 'default nil :font "DinaRemaster" :height 250)
-  ;;(set-face-attribute 'default nil :font "B612 Mono" :height 200)
+  ;; (set-face-attribute 'default nil :font "DinaRemaster" :height 250)
+  ;; (set-face-attribute 'default nil :font "B612 Mono" :height 200)
 #+end_src
 
 ** UI Disables
@@ -119,9 +121,11 @@
 
   ;; center frame after finishing customizing things that
   ;; can change the size of the window
-                                          ;(my/frame-centerI)
+  ;; (my/frame-centerI)
 #+end_src
+
 * Keybindings
+
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c c") 'org-capture)
@@ -129,6 +133,7 @@
   (global-set-key (kbd "C-c a") 'my/org-agenda-columns)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
 #+end_src
+
 * Buffer
 ** Tabs
 
@@ -142,7 +147,6 @@
 #+end_src
 
 ** Line and Column Numbers
-
 
 #+begin_src emacs-lisp
   ;; enable line and column numbers
@@ -163,13 +167,17 @@
 #+end_src
 
 ** Line-Wrapping
+
 #+begin_src emacs-lisp
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 #+end_src
+
 ** Whitespace
+
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'whitespace-cleanup)
 #+end_src
+
 * Suggestion Engines
 ** swiper
 
@@ -236,6 +244,7 @@
 #+begin_src emacs-lisp
   (use-package magit)
 #+end_src
+balls
 
 * Org Mode
 *** Basic (use-package Statement)
@@ -389,6 +398,7 @@ Commands to install latex:
 #+end_src
 
 *** Math Equations
+
 #+begin_src emacs-lisp
   (use-package org-fragtog
     :hook
@@ -397,11 +407,14 @@ Commands to install latex:
   (setq org-preview-latex-default-process 'dvisvgm)
   (setq org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
 #+end_src
+
 * Coding
 ** Compiling
+
 #+begin_src emacs-lisp
   (setq compile-command nil)
 #+end_src
+
 ** Syntax Reporting
 
 #+begin_src emacs-lisp
@@ -501,11 +514,13 @@ JavaScript
 npm install -g typescript typescript-language-server
 put the typescript-language-server in /usr/local/bin
 to use create jsconfig.json or tsconfig.json
+
 #+begin_src emacs-lisp
   (add-hook 'js-mode-hook 'lsp)
   (use-package prettier-js)
   (add-hook 'js-mode-hook 'prettier-js-mode)
 #+end_src
+
 *** Other ones not yet setup
 Markdown
 brew install marksman
@@ -524,11 +539,14 @@ LSP:
 brew install z
 * Term
 Need to install /glibtool/ and /cmake/
+
 #+begin_src emacs-lisp
   (use-package vterm
     :ensure t)
 #+end_src
+
 * Bug Fixes
+
 #+begin_src emacs-lisp
   ;; fix svg display issue on macos: https://github.com/caldwell/build-emacs/issues/126
   (add-to-list 'image-types 'svg)
@@ -541,10 +559,13 @@ Need to install /glibtool/ and /cmake/
 
 * Miscellaneous
 ** Yes-or-No -> Y-or-N
+
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
+
 ** Change Backups Location
+
 #+begin_src emacs-lisp
   (setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
   backup-by-copying t    ; Don't delink hardlinks
