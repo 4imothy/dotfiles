@@ -9,7 +9,7 @@ current_path=$(pwd)
 ln_flags="-sfn"
 
 link_with_flags () {
-	ln "$ln_flags" "$1" "$2"
+    ln "$ln_flags" "$1" "$2"
 }
 
 # for when path relative to this folder is the same as path relative to $HOME
@@ -21,11 +21,11 @@ link_same() {
 # things that have the same path relative to this
 # directory and $HOME
 emacs_dir=".emacs.d"
-link_same "$emacs_dir/config.org"
+# link_same "$emacs_dir/config.org"
 link_same "$emacs_dir/init.el"
 # this has to be an actual file telling emacs to automatically
 # follow git controlled symlinks
-cp "$current_path/$emacs_dir/early-init.el" "$HOME/$emacs_dir/early-init.el" 
+cp "$current_path/$emacs_dir/early-init.el" "$HOME/$emacs_dir/early-init.el"
 
 config_dir=".config"
 link_same "$config_dir/alacritty"
