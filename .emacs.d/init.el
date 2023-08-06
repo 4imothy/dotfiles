@@ -41,7 +41,7 @@
 ;; keybindings
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
-;; (global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-c t") 'vterm)
 (global-set-key (kbd "C-c a") 'my/open-dashboard)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
