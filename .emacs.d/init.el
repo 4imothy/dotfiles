@@ -132,6 +132,45 @@
                ((org-agenda-window-setup 'only-window)))))
       )
 
+;; from this question: https://emacs.stackexchange.com/questions/7375/can-i-format-cells-in-an-org-mode-table-differently-depending-on-a-formula
+;; and this person: https://emacs.stackexchange.com/users/15307/erki-der-loony
+(defface positive-face
+  '((t :foreground "green"))
+  "Indicates something positive")
+
+(defface negative-face
+  '((t (:foreground "red")))
+  "Indicates something negative")
+
+(defun ek/match-positive-numbers (limit)
+  (let (result)
+    (while
+        (progn
+          (when (looking-back "|" 1)
+            (backward-char))
+          (setq result (re-search-forward "| *\\([0-9\\., ]+\\) *|" limit t))
+          (save-match-data
+            (and result (not (looking-back "^ *|.*"))))))
+    result))
+
+(defun ek/match-negative-numbers (limit)
+  (let (result)
+    (while
+        (progn
+          (when (looking-back "|")
+            (backward-char))
+          (setq result (re-search-forward "| *\\(- *[0-9\\., ]+\\) *|" limit t))
+          (save-match-data
+            (and result (not (looking-back "^ *|.*"))))))
+    result))
+
+(font-lock-add-keywords 'org-mode
+                        '((ek/match-positive-numbers 1 'positive-face t))
+                        'append)
+
+(font-lock-add-keywords 'org-mode
+                        '((ek/match-negative-numbers 1 'negative-face t))
+                        'append)
 
 (defun my/org-mode-setup ()
   (org-indent-mode))
