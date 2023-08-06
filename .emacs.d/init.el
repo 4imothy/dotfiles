@@ -19,19 +19,13 @@
 
 ;; make fullscreen and edit menu items
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
-;; disable the menu bar
 (menu-bar-mode -1)
-;; disable the toolbar
 (tool-bar-mode -1)
-;; set fringe mode to provide some breathing room
 (set-fringe-mode 10)
-;; disable tooltips
 (tooltip-mode -1)
-;; remove scroll bars
 (scroll-bar-mode -1)
-;; disable the startup screen
+(blink-cursor-mode 0)
 (setq inhibit-startup-screen t)
-;; disable audio beeps
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
 
@@ -69,6 +63,21 @@
 ;; remove whitespace on save
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
+;; dired
+;; from: https://www.emacswiki.org/emacs/DiredSortDirectoriesFirst
+(defun my/dired-sort ()
+  "Sort dired listings with directories first."
+  (save-excursion
+    (let (buffer-read-only)
+      (forward-line 2) ;; beyond dir. header
+      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+    (set-buffer-modified-p nil)))
+
+(defadvice dired-readin
+  (after dired-after-updating-hook first () activate)
+  "Sort dired listings with directories first before adding marks."
+  (my/dired-sort))
+
 ;; suggestions
 (use-package swiper)
 (use-package ivy
@@ -104,9 +113,9 @@
       (setq org-todo-keywords
             (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)"))))
       (setq org-agenda-span 14)
+      (setq org-startup-with-latex-preview t)
       (setq org-directory "~/Documents/org")
       (setq org-columns-default-format "%ALLTAGS %TODO %30ITEM %22SCHEDULED")
-      (setq org-startup-with-latex-preview t)
       (setq org-default-notes-file (concat org-directory "/captures.org"))
       (setq org-agenda-custom-commands
             '(("d" "Dashboard"
@@ -132,17 +141,23 @@
                ((org-agenda-window-setup 'only-window)))))
       )
 
+;; open dashboard on startup
+(add-hook 'emacs-startup-hook (lambda () (execute-kbd-macro (read-kbd-macro "C-c a d"))))
+
+(defvar solarized-green "#859900")
+(defvar solarized-red "#dc322f")
+
 ;; from this question: https://emacs.stackexchange.com/questions/7375/can-i-format-cells-in-an-org-mode-table-differently-depending-on-a-formula
 ;; and this person: https://emacs.stackexchange.com/users/15307/erki-der-loony
 (defface positive-face
-  '((t :foreground "green"))
+  `((t :foreground ,solarized-green))
   "Indicates something positive")
 
 (defface negative-face
-  '((t (:foreground "red")))
+  `((t :foreground ,solarized-red))
   "Indicates something negative")
 
-(defun ek/match-positive-numbers (limit)
+(defun my/match-positive-numbers (limit)
   (let (result)
     (while
         (progn
@@ -153,7 +168,7 @@
             (and result (not (looking-back "^ *|.*"))))))
     result))
 
-(defun ek/match-negative-numbers (limit)
+(defun my/match-negative-numbers (limit)
   (let (result)
     (while
         (progn
@@ -165,11 +180,11 @@
     result))
 
 (font-lock-add-keywords 'org-mode
-                        '((ek/match-positive-numbers 1 'positive-face t))
+                        '((my/match-positive-numbers 1 'positive-face t))
                         'append)
 
 (font-lock-add-keywords 'org-mode
-                        '((ek/match-negative-numbers 1 'negative-face t))
+                        '((my/match-negative-numbers 1 'negative-face t))
                         'append)
 
 (defun my/org-mode-setup ()
@@ -183,19 +198,7 @@
   (org-agenda-columns))
 
 ;; heading sizes
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
- '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
- '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
- '(org-level-8 ((t (:inherit outline-8 :height 1.0)))))
+
 
 ;; list config
 ;; Replace list hyphen with dot
@@ -295,21 +298,19 @@
 (setq compile-command nil)
 
 ;; syntax reports
-(use-package flycheck)
+(use-package flycheck
+  :init (global-flycheck-mode)
+  )
 
 ;; lsp
 (use-package lsp-mode
+  ;; TODO make this :hook like the website https://emacs-lsp.github.io/lsp-mode/page/installation/
   :init (add-hook 'rust-mode-hook #'lsp)
-  :commands (lsp lsp-deferred)
-  :hook
-  (lsp-mode . efs/lsp-mode-setup)
-  :config
-  (lsp-enable-which-key-integration t))
-
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
   :custom
-  (lsp-ui-doc-position 'bottom))
+  (lsp-completion-provider :none)
+  (lsp-diagnostics-provider :flycheck)
+  (lsp-enable-snippet nil)
+  :commands (lsp lsp-deferred))
 
 ;; completions
 (use-package corfu
@@ -391,12 +392,23 @@
       kept-old-versions 5    ; and how many of the old
       )
 
-;; open dashboard
-(add-hook 'after-init-hook (lambda () (execute-kbd-macro (read-kbd-macro "C-c a d"))))
+;; fix error: `ls does not support --dired`
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired nil))
+
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" default))
  '(package-selected-packages
-   '(vterm prettier-js rust-mode pyvenv python-mode corfu lsp-ui lsp-mode flycheck org-fragtog pdf-tools magit doom-modeline which-key counsel swiper solarized-theme)))
+   '(vterm prettier-js rust-mode pyvenv python-mode corfu lsp-mode flycheck org-fragtog pdf-tools magit doom-modeline which-key counsel swiper solarized-theme)))
+
+(custom-set-faces
+ '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
+ '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
+ '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
+ '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
+ '(org-table ((t (:foreground "#657b83")))))
