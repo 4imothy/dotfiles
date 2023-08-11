@@ -19,6 +19,10 @@
 (setq inhibit-startup-screen t)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
+;; start *scratch* with no message and not as a Lisp Interactiobn
+(setq initial-major-mode 'text-mode)
+(setq initial-scratch-message "")
+
 ;; font
 (set-face-attribute 'default nil :font "mononoki" :height 200)
 
@@ -104,6 +108,7 @@
 ;; suggestions
 (use-package swiper)
 (use-package ivy
+  :require
   :diminish
   :bind ("C-s" . swiper)
   :init
@@ -115,6 +120,7 @@
          ("C-x C-f" . counsel-find-file)))
 
 (use-package which-key
+  :require
   :custom
   (which-key-idle-delay 0.2)
   :config
@@ -122,7 +128,8 @@
 
 ;; modeline have to M-x nerd-icons-install-fonts to get icons
 (use-package doom-modeline
-  :custom ((doom-modeline-height 15))
+  :require
+  :custom ((doom-modeline-height 20))
   :config (doom-modeline-mode 1))
 
 ;; magit
@@ -142,6 +149,7 @@
 
 ;; org-mode
 (use-package org
+  :require
   :hook
   (org-mode . org-indent-mode)
   (org-mode . my/org-bindings)
@@ -152,11 +160,11 @@
   (org-ellipsis "⤵")
   (org-agenda-files (list "~/Documents/org/"))
   (org-todo-keywords
-   (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)"))))
+   (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)"))))
   (org-agenda-span 14)
   (org-startup-with-latex-preview t)
   (org-directory "~/Documents/org")
-  (org-columns-default-format "%ALLTAGS %TODO %30ITEM %22SCHEDULED")
+  (org-columns-default-format "%ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE")
   (org-default-notes-file (concat org-directory "/captures.org"))
   (org-agenda-custom-commands
    '(("d" "Dashboard"
@@ -166,6 +174,8 @@
              ((org-agenda-overriding-header "doings")))
        (todo "DONE"
              ((org-agenda-overriding-header "dones")))
+       (todo "EVENT"
+             ((org-agenda-overriding-header "events")))
        (agenda ""
                ((org-agenda-span 1)
                 (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
@@ -315,6 +325,7 @@
 
 ;; math preview
 (use-package org-fragtog
+  :require
   :hook
   (org-mode . org-fragtog-mode)
   :config
@@ -338,6 +349,7 @@
   ;; TODO make this :hook like the website https://emacs-lsp.github.io/lsp-mode/page/installation/
   :hook
   (rust-mode . lsp)
+  (elisp-mode . lsp)
   (c-mode . lsp)
   (js-mode . lsp)
   (python-mode . lsp-deferred)
@@ -351,10 +363,12 @@
 
 ;; syntax reports
 (use-package flymake
+  :hook
+  (emacs-lisp-mode . flymake-mode)
   :bind (("C-c f d"   . flymake-show-buffer-diagnostics)
          ("C-c f D" . flymake-show-project-diagnostics))
   :hook
-  (prog-mode . (lambda () (flymake-mode t)))
+  (lsp-mode . (lambda () (flymake-mode t)))
   (after-save-hook . my-flymake-refresh-errors)
   :custom
   (defun my-flymake-refresh-errors ()
@@ -367,6 +381,7 @@
 
 ;; completions
 (use-package corfu
+  :require
   :custom
   (corfu-cycle t)
   (corfu-auto t)
@@ -383,6 +398,7 @@
 ;; 2. put the pylsp in path
 (use-package python-mode)
 (use-package pyvenv
+  :require
   :after python-mode
   :config
   (pyvenv-mode 1))
