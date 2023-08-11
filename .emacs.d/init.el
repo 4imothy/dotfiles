@@ -108,7 +108,6 @@
 ;; suggestions
 (use-package swiper)
 (use-package ivy
-  :require
   :diminish
   :bind ("C-s" . swiper)
   :init
@@ -120,7 +119,6 @@
          ("C-x C-f" . counsel-find-file)))
 
 (use-package which-key
-  :require
   :custom
   (which-key-idle-delay 0.2)
   :config
@@ -128,7 +126,6 @@
 
 ;; modeline have to M-x nerd-icons-install-fonts to get icons
 (use-package doom-modeline
-  :require
   :custom ((doom-modeline-height 20))
   :config (doom-modeline-mode 1))
 
@@ -149,7 +146,6 @@
 
 ;; org-mode
 (use-package org
-  :require
   :hook
   (org-mode . org-indent-mode)
   (org-mode . my/org-bindings)
@@ -325,7 +321,6 @@
 
 ;; math preview
 (use-package org-fragtog
-  :require
   :hook
   (org-mode . org-fragtog-mode)
   :config
@@ -381,13 +376,13 @@
 
 ;; completions
 (use-package corfu
-  :require
   :custom
   (corfu-cycle t)
   (corfu-auto t)
   (corfu-auto-prefix 2)
   (corfu-auto-delay 0.0)
   (corfu-popupinfo-delay '(0.5 . 0.2))
+  (corfu-preview-current 'insert)
   :config
   (global-corfu-mode)
   (corfu-history-mode)
@@ -398,7 +393,6 @@
 ;; 2. put the pylsp in path
 (use-package python-mode)
 (use-package pyvenv
-  :require
   :after python-mode
   :config
   (pyvenv-mode 1))
