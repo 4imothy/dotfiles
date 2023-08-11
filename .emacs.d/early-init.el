@@ -4,8 +4,8 @@
 ;;; Code:
 
 ;; avoid flashing of default white theme
-(set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
-(set-face-attribute 'mode-line nil :background "#000000" :foreground "#ffffff" :box 'unspecified)
+(set-face-attribute 'default nil :background "#fdf6e3" :foreground "#657b83")
+(set-face-attribute 'mode-line nil :background "#fdf6e3" :foreground "#657b83")
 
 (defvar my/gc-cons-threshold gc-cons-threshold)
 (setq gc-cons-threshold most-positive-fixnum)
