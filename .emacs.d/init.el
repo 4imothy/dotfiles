@@ -99,11 +99,19 @@
 (setq use-package-always-ensure t)
 
 ;; theme
-(use-package solarized-theme
-  :custom
-  (solarized-use-variable-pitch nil) ; don't change the fonts
-  :config
-  (load-theme 'solarized-light t))
+;;(load-theme 'wheatgrass)
+(load-theme 'modus-vivendi)
+;;(use-package solarized-theme
+;;  :custom
+;;  (solarized-use-variable-pitch nil) ; don't change the fonts
+;;  :config
+;;  (load-theme 'solarized-light t))
+
+;; better editing
+(use-package multiple-cursors
+  :bind
+  ("C->" . 'mc/mark-next-like-this)
+  ("C-<" . 'mc/mark-previous-like-this))
 
 ;; suggestions
 (use-package swiper)
@@ -120,7 +128,7 @@
 
 (use-package which-key
   :custom
-  (which-key-idle-delay 0.2)
+  (which-key-idle-delay 1.0)
   :config
   (which-key-mode 1))
 
@@ -128,9 +136,6 @@
 (use-package doom-modeline
   :custom ((doom-modeline-height 20))
   :config (doom-modeline-mode 1))
-
-;; magit
-(use-package magit)
 
 (use-package pdf-tools)
 ;; run a M-x pdf-tools-install
@@ -140,7 +145,7 @@
 ;; - sudo tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/
 ;; - sudo tlmgr update –self
 ;; -  If needed: sudo tlmgr install <your_package_name>
-;; -  sudo tlmgr install dvisvgm # for math preview
+;; -  sudo tlmgr install dvisvgm/dvipng # for math preview
 ;; other dependencies
 ;; - ghostscript
 
@@ -325,7 +330,7 @@
   (org-mode . org-fragtog-mode)
   :config
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
-  (setq org-preview-latex-default-process 'dvisvgm)
+  (setq org-preview-latex-default-process 'dvipng)
   (setq org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
   )
 
@@ -336,6 +341,9 @@
   )
 
 ;; coding
+;; magit
+(use-package magit)
+
 ;; compiling
 (setq compile-command nil)
 
