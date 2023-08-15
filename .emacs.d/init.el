@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;; Nice customizations for Emacs.
 
-;; TODO change to eglot, lsp-mode is slow i think
-
 ;;; Code:
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
@@ -43,9 +41,6 @@
 
 ;; make command prefixes show fast
 (setq echo-keystrokes 0.01)
-
-;; line wrapping
-;; (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
 ;; remove whitespace on save
 (add-hook 'before-save-hook 'whitespace-cleanup)
@@ -173,8 +168,6 @@
              ((org-agenda-overriding-header "todos")))
        (todo "DOING"
              ((org-agenda-overriding-header "doings")))
-       (todo "DONE"
-             ((org-agenda-overriding-header "dones")))
        (todo "EVENT"
              ((org-agenda-overriding-header "events")))
        (agenda ""
@@ -189,7 +182,10 @@
                 (org-agenda-span 10)
                 (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
                 (org-agenda-overriding-header "ten days out")
-                )))
+                ))
+       (todo "DONE"
+             ((org-agenda-overriding-header "dones")))
+       )
       ((org-agenda-window-setup 'only-window)))))
   :config
   (set-face-underline 'org-ellipsis nil)
@@ -348,21 +344,16 @@
 (setq compile-command nil)
 
 ;; lsp
-(use-package lsp-mode
-  ;; TODO make this :hook like the website https://emacs-lsp.github.io/lsp-mode/page/installation/
+(use-package eglot
   :hook
-  (rust-mode . lsp)
-  (elisp-mode . lsp)
-  (c-mode . lsp)
-  (js-mode . lsp)
-  (python-mode . lsp-deferred)
-  (lsp-mode . lsp-enable-which-key-integration)
+  (rust-mode . eglot-ensure)
+  (elisp-mode . eglot-ensure)
+  (c-mode . eglot-ensure)
+  (js-mode . eglot-ensure)
+  (python-mode . eglot-ensure)
+  (eglot . eglot-ensure)
   :custom
-  (lsp-completion-provider :none)
-  (lsp-diagnostics-provider :flymake)
-  (lsp-enable-snippet nil)
-  :commands (lsp lsp-deferred)
-  )
+  (eglot-strict-mode nil))
 
 ;; syntax reports
 (use-package flymake
@@ -388,10 +379,10 @@
   (corfu-cycle t)
   (corfu-auto t)
   (corfu-auto-prefix 2)
-  (corfu-auto-delay 0.0)
+  (corfu-auto-delay 0)
   (corfu-popupinfo-delay '(0.5 . 0.2))
   (corfu-preview-current 'insert)
-  :config
+  :init
   (global-corfu-mode)
   (corfu-history-mode)
   (corfu-popupinfo-mode))
