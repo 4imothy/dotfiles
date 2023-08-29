@@ -166,6 +166,7 @@
   ("C-c c" . org-capture)
   ("C-c a" . my/open-agenda)
   :custom
+  ;; (org-deadline-warning-days 0)
   (org-ellipsis "⤵")
   (org-agenda-files (list "~/Documents/org/"))
   (org-todo-keywords
@@ -177,21 +178,21 @@
   (org-default-notes-file (concat org-directory "/captures.org"))
   (org-agenda-custom-commands
    '(("d" "Dashboard"
-      ((todo "TODO"
+      ((agenda ""
+               ((org-agenda-start-day (org-today))
+                (org-agenda-span 1)
+                (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+                (org-agenda-format-date "%A %-e %B %Y")
+                (org-agenda-overriding-header "day")
+                ))
+       (todo "TODO"
              ((org-agenda-overriding-header "todos")))
        (todo "DOING"
              ((org-agenda-overriding-header "doings")))
        (todo "EVENT"
              ((org-agenda-overriding-header "events")))
        (agenda ""
-               ((org-agenda-span 1)
-                (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-                (org-agenda-format-date "%A %-e %B %Y")
-                (org-agenda-overriding-header "day")
-                ))
-       (agenda ""
-               ((org-agenda-start-day nil)
-                (org-agenda-start-day "+1d")
+               ((org-agenda-start-day "+1d")
                 (org-agenda-span 10)
                 (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
                 (org-agenda-overriding-header "ten days out")
