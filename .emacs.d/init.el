@@ -39,6 +39,9 @@
                 conf-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
+;; line wrapping
+(global-visual-line-mode)
+
 ;; make command prefixes show fast
 (setq echo-keystrokes 0.01)
 
@@ -79,6 +82,20 @@
 ;; keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; isearch, from: https://stackoverflow.com/a/36707038/588759
+(define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
+
+(defadvice isearch-search (after isearch-no-fail activate)
+  (unless isearch-success
+    (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
+    (ad-activate 'isearch-search)
+    (isearch-repeat (if isearch-forward 'forward))
+    (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
+    (ad-activate 'isearch-search)))
+
+;; theme
+(load-theme 'modus-vivendi)
+
 ;; packages
 (defvar package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
@@ -95,7 +112,6 @@
 
 ;; theme
 ;;(load-theme 'wheatgrass)
-(load-theme 'modus-vivendi)
 ;;(use-package solarized-theme
 ;;  :custom
 ;;  (solarized-use-variable-pitch nil) ; don't change the fonts
@@ -109,10 +125,7 @@
   ("C-<" . 'mc/mark-previous-like-this))
 
 ;; suggestions
-(use-package swiper)
 (use-package ivy
-  :diminish
-  :bind ("C-s" . swiper)
   :init
   (ivy-mode 1))
 
@@ -346,14 +359,14 @@
 ;; lsp
 (use-package eglot
   :hook
-  (rust-mode . eglot-ensure)
-  (elisp-mode . eglot-ensure)
-  (c-mode . eglot-ensure)
-  (js-mode . eglot-ensure)
-  (python-mode . eglot-ensure)
+  ;; (rust-mode . eglot-ensure)
+  ;; (elisp-mode . eglot-ensure)
+  ;; (c-mode . eglot-ensure)
+  ;; (js-mode . eglot-ensure)
+  ;; (python-mode . eglot-ensure)
   (eglot . eglot-ensure)
   :custom
-  (eglot-strict-mode nil))
+  (eglot-ignored-server-capabilities '(:hoverProvider)))
 
 ;; syntax reports
 (use-package flymake
@@ -362,7 +375,6 @@
   :bind (("C-c f d"   . flymake-show-buffer-diagnostics)
          ("C-c f D" . flymake-show-project-diagnostics))
   :hook
-  (lsp-mode . (lambda () (flymake-mode t)))
   (after-save-hook . my-flymake-refresh-errors)
   :custom
   (defun my-flymake-refresh-errors ()
@@ -436,21 +448,8 @@
 ;; - LSP:
 ;; -brew install zls
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" default))
- '(package-selected-packages
-   '(vterm prettier-js rust-mode pyvenv python-mode corfu lsp-mode flycheck org-fragtog pdf-tools magit doom-modeline which-key counsel swiper solarized-theme)))
-
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+ '(org-tag ((t (:inherit default :height 1.0))))
  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
  '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
  '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
@@ -459,6 +458,6 @@
  '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
  '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
  '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
- '(org-table ((t (:foreground "#657b83")))))
+ )
 
 ;;; init.el ends here
