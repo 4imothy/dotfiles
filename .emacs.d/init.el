@@ -167,6 +167,7 @@
   ("C-c a" . my/open-agenda)
   :custom
   ;; (org-deadline-warning-days 0)
+  (org-fold-show-context-detail t)
   (org-ellipsis "⤵")
   (org-agenda-files (list "~/Documents/org/"))
   (org-todo-keywords
