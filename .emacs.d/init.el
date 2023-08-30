@@ -167,11 +167,19 @@
   ("C-c a" . my/open-agenda)
   :custom
   ;; (org-deadline-warning-days 0)
+  (org-image-actual-width 400)
+  (org-hide-emphasis-markers t)
+  (org-tags-column 1)
   (org-fold-show-context-detail t)
   (org-ellipsis "⤵")
   (org-agenda-files (list "~/Documents/org/"))
   (org-todo-keywords
    (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)"))))
+  (org-todo-keyword-faces
+      '(("TODO" . (:foreground "red" :weight bold))
+        ("DOING" . (:foreground "orange" :weight bold))
+        ("DONE" . (:foreground "green" :weight bold))
+        ("EVENT" . (:foreground "purple" :weight bold))))
   (org-agenda-span 14)
   (org-startup-with-latex-preview t)
   (org-directory "~/Documents/org")
@@ -204,8 +212,8 @@
       ((org-agenda-window-setup 'only-window)))))
   :config
   (set-face-underline 'org-ellipsis nil)
-  (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
-  (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
+  ;; (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
+  ;; (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
   (defun my/open-agenda ()
     "Open the agenda and switch to the \"org-agenda-columns\" view."
     (interactive)
