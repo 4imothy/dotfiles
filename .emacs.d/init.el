@@ -6,6 +6,8 @@
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
+(server-start)
+
 ;; make fullscreen and edit menu items
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
@@ -152,8 +154,9 @@
 ;; - Install basictex
 ;; - sudo tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/
 ;; - sudo tlmgr update –self
-;; -  If needed: sudo tlmgr install <your_package_name>
-;; -  sudo tlmgr install dvisvgm/dvipng # for math preview
+;; - If needed: sudo tlmgr install <your_package_name>
+;; - sudo tlmgr install dvisvgm/dvipng # for math preview
+;; - sudo tlmgr install latexmk # for better compilation
 ;; other dependencies
 ;; - ghostscript
 
@@ -385,9 +388,9 @@
   :bind (("C-c f d"   . flymake-show-buffer-diagnostics)
          ("C-c f D" . flymake-show-project-diagnostics))
   :hook
-  (after-save-hook . my-flymake-refresh-errors)
+  (after-save-hook . my/flymake-refresh-errors)
   :custom
-  (defun my-flymake-refresh-errors ()
+  (defun my/flymake-refresh-errors ()
     "Restart \"flymake\" to refresh reporting."
     (when flymake-mode
       (flymake-mode 0)
@@ -459,7 +462,10 @@
 ;; -brew install zls
 
 (custom-set-faces
- '(org-tag ((t (:inherit default :height 1.0))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
  '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
  '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
@@ -468,6 +474,13 @@
  '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
  '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
  '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
- )
+ '(org-tag ((t (:inherit default :height 1.0)))))
 
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(auctex which-key vterm rust-mode pyvenv python-mode prettier-js pdf-tools org-fragtog multiple-cursors magit doom-modeline counsel corfu)))
