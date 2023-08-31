@@ -147,6 +147,7 @@
   :custom ((doom-modeline-height 20))
   :config (doom-modeline-mode 1))
 
+;; latex and pdf previews
 (use-package pdf-tools)
 ;; run a M-x pdf-tools-install
 ;; PDF preview
@@ -368,6 +369,7 @@
 
 ;; compiling
 (setq compile-command nil)
+(setq tex-compile-commands '(("latexmk -pdf -pvc %f")))
 
 ;; lsp
 (use-package eglot
