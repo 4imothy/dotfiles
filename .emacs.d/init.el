@@ -171,6 +171,8 @@
   ("C-c a" . my/open-agenda)
   :custom
   ;; (org-deadline-warning-days 0)
+  (org-preview-latex-default-process 'dvisvgm)
+  (org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
   (org-image-actual-width 400)
   (org-hide-emphasis-markers t)
   (org-tags-column 1)
@@ -352,9 +354,9 @@
   :hook
   (org-mode . org-fragtog-mode)
   :config
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
-  (setq org-preview-latex-default-process 'dvipng)
-  (setq org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
+  (plist-put org-format-latex-options :scale 2.0)
+  (plist-put org-format-latex-options :foreground nil)
+  (plist-put org-format-latex-options :background nil)
   )
 
 ;; Terminal
@@ -484,5 +486,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ ;; '(org-format-latex-options
+ ;;   '(:foreground nil :background nil :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+ ;;                 ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(package-selected-packages
    '(auctex which-key vterm rust-mode pyvenv python-mode prettier-js pdf-tools org-fragtog multiple-cursors magit doom-modeline counsel corfu)))
