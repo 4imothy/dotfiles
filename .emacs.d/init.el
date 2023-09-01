@@ -88,6 +88,7 @@
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
 
 (defadvice isearch-search (after isearch-no-fail activate)
+  "Ensure isearch continues in the same direction if no match is found."
   (unless isearch-success
     (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
     (ad-activate 'isearch-search)
@@ -186,7 +187,7 @@
   (org-agenda-span 14)
   (org-startup-with-latex-preview t)
   (org-directory "~/Documents/org")
-  (org-columns-default-format "%ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE")
+  (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE")
   (org-default-notes-file (concat org-directory "/captures.org"))
   (org-agenda-custom-commands
    '(("d" "Dashboard"
