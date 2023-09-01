@@ -56,3 +56,7 @@ link_with_flags "$current_path/$org_path/$file" "$HOME/Library/Application Suppo
 link_with_flags "$current_path/browsers/qutebrowser" "$HOME/.qutebrowser"
 link_with_flags "$current_path/obsidian" "$HOME/Documents/Vault/.obsidian/snippets"
 link_with_flags "$current_path/$emacs_dir/.latexmkrc" "$HOME/"
+
+# latex
+texmf_home=$(kpsewhich -var-value TEXMFHOME)
+link_with_flags "$current_path/texmf" "$texmf_home"
