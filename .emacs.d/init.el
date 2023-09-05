@@ -145,8 +145,12 @@
 
 ;; modeline have to M-x nerd-icons-install-fonts to get icons
 (use-package doom-modeline
-  :custom ((doom-modeline-height 20))
-  :config (doom-modeline-mode 1))
+  :custom
+  (doom-modeline-height 20)
+  :config
+  (doom-modeline-mode 1)
+  (display-time-mode)
+  )
 
 ;; latex and pdf previews
 (use-package pdf-tools)
@@ -169,11 +173,19 @@
   (org-mode . my/org-bindings)
   :bind
   ("C-c c" . org-capture)
-  ("C-c a" . my/open-agenda)
+  ("C-c a" . org-agenda)
   :custom
+  ;; (org-agenda-view-columns-initially t)
+  (org-agenda-prefix-format
+   '((agenda . " %?-10T %?-12t %s")
+     (todo . " %-10T %-22(org-entry-get (point) \"SCHEDULED\") ")
+     (tags . " %T")
+     (search . " %T")))
+  (org-agenda-remove-tags t)
   (org-image-actual-width 400)
   (org-hide-emphasis-markers t)
   (org-tags-column 1)
+  (org-agenda-tags-column 0)
   (org-fold-show-context-detail t)
   (org-ellipsis "⤵")
   (org-agenda-files (list "~/Documents/org/"))
@@ -187,7 +199,7 @@
   (org-agenda-span 14)
   (org-startup-with-latex-preview t)
   (org-directory "~/Documents/org")
-  (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE")
+  (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
   (org-default-notes-file (concat org-directory "/captures.org"))
   (org-agenda-custom-commands
    '(("d" "Dashboard"
@@ -218,12 +230,6 @@
   (set-face-underline 'org-ellipsis nil)
   ;; (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
   ;; (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
-  (defun my/open-agenda ()
-    "Open the agenda and switch to the \"org-agenda-columns\" view."
-    (interactive)
-    (org-agenda)
-    (defvar org-agenda-columns-active nil)
-    (org-agenda-columns))
 
   (defvar solarized-green "#859900")
   (defvar solarized-red "#dc322f")
