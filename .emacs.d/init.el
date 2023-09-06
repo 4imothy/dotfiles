@@ -150,6 +150,7 @@
   :config
   (doom-modeline-mode 1)
   (display-time-mode)
+  (display-battery-mode)
   )
 
 ;; latex and pdf previews
@@ -167,6 +168,7 @@
 ;; - ghostscript
 
 ;; org-mode
+(defvar my/org-directory "~/Documents/org")
 (use-package org
   :hook
   (org-mode . org-indent-mode)
@@ -174,6 +176,7 @@
   :bind
   ("C-c c" . org-capture)
   ("C-c a" . org-agenda)
+  ("C-c f t" . (lambda () (interactive) (find-file (concat my/org-directory "/tasks.org"))))
   :custom
   ;; (org-agenda-view-columns-initially t)
   (org-agenda-prefix-format
@@ -190,7 +193,7 @@
   (org-ellipsis "⤵")
   (org-agenda-files (list "~/Documents/org/"))
   (org-todo-keywords
-   (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)"))))
+   (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)" ))))
   (org-todo-keyword-faces
       '(("TODO" . (:foreground "red" :weight bold))
         ("DOING" . (:foreground "orange" :weight bold))
@@ -198,7 +201,7 @@
         ("EVENT" . (:foreground "purple" :weight bold))))
   (org-agenda-span 14)
   (org-startup-with-latex-preview t)
-  (org-directory "~/Documents/org")
+  (org-directory my/org-directory)
   (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
   (org-default-notes-file (concat org-directory "/captures.org"))
   (org-agenda-custom-commands
@@ -351,7 +354,7 @@
   )
 
 ;; open dashboard on startup
-(add-hook 'emacs-startup-hook (lambda () (execute-kbd-macro (read-kbd-macro "C-c a d"))))
+;; (add-hook 'emacs-startup-hook (lambda () (execute-kbd-macro (read-kbd-macro "C-c a d"))))
 
 ;; math preview
 (use-package org-fragtog
