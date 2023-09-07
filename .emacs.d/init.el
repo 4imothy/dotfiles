@@ -147,8 +147,9 @@
 (use-package doom-modeline
   :custom
   (doom-modeline-height 20)
+  (display-time-format "%H:%M")
   :config
-  (doom-modeline-mode 1)
+  (doom-modeline-mode)
   (display-time-mode)
   (display-battery-mode)
   )
