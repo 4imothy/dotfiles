@@ -182,9 +182,9 @@
   ;; (org-agenda-view-columns-initially t)
   (org-agenda-prefix-format
    '((agenda . " %?-10T %?-12t %s")
-     (todo . " %-10T %-22(org-entry-get (point) \"SCHEDULED\") ")
-     (tags . " %T")
-     (search . " %T")))
+     (todo . " %-10T %-16(or (org-entry-get (point) \"TIMESTAMP\") (org-entry-get (point) \"SCHEDULED\") (org-entry-get (point) \"DEADLINE\")) ")
+     (tags  . " %i %-12:c")
+     (search . " %i %-12:c")))
   (org-agenda-remove-tags t)
   (org-image-actual-width 400)
   (org-hide-emphasis-markers t)
