@@ -155,7 +155,14 @@
   )
 
 ;; latex and pdf previews
-(use-package pdf-tools)
+(use-package pdf-tools
+  :custom
+  (doc-view-ghostscript-program
+   (substring
+       (shell-command-to-string "where gs")
+       0
+       -1)))
+
 ;; run a M-x pdf-tools-install
 ;; PDF preview
 ;; to install latex:
@@ -169,7 +176,6 @@
 ;; - ghostscript
 
 ;; org-mode
-(defvar my/org-directory "~/Documents/org")
 (use-package org
   :hook
   (org-mode . org-indent-mode)
@@ -177,9 +183,13 @@
   :bind
   ("C-c c" . org-capture)
   ("C-c a" . org-agenda)
-  ("C-c f t" . (lambda () (interactive) (find-file (concat my/org-directory "/tasks.org"))))
+  ("C-c f t" . (lambda () (interactive) (find-file (concat org-directory "/tasks.org"))))
   :custom
   ;; (org-agenda-view-columns-initially t)
+  (org-directory "~/Documents/org")
+  (org-default-notes-file (concat org-directory "/tasks.org"))
+  (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))
+                        (org-default-notes-file . (:maxlevel . 2))))
   (org-agenda-prefix-format
    '((agenda . " %?-10T %?-12t %s")
      (todo . " %-10T %-16(or (org-entry-get (point) \"TIMESTAMP\") (org-entry-get (point) \"SCHEDULED\") (org-entry-get (point) \"DEADLINE\")) ")
@@ -202,9 +212,7 @@
         ("EVENT" . (:foreground "purple" :weight bold))))
   (org-agenda-span 14)
   (org-startup-with-latex-preview t)
-  (org-directory my/org-directory)
   (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
-  (org-default-notes-file (concat org-directory "/captures.org"))
   (org-agenda-custom-commands
    '(("d" "Dashboard"
       ((agenda ""
@@ -215,11 +223,14 @@
                 (org-agenda-overriding-header "day")
                 ))
        (todo "TODO"
-             ((org-agenda-overriding-header "todos")))
+             ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+              (org-agenda-overriding-header "todos")))
        (todo "DOING"
-             ((org-agenda-overriding-header "doings")))
+             ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+              (org-agenda-overriding-header "doings")))
        (todo "EVENT"
-             ((org-agenda-overriding-header "events")))
+             ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+              (org-agenda-overriding-header "events")))
        (agenda ""
                ((org-agenda-start-day "+1d")
                 (org-agenda-span 10)
@@ -324,7 +335,7 @@
   ;; captures
   (defvar org-capture-templates
     '(("t"
-       "Todo List Item"
+       "Todo Item"
        entry
        (file org-default-notes-file)
        "* TODO %?\n %i\n %a")))
@@ -373,7 +384,8 @@
 ;; Terminal
 ;; Need to install /glibtool/ and /cmake/
 (use-package vterm
-  :bind ("C-c t" . vterm)
+  ;;  :bind ("C-c t" . vterm)
+  :bind ("C-c t" . eshell)
   )
 
 ;; coding
@@ -383,6 +395,10 @@
 ;; compiling
 (setq compile-command nil)
 (setq tex-compile-commands '(("latexmk -pdf -pvc %f")))
+
+(use-package projectile
+  :config
+  (projectile-mode 1))
 
 ;; lsp
 (use-package eglot
@@ -417,7 +433,7 @@
 (use-package corfu
   :custom
   (corfu-cycle t)
-  (corfu-auto t)
+  ;; (corfu-auto t)
   (corfu-auto-prefix 2)
   (corfu-auto-delay 0)
   (corfu-popupinfo-delay '(0.5 . 0.2))
@@ -427,7 +443,22 @@
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
-;; python
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (setq-local corfu-auto nil)
+            (corfu-mode)))
+
+(defun corfu-send-shell (&rest _)
+  "Send completion candidate when inside comint/eshell."
+  (cond
+   ((and (derived-mode-p 'eshell-mode) (fboundp 'eshell-send-input))
+    (eshell-send-input))
+   ((and (derived-mode-p 'comint-mode)  (fboundp 'comint-send-input))
+    (comint-send-input))))
+
+(advice-add #'corfu-insert :after #'corfu-send-shell)
+
+;; pythonn
 ;; 1. *Command:* /pip3 install python-lsp-server[all]/
 ;; 2. put the pylsp in path
 (use-package python-mode)
@@ -445,6 +476,7 @@
 
 ;; add rust-analyzer to exec-path for lsp-mode
 (add-to-list 'exec-path "~/.cargo/bin")
+(add-to-list 'exec-path "~/bin")
 (use-package rust-mode
   :hook
   (rust-mode .
