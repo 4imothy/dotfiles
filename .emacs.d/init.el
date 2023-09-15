@@ -81,8 +81,19 @@
 (when (string= system-type "darwin")
   (defvar dired-use-ls-dired nil))
 
+;; custom compile
+(defun my/compile ()
+  "Compile depending on the context: project or LaTeX mode."
+  (interactive)
+  (if (project-current)
+      (project-compile)
+    (if (eq major-mode 'latex-mode)
+        (call-interactively 'tex-compile)
+      (call-interactively 'compile))))
+
 ;; keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x p c") 'my/compile)
 
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
@@ -396,10 +407,6 @@
 (setq compile-command nil)
 (setq tex-compile-commands '(("latexmk -pdf -pvc %f")))
 
-(use-package projectile
-  :config
-  (projectile-mode 1))
-
 ;; lsp
 (use-package eglot
   :hook
@@ -442,21 +449,6 @@
   (global-corfu-mode)
   (corfu-history-mode)
   (corfu-popupinfo-mode))
-
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (setq-local corfu-auto nil)
-            (corfu-mode)))
-
-(defun corfu-send-shell (&rest _)
-  "Send completion candidate when inside comint/eshell."
-  (cond
-   ((and (derived-mode-p 'eshell-mode) (fboundp 'eshell-send-input))
-    (eshell-send-input))
-   ((and (derived-mode-p 'comint-mode)  (fboundp 'comint-send-input))
-    (comint-send-input))))
-
-(advice-add #'corfu-insert :after #'corfu-send-shell)
 
 ;; pythonn
 ;; 1. *Command:* /pip3 install python-lsp-server[all]/
