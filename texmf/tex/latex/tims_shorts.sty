@@ -1,5 +1,6 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{enumitem}
 
 \newcommand\R{\mathbb{R}}
 \newcommand\C{\mathbb{C}}
@@ -7,6 +8,10 @@
 \newcommand\N{\mathbb{N}}
 \newcommand\Z{\mathbb{Z}}
 \newcommand\F{\mathbb{F}}
+
+\newenvironment{alphlist}{\begin{enumerate}[label={(\alph*)}]}{\end{enumerate}}
+\newenvironment{romanlist}{\begin{enumerate}[label={(\roman*)}]}{\end{enumerate}}
+\newenvironment{arabiclist}{\begin{enumerate}[label={(\arabic*)}]}{\end{enumerate}}
 
 \newcommand\spread[3]{{#1}_{#2}, \ldots, {#1}_{#3}}
 \newcommand\smat{\begin{bmatrix}}
