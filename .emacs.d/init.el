@@ -440,11 +440,12 @@
 (use-package corfu
   :custom
   (corfu-cycle t)
-  ;; (corfu-auto t)
+  (corfu-auto t)
   (corfu-auto-prefix 2)
   (corfu-auto-delay 0)
   (corfu-popupinfo-delay '(0.5 . 0.2))
   (corfu-preview-current 'insert)
+  (corfu-count 4)
   :init
   (global-corfu-mode)
   (corfu-history-mode)
