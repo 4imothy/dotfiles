@@ -377,6 +377,15 @@
   :custom
   (org-preview-latex-default-process 'dvisvgm)
   (org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
+  (org-preview-latex-process-alist '((dvisvgm :programs
+                                              ("latex" "dvisvgm")
+                                              :image-input-type "dvi"
+                                              :image-output-type "svg"
+                                              :image-size-adjust (1.7 . 1.5)
+                                              :latex-compiler
+                                              ("latex -interaction nonstopmode -output-directory %o %f")
+                                              :image-converter
+                                              ("dvisvgm %f --libgs=/opt/homebrew/lib/libgs.dylib --no-fonts --exact-bbox --scale=%S --output=%O"))))
   :config
   (plist-put org-format-latex-options :scale 2.0)
   (plist-put org-format-latex-options :foreground nil)
