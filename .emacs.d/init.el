@@ -81,19 +81,10 @@
 (when (string= system-type "darwin")
   (defvar dired-use-ls-dired nil))
 
-;; custom compile
-(defun my/compile ()
-  "Compile depending on the context: project or LaTeX mode."
-  (interactive)
-  (if (project-current)
-      (project-compile)
-    (if (eq major-mode 'latex-mode)
-        (call-interactively 'tex-compile)
-      (call-interactively 'compile))))
-
 ;; keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x p c") 'my/compile)
+(global-set-key (kbd "C-c t") 'eshell)
 
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
@@ -392,13 +383,6 @@
   (plist-put org-format-latex-options :background nil)
   )
 
-;; Terminal
-;; Need to install /glibtool/ and /cmake/
-(use-package vterm
-  ;;  :bind ("C-c t" . vterm)
-  :bind ("C-c t" . eshell)
-  )
-
 ;; coding
 ;; magit
 (use-package magit)
@@ -406,6 +390,14 @@
 ;; compiling
 (setq compile-command nil)
 (setq tex-compile-commands '(("latexmk -pdf -pvc %f")))
+(defun my/compile ()
+  "Compile depending on the context: project or LaTeX mode."
+  (interactive)
+  (if (project-current)
+      (project-compile)
+    (if (eq major-mode 'latex-mode)
+        (call-interactively 'tex-compile)
+      (call-interactively 'compile))))
 
 ;; lsp
 (use-package eglot
@@ -438,6 +430,12 @@
 
 ;; completions
 (use-package corfu
+  :hook
+  (rust-mode .
+          (lambda () (setq indent-tabs-mode nil)))
+  (eshell-mode . (lambda ()
+                   (setq-local corfu-auto nil))
+               )
   :custom
   (corfu-cycle t)
   (corfu-auto t)
@@ -446,12 +444,15 @@
   (corfu-popupinfo-delay '(0.5 . 0.2))
   (corfu-preview-current 'insert)
   (corfu-count 4)
+  :bind
+  (:map corfu-map
+        ("RET" . nil))
   :init
   (global-corfu-mode)
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
-;; pythonn
+;; python
 ;; 1. *Command:* /pip3 install python-lsp-server[all]/
 ;; 2. put the pylsp in path
 (use-package python-mode)
@@ -517,3 +518,10 @@
  '(org-tag ((t (:inherit default :height 1.0)))))
 
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(prettier-js rust-mode pyvenv python-mode corfu magit org-fragtog pdf-tools doom-modeline which-key counsel ivy multiple-cursors)))
