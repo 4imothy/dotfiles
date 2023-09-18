@@ -1,19 +1,12 @@
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 
-case ":${PATH}:" in
-    *:"$HOME/bin":*)
-        ;;
-    *)
-        export PATH="$HOME/bin:$PATH"
-        ;;
-esac
+# Directories to add to PATH
+path_dirs=("$HOME/bin" "$HOME/.cargo/bin" "$HOME/.go/bin")
 
-case ":${PATH}:" in
-    *:"$HOME/.go/bin":*)
-        ;;
-    *)
-        export PATH="$HOME/.go/bin:$PATH"
-        ;;
-esac
+for dir in "${path_dirs[@]}"; do
+    if [[ ":$PATH:" != *":$dir:"* ]]; then
+        export PATH="$dir:$PATH"
+    fi
+done
 
 export GOPATH="$HOME/.go"
