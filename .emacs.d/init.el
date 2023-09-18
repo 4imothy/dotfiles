@@ -377,6 +377,7 @@
   :custom
   (org-preview-latex-default-process 'dvisvgm)
   (org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
+  ;; https://dvisvgm.de/FAQ/
   (org-preview-latex-process-alist '((dvisvgm :programs
                                               ("latex" "dvisvgm")
                                               :image-input-type "dvi"
@@ -480,6 +481,7 @@
 ;; add rust-analyzer to exec-path for lsp-mode
 (add-to-list 'exec-path "~/.cargo/bin")
 (add-to-list 'exec-path "~/bin")
+;; (setenv "PATH" (concat "/Users/timothy/bin:" (getenv "PATH")))
 (use-package rust-mode
   :hook
   (rust-mode .
