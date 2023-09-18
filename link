@@ -43,6 +43,7 @@ link_dif() {
 }
 org_path="zsh"
 link_dif $org_path ".zshrc"
+link_dif $org_path ".zshenv"
 link_dif $org_path ".hushlogin"
 link_dif $org_path "sourced"
 org_path="tmux"
