@@ -8,6 +8,15 @@
 
 (server-start)
 
+(setq ibuffer-saved-filter-groups
+      (quote (("default"
+               ("files" (not (name . "^\\*.*\\*$"))))
+              )))
+
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
+
 ;; make fullscreen and edit menu items
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
