@@ -86,6 +86,9 @@
 (global-set-key (kbd "C-x p c") 'my/compile)
 (global-set-key (kbd "C-c t") 'eshell)
 
+;; add custom bins to exec-path for eshell
+(add-to-list 'exec-path "~/bin")
+
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
 
@@ -213,7 +216,7 @@
         ("DONE" . (:foreground "green" :weight bold))
         ("EVENT" . (:foreground "purple" :weight bold))))
   (org-agenda-span 14)
-  (org-startup-with-latex-preview t)
+  ;; (org-startup-with-latex-preview t)
   (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
   (org-agenda-custom-commands
    '(("d" "Dashboard"
@@ -222,25 +225,22 @@
                 (org-agenda-span 1)
                 (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                 (org-agenda-format-date "%A %-e %B %Y")
-                (org-agenda-overriding-header "day")
+                (org-agenda-overriding-header "")
                 ))
-       (todo "TODO"
+       (todo "TODO|DOING"
              ((org-agenda-sorting-strategy '(priority-down timestamp-up))
-              (org-agenda-overriding-header "todos")))
-       (todo "DOING"
-             ((org-agenda-sorting-strategy '(priority-down timestamp-up))
-              (org-agenda-overriding-header "doings")))
+              (org-agenda-overriding-header "")))
        (todo "EVENT"
              ((org-agenda-sorting-strategy '(priority-down timestamp-up))
-              (org-agenda-overriding-header "events")))
+              (org-agenda-overriding-header "")))
        (agenda ""
                ((org-agenda-start-day "+1d")
                 (org-agenda-span 10)
                 (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
-                (org-agenda-overriding-header "ten days out")
+                (org-agenda-overriding-header "")
                 ))
        (todo "DONE"
-             ((org-agenda-overriding-header "dones")))
+             ((org-agenda-overriding-header "")))
        )
       ((org-agenda-window-setup 'only-window)))))
   :config
@@ -395,7 +395,9 @@
 
 ;; coding
 ;; magit
-(use-package magit)
+(use-package magit
+  :bind ("C-x g"   . magit-status)
+  )
 
 ;; compiling
 (setq compile-command nil)
@@ -478,14 +480,13 @@
 ;; - locate its location with: rustup which rust-analyzer
 ;; - add that path to /$PATH/
 
-;; add rust-analyzer to exec-path for lsp-mode
-(add-to-list 'exec-path "~/.cargo/bin")
-(add-to-list 'exec-path "~/bin")
-;; (setenv "PATH" (concat "/Users/timothy/bin:" (getenv "PATH")))
 (use-package rust-mode
   :hook
   (rust-mode .
-          (lambda () (setq indent-tabs-mode nil)))
+             (lambda () (setq indent-tabs-mode nil)))
+  :config
+  ;; add rust-analyzer to exec-path for lsp-mode
+  (add-to-list 'exec-path "~/.cargo/bin")
   :init
   (defvar rust-format-on-save t))
 
