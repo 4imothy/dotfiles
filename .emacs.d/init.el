@@ -10,7 +10,7 @@
 
 (setq ibuffer-saved-filter-groups
       (quote (("default"
-               ("files" (not (name . "^\\*.*\\*$"))))
+               ("main" (not (name . "^\\*.*\\*$"))))
               )))
 
 (add-hook 'ibuffer-mode-hook
