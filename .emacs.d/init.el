@@ -10,8 +10,9 @@
 
 (setq ibuffer-saved-filter-groups
       (quote (("default"
-               ("main" (not (name . "^\\*.*\\*$"))))
-              )))
+               ;; ("main" (not (name . "^\\*.*\\*$")))
+               ("main" (not (name . "^\\*")))
+              ))))
 
 (add-hook 'ibuffer-mode-hook
           (lambda ()
@@ -237,10 +238,10 @@
                 (org-agenda-overriding-header "")
                 ))
        (todo "TODO|DOING"
-             ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+             ((org-agenda-sorting-strategy '(timestamp-up))
               (org-agenda-overriding-header "")))
        (todo "EVENT"
-             ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+             ((org-agenda-sorting-strategy '(timestamp-up))
               (org-agenda-overriding-header "")))
        (agenda ""
                ((org-agenda-start-day "+1d")
@@ -349,7 +350,7 @@
        "Todo Item"
        entry
        (file org-default-notes-file)
-       "* TODO %?\n %i\n %a")))
+       "* TODO %?\n %i")))
 
   (defun my/org-bindings ()
     (local-set-key (kbd "C-c p") 'my/org-export-to-pdf-and-open)
@@ -507,6 +508,18 @@
   :hook
   (js-mode . prettier-js-mode)
   )
+
+;; go lang
+;; go install golang.org/x/tools/gopls@latest
+(use-package go-mode
+  :config
+  (add-to-list 'exec-path "~/.go/bin")
+  )
+
+(defun eglot-format-buffer-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
+
 
 ;; Other languages not setup yet
 ;; Markdown
