@@ -87,6 +87,28 @@
 (global-set-key (kbd "C-c e") 'eshell)
 (global-set-key (kbd "C-c t") 'calendar)
 
+(defun my/eshell-maybe-bol ()
+  (interactive)
+  (let ((p (point)))
+    (eshell-bol)
+    (if (= p (point))
+        (beginning-of-line))))
+
+(add-hook 'eshell-mode-hook
+          (lambda () (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)))
+
+(defvar my/eshell-prompt-ending "->\s")
+(setq eshell-prompt-function
+      (lambda ()
+        (let* ((pwd (eshell/pwd))
+               (home (expand-file-name (getenv "HOME")))
+               (abbreviated-pwd (if (string-prefix-p home pwd)
+                                    (concat "~" (substring pwd (length home)))
+                                  pwd))
+               (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#e9e2cb"))))
+          (concat "\s" colored-pwd "\n" my/eshell-prompt-ending)))
+      eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
+
 (defun my-calendar-setup ()
   "Set up keybindings for the calendar."
   (local-set-key (kbd "q") 'my-calendar-quit))
