@@ -87,6 +87,12 @@
 (global-set-key (kbd "C-c e") 'eshell)
 (global-set-key (kbd "C-c t") 'calendar)
 
+(defun my-eshell-setup ()
+  (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)
+  (setq-local face-remapping-alist '((eshell-prompt (:foreground "#40E0D0")))))
+
+(add-hook 'eshell-mode-hook 'my-eshell-setup)
+
 (setenv "SHELL" (shell-command-to-string "which zsh"))
 (defun my/eshell-maybe-bol ()
   (interactive)
@@ -94,9 +100,6 @@
     (eshell-bol)
     (if (= p (point))
         (beginning-of-line))))
-
-(add-hook 'eshell-mode-hook
-          (lambda () (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)))
 
 (defvar my/eshell-prompt-ending "╰──%\s")
 (setq eshell-prompt-function
