@@ -105,13 +105,12 @@
 ;; ibuffer
 (setq ibuffer-saved-filter-groups
       (quote (("default"
-               ("main" (not (name . "^\\*")))
+               ("main"  (not (name . "^\\*")))
               ))))
 
 (add-hook 'ibuffer-mode-hook
           (lambda ()
             (ibuffer-switch-to-saved-filter-groups "default")))
-
 
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
