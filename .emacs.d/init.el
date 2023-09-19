@@ -87,6 +87,7 @@
 (global-set-key (kbd "C-c e") 'eshell)
 (global-set-key (kbd "C-c t") 'calendar)
 
+(setenv "SHELL" (shell-command-to-string "which zsh"))
 (defun my/eshell-maybe-bol ()
   (interactive)
   (let ((p (point)))
@@ -97,7 +98,7 @@
 (add-hook 'eshell-mode-hook
           (lambda () (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)))
 
-(defvar my/eshell-prompt-ending "->\s")
+(defvar my/eshell-prompt-ending "╰──%\s")
 (setq eshell-prompt-function
       (lambda ()
         (let* ((pwd (eshell/pwd))
@@ -106,7 +107,7 @@
                                     (concat "~" (substring pwd (length home)))
                                   pwd))
                (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#e9e2cb"))))
-          (concat "\s" colored-pwd "\n" my/eshell-prompt-ending)))
+          (concat "╭─[" colored-pwd "]" "\n" my/eshell-prompt-ending )))
       eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
 
 (defun my-calendar-setup ()
