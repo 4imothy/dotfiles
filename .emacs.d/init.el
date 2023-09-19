@@ -87,6 +87,18 @@
 (global-set-key (kbd "C-c e") 'eshell)
 (global-set-key (kbd "C-c t") 'calendar)
 
+(defun my-calendar-setup ()
+  "Set up keybindings for the calendar."
+  (local-set-key (kbd "q") 'my-calendar-quit))
+
+(defun my-calendar-quit ()
+  "Quit the calendar and kill the buffer."
+  (interactive)
+  (kill-buffer)
+  (delete-window))
+
+(add-hook 'calendar-mode-hook 'my-calendar-setup)
+
 ;; add custom bins to exec-path for eshell
 ;; (add-to-list 'exec-path "~/bin")
 
@@ -196,11 +208,9 @@
 (use-package org
   :hook
   (org-mode . org-indent-mode)
-  (org-mode . my/org-bindings)
   :bind
   ("C-c c" . org-capture)
   ("C-c a" . org-agenda)
-  ("C-c f t" . (lambda () (interactive) (find-file (concat org-directory "/tasks.org"))))
   :custom
   ;; (org-agenda-view-columns-initially t)
   (org-directory "~/Documents/org")
@@ -353,34 +363,7 @@
        entry
        (file org-default-notes-file)
        "* TODO %?\n %i")))
-
-  (defun my/org-bindings ()
-    (local-set-key (kbd "C-c p") 'my/org-export-to-pdf-and-open)
-    )
-  ;; PDF previews
-  (defun my/org-export-to-pdf-and-open ()
-    "Export the current Org mode buffer to PDF and open it in a window to the right."
-    (interactive)
-    ;; Export to PDF
-    (org-latex-export-to-pdf)
-
-    ;; Define the PDF file name (assuming the same base name as the Org file)
-    (let* ((org-file (buffer-file-name))
-           (pdf-file (concat (file-name-sans-extension org-file) ".pdf")))
-
-      ;; Open the PDF file in a window to the right
-      (if (file-exists-p pdf-file)
-          (progn
-            (delete-other-windows)
-            (split-window-horizontally)
-            (other-window 1)
-            (find-file pdf-file)
-            (other-window 1))
-        (message "PDF export failed."))))
   )
-
-;; open dashboard on startup
-;; (add-hook 'emacs-startup-hook (lambda () (execute-kbd-macro (read-kbd-macro "C-c a d"))))
 
 ;; math preview
 (use-package org-fragtog
