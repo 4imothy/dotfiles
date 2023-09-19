@@ -8,16 +8,6 @@
 
 (server-start)
 
-(setq ibuffer-saved-filter-groups
-      (quote (("default"
-               ;; ("main" (not (name . "^\\*.*\\*$")))
-               ("main" (not (name . "^\\*")))
-              ))))
-
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (ibuffer-switch-to-saved-filter-groups "default")))
-
 ;; make fullscreen and edit menu items
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
@@ -94,10 +84,22 @@
 ;; keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x p c") 'my/compile)
-(global-set-key (kbd "C-c t") 'eshell)
+(global-set-key (kbd "C-c e") 'eshell)
+(global-set-key (kbd "C-c t") 'calendar)
 
 ;; add custom bins to exec-path for eshell
-(add-to-list 'exec-path "~/bin")
+;; (add-to-list 'exec-path "~/bin")
+
+;; ibuffer
+(setq ibuffer-saved-filter-groups
+      (quote (("default"
+               ("main" (not (name . "^\\*")))
+              ))))
+
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
+
 
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
@@ -239,15 +241,15 @@
                 ))
        (todo "TODO|DOING"
              ((org-agenda-sorting-strategy '(timestamp-up))
-              (org-agenda-overriding-header "")))
+              (org-agenda-overriding-header "currents")))
        (todo "EVENT"
              ((org-agenda-sorting-strategy '(timestamp-up))
-              (org-agenda-overriding-header "")))
+              (org-agenda-overriding-header "events")))
        (agenda ""
                ((org-agenda-start-day "+1d")
                 (org-agenda-span 10)
                 (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
-                (org-agenda-overriding-header "")
+                (org-agenda-overriding-header "ten days out")
                 ))
        (todo "DONE"
              ((org-agenda-overriding-header "")))
@@ -495,8 +497,6 @@
   (rust-mode .
              (lambda () (setq indent-tabs-mode nil)))
   :config
-  ;; add rust-analyzer to exec-path for lsp-mode
-  (add-to-list 'exec-path "~/.cargo/bin")
   :init
   (defvar rust-format-on-save t))
 
@@ -511,10 +511,7 @@
 
 ;; go lang
 ;; go install golang.org/x/tools/gopls@latest
-(use-package go-mode
-  :config
-  (add-to-list 'exec-path "~/.go/bin")
-  )
+(use-package go-mode)
 
 (defun eglot-format-buffer-on-save ()
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
