@@ -242,12 +242,7 @@
   (org-default-notes-file (concat org-directory "/tasks.org"))
   (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))
                         (org-default-notes-file . (:maxlevel . 2))))
-  (org-agenda-prefix-format
-   '((agenda . " %?-10T %?-12t %s")
-     (todo . " %-10T %-16(or (org-entry-get (point) \"TIMESTAMP\") (org-entry-get (point) \"SCHEDULED\") (org-entry-get (point) \"DEADLINE\")) ")
-     (tags  . " %i %-12:c")
-     (search . " %i %-12:c")))
-  (org-agenda-remove-tags t)
+
   (org-image-actual-width 400)
   (org-hide-emphasis-markers t)
   (org-tags-column 1)
@@ -262,6 +257,12 @@
         ("DOING" . (:foreground "orange" :weight bold))
         ("DONE" . (:foreground "green" :weight bold))
         ("EVENT" . (:foreground "purple" :weight bold))))
+  (org-agenda-prefix-format
+   '((agenda . " %?-10T %?-12t %s")
+     (todo . " %-10T %-16(or (org-entry-get (point) \"TIMESTAMP\") (org-entry-get (point) \"SCHEDULED\") (org-entry-get (point) \"DEADLINE\")) ")
+     (tags  . " %i %-12:c")
+     (search . " %i %-12:c")))
+  (org-agenda-remove-tags t)
   (org-agenda-span 14)
   ;; (org-startup-with-latex-preview t)
   (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
