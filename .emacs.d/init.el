@@ -85,7 +85,6 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x p c") 'my/compile)
 (global-set-key (kbd "C-c e") 'eshell)
-(global-set-key (kbd "C-c t") 'calendar)
 
 (defun my-eshell-setup ()
   (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)
@@ -112,18 +111,6 @@
                (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#e9e2cb"))))
           (concat "╭─[" colored-pwd "]" "\n" my/eshell-prompt-ending )))
       eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
-
-(defun my-calendar-setup ()
-  "Set up keybindings for the calendar."
-  (local-set-key (kbd "q") 'my-calendar-quit))
-
-(defun my-calendar-quit ()
-  "Quit the calendar and kill the buffer."
-  (interactive)
-  (kill-buffer)
-  (delete-window))
-
-(add-hook 'calendar-mode-hook 'my-calendar-setup)
 
 ;; add custom bins to exec-path for eshell
 ;; (add-to-list 'exec-path "~/bin")
