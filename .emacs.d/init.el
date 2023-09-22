@@ -86,6 +86,21 @@
 (global-set-key (kbd "C-x p c") 'my/compile)
 (global-set-key (kbd "C-c e") 'eshell)
 
+(defun my/clear-buffers ()
+  (interactive)
+  (mapc (lambda (buffer)
+          (unless (or (string= (buffer-name buffer) "*scratch*")
+                      (string= (buffer-name buffer) "*Messages*")
+                      (string= (buffer-name buffer) "*Ibuffer*"))
+            (kill-buffer buffer)))
+        (buffer-list))
+  (ibuffer-update nil t))
+
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c k") 'my/clear-buffers)))
+
+
 (defun my-eshell-setup ()
   (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)
   (setq-local face-remapping-alist '((eshell-prompt (:foreground "#40E0D0")))))
@@ -196,13 +211,13 @@
   )
 
 ;; latex and pdf previews
-(use-package pdf-tools
-  :custom
-  (doc-view-ghostscript-program
-   (substring
-       (shell-command-to-string "where gs")
-       0
-       -1)))
+;; (use-package pdf-tools
+;;   :custom
+;;   (doc-view-ghostscript-program
+;;    (substring
+;;        (shell-command-to-string "where gs")
+;;        0
+;;        -1)))
 
 ;; run a M-x pdf-tools-install
 ;; PDF preview
@@ -542,7 +557,7 @@
  '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
  '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
  '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
- '(org-tag ((t (:inherit default :height 1.0)))))
+ '(org-tag ((t (:foreground "brue" :weight bold)))))
 
 ;;; init.el ends here
 (custom-set-variables
