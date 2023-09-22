@@ -211,15 +211,6 @@
   )
 
 ;; latex and pdf previews
-;; (use-package pdf-tools
-;;   :custom
-;;   (doc-view-ghostscript-program
-;;    (substring
-;;        (shell-command-to-string "where gs")
-;;        0
-;;        -1)))
-
-;; run a M-x pdf-tools-install
 ;; PDF preview
 ;; to install latex:
 ;; - Install basictex
