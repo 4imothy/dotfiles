@@ -100,7 +100,6 @@
           (lambda ()
             (local-set-key (kbd "C-c k") 'my/clear-buffers)))
 
-
 (defun my-eshell-setup ()
   (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)
   (setq-local face-remapping-alist '((eshell-prompt (:foreground "#40E0D0")))))
@@ -126,9 +125,6 @@
                (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#e9e2cb"))))
           (concat "╭─[" colored-pwd "]" "\n" my/eshell-prompt-ending )))
       eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
-
-;; add custom bins to exec-path for eshell
-;; (add-to-list 'exec-path "~/bin")
 
 ;; ibuffer
 (setq ibuffer-saved-filter-groups
@@ -501,6 +497,12 @@
   :config
   :init
   (defvar rust-format-on-save t))
+
+;; Java
+;; After brew install openjdk do the command shown by brew info openJDK
+;; sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+(setenv "JAVA_HOME" (shell-command-to-string "/usr/libexec/java_home"))
+
 
 ;; JavaScript
 ;; - npm install -g typescript typescript-language-server
