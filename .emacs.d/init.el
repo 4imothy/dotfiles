@@ -22,6 +22,7 @@
 ;; start *scratch* with no message and not as a Lisp Interactiobn
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
+(setq doc-view-resolution 500)
 
 ;; font
 (set-face-attribute 'default nil :font "mononoki" :height 200)
@@ -49,6 +50,16 @@
 
 ;; remove whitespace on save
 (add-hook 'before-save-hook 'whitespace-cleanup)
+
+(defun add-newline-at-end-if-missing ()
+  "Add a newline at the end of the buffer if it's missing."
+  (interactive)
+  (save-excursion
+    (goto-char (point-max))
+    (unless (bolp) ; Check if the point is already at the beginning of a line
+      (insert "\n"))))
+
+(add-hook 'before-save-hook 'add-newline-at-end-if-missing)
 
 ;; Dired
 ;; from: https://www.emacswiki.org/emacs/DiredSortDirectoriesFirst
@@ -86,6 +97,18 @@
 (global-set-key (kbd "C-x p c") 'my/compile)
 (global-set-key (kbd "C-c e") 'eshell)
 
+(defvar my/eshell-prompt-ending "╰──% ")
+(setq eshell-prompt-function
+      (lambda ()
+        (let* ((pwd (eshell/pwd))
+               (home (expand-file-name (getenv "HOME")))
+               (abbreviated-pwd (if (string-prefix-p home pwd)
+                                    (concat "~" (substring pwd (length home)))
+                                  pwd))
+               (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#e9e2cb"))))
+          (concat "╭─[" colored-pwd "]" "\n" my/eshell-prompt-ending )))
+      eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
+
 (defun my/clear-buffers ()
   (interactive)
   (mapc (lambda (buffer)
@@ -113,18 +136,6 @@
     (eshell-bol)
     (if (= p (point))
         (beginning-of-line))))
-
-(defvar my/eshell-prompt-ending "╰──%\s")
-(setq eshell-prompt-function
-      (lambda ()
-        (let* ((pwd (eshell/pwd))
-               (home (expand-file-name (getenv "HOME")))
-               (abbreviated-pwd (if (string-prefix-p home pwd)
-                                    (concat "~" (substring pwd (length home)))
-                                  pwd))
-               (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#e9e2cb"))))
-          (concat "╭─[" colored-pwd "]" "\n" my/eshell-prompt-ending )))
-      eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
 
 ;; ibuffer
 (setq ibuffer-saved-filter-groups
@@ -238,7 +249,8 @@
   (org-agenda-tags-column 0)
   (org-fold-show-context-detail t)
   (org-ellipsis "⤵")
-  (org-agenda-files (list "~/Documents/org/"))
+  ;; (org-agenda-files (list "~/Documents/org/"))
+  (org-agenda-files (list org-default-notes-file))
   (org-todo-keywords
    (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)" ))))
   (org-todo-keyword-faces
@@ -553,10 +565,3 @@
  '(org-tag ((t (:foreground "brue" :weight bold)))))
 
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(prettier-js rust-mode pyvenv python-mode corfu magit org-fragtog pdf-tools doom-modeline which-key counsel ivy multiple-cursors)))
