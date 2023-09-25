@@ -97,9 +97,12 @@
 (global-set-key (kbd "C-x p c") 'my/compile)
 (global-set-key (kbd "C-c e") 'eshell)
 
+;; (add-hook 'eshell-mode-hook
+;;           (lambda ()
+;;             (eshell/alias "batt" "pmset -g batt | grep -Eo '\\d+%'")))
 (add-hook 'eshell-mode-hook
           (lambda ()
-            (eshell/alias "batt" "pmset -g batt | grep -Eo '\\d+%'")))
+            (eshell/alias "batt" "pmset -g batt | awk '/InternalBattery/ {print $3, $4}'")))
 
 (defvar my/eshell-prompt-ending "╰──% ")
 (setq eshell-prompt-function
