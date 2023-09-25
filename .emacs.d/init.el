@@ -22,7 +22,7 @@
 ;; start *scratch* with no message and not as a Lisp Interactiobn
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
-(setq doc-view-resolution 500)
+(setq doc-view-resolution 150)
 
 ;; font
 (set-face-attribute 'default nil :font "mononoki" :height 200)
@@ -233,6 +233,7 @@
 (use-package org
   :hook
   (org-mode . org-indent-mode)
+  (org-agenda-mode . (lambda () (hl-line-mode 1)))
   :bind
   ("C-c c" . org-capture)
   ("C-c a" . org-agenda)
