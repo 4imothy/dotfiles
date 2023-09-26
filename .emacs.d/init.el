@@ -97,9 +97,6 @@
 (global-set-key (kbd "C-x p c") 'my/compile)
 (global-set-key (kbd "C-c e") 'eshell)
 
-;; (add-hook 'eshell-mode-hook
-;;           (lambda ()
-;;             (eshell/alias "batt" "pmset -g batt | grep -Eo '\\d+%'")))
 (add-hook 'eshell-mode-hook
           (lambda ()
             (eshell/alias "batt" "pmset -g batt | awk '/InternalBattery/ {print $3, $4}'")))
@@ -243,9 +240,8 @@
   (org-agenda-mode . (lambda () (hl-line-mode 1)))
   :bind
   ("C-c c" . org-capture)
-  ("C-c a" . org-agenda)
+  ("C-c d" . my/dashboard)
   :custom
-  ;; (org-agenda-view-columns-initially t)
   (org-directory "~/Documents/org")
   (org-default-notes-file (concat org-directory "/tasks.org"))
   (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))
@@ -257,7 +253,6 @@
   (org-agenda-tags-column 0)
   (org-fold-show-context-detail t)
   (org-ellipsis "⤵")
-  ;; (org-agenda-files (list "~/Documents/org/"))
   (org-agenda-files (list org-default-notes-file))
   (org-todo-keywords
    (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)" ))))
@@ -302,6 +297,11 @@
       ((org-agenda-window-setup 'only-window)))))
   :config
   (set-face-underline 'org-ellipsis nil)
+
+  (defun my/dashboard ()
+    "Launch the Org Agenda Dashboard custom command."
+    (interactive)
+    (org-agenda nil "d"))
   ;; (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
   ;; (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
 
