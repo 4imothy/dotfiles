@@ -494,6 +494,8 @@
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
+(use-package markdown-mode)
+
 ;; python
 ;; 1. *Command:* /pip3 install python-lsp-server[all]/
 ;; 2. put the pylsp in path
@@ -573,3 +575,10 @@
  '(org-tag ((t (:foreground "brue" :weight bold)))))
 
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(markdown-mode which-key rust-mode pyvenv python-mode prettier-js org-fragtog multiple-cursors magit go-mode doom-modeline counsel corfu)))
