@@ -12,7 +12,7 @@
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(set-fringe-mode 10)
+(set-fringe-mode 5)
 (tooltip-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode 0)
@@ -272,7 +272,10 @@
   (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
   (org-agenda-custom-commands
    '(("d" "Dashboard"
-      ((agenda ""
+      (
+       (tags "+day_plan"
+                  ((org-agenda-overriding-header "")))
+       (agenda ""
                ((org-agenda-start-day (org-today))
                 (org-agenda-span 1)
                 (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
@@ -294,7 +297,8 @@
        (todo "DONE"
              ((org-agenda-overriding-header "")))
        )
-      ((org-agenda-window-setup 'only-window)))))
+      ((org-agenda-window-setup 'only-window)
+       ))))
   :config
   (set-face-underline 'org-ellipsis nil)
 
@@ -572,13 +576,4 @@
  '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
  '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
  '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
- '(org-tag ((t (:foreground "brue" :weight bold)))))
-
-;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(markdown-mode which-key rust-mode pyvenv python-mode prettier-js org-fragtog multiple-cursors magit go-mode doom-modeline counsel corfu)))
+ '(org-tag ((t (:weight bold :height 0.6)))))
