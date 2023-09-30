@@ -246,7 +246,6 @@
   (org-default-notes-file (concat org-directory "/tasks.org"))
   (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))
                         (org-default-notes-file . (:maxlevel . 2))))
-
   (org-image-actual-width 400)
   (org-hide-emphasis-markers t)
   (org-tags-column 1)
