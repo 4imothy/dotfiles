@@ -306,7 +306,7 @@
     "Search for Org files using Ivy."
     (interactive)
     (let ((org-files (directory-files "~/Documents/org" "\\.org$")))
-      (ivy-read "Search Org files: " org-files
+      (ivy-read "Search Orgs: " org-files
                 :action (lambda (file)
                           (find-file file))
                 :caller 'my-org-file-search)))
