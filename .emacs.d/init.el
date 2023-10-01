@@ -241,6 +241,7 @@
   :bind
   ("C-c c" . org-capture)
   ("C-c d" . my/dashboard)
+  ("C-c o" . my/org-file-search)
   :custom
   (org-directory "~/Documents/org")
   (org-default-notes-file (concat org-directory "/tasks.org"))
@@ -300,6 +301,15 @@
        ))))
   :config
   (set-face-underline 'org-ellipsis nil)
+
+  (defun my/org-file-search ()
+    "Search for Org files using Ivy."
+    (interactive)
+    (let ((org-files (directory-files "~/Documents/org" "\\.org$")))
+      (ivy-read "Search Org files: " org-files
+                :action (lambda (file)
+                          (find-file file))
+                :caller 'my-org-file-search)))
 
   (defun my/dashboard ()
     "Launch the Org Agenda Dashboard custom command."
