@@ -105,7 +105,7 @@
 (add-hook 'eshell-mode-hook
           (lambda ()
             (eshell/alias "batt" "pmset -g batt | awk '/InternalBattery/ {print $3, $4}'")
-            (eshell/alias "TODO" "gret TODO")))
+            (eshell/alias "todo" "gret TODO")))
 
 (defvar my/eshell-prompt-ending "╰──% ")
 (setq eshell-prompt-function

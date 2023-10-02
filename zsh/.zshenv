@@ -10,4 +10,4 @@ for dir in "${path_dirs[@]}"; do
 done
 
 export GOPATH="$HOME/.go"
-alias TODO="gret TODO"
+alias todo="gret TODO"
