@@ -552,6 +552,8 @@
 ;; go install golang.org/x/tools/gopls@latest
 (use-package go-mode)
 
+(load-file (concat user-emacs-directory "glsl-mode.el"))
+
 (defun eglot-format-buffer-on-save ()
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 (add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
@@ -586,3 +588,10 @@
  '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
  '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
  '(org-tag ((t (:weight bold :height 0.6)))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(glsl-mode which-key rust-mode pyvenv python-mode prettier-js org-fragtog multiple-cursors markdown-mode magit go-mode doom-modeline counsel corfu)))
