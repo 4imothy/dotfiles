@@ -6,6 +6,11 @@
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
+(defun save-after-capture-refile ()
+  (with-current-buffer (marker-buffer org-capture-last-stored-marker)
+    (save-buffer)))
+(advice-add 'org-capture-refile :after 'save-after-capture-refile)
+
 (server-start)
 
 ;; make fullscreen and edit menu items
