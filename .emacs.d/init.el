@@ -305,11 +305,11 @@
   (defun my/org-file-search ()
     "Search for Org files using Ivy."
     (interactive)
-    (let ((org-files (directory-files "~/Documents/org" "\\.org$")))
+    (let* ((org-directory "~/Documents/org")
+           (org-files (seq-filter (lambda (file) (string-suffix-p ".org" file)) (directory-files org-directory))))
       (ivy-read "Search Orgs: " org-files
                 :action (lambda (file)
-                          (find-file file))
-                :caller 'my-org-file-search)))
+                          (find-file (expand-file-name file org-directory))))))
 
   (defun my/dashboard ()
     "Launch the Org Agenda Dashboard custom command."
