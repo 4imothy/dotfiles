@@ -123,7 +123,6 @@
   (interactive)
   (mapc (lambda (buffer)
           (unless (or (string= (buffer-name buffer) "*scratch*")
-                      (string= (buffer-name buffer) "*Messages*")
                       (string= (buffer-name buffer) "*Ibuffer*"))
             (kill-buffer buffer)))
         (buffer-list))
@@ -168,6 +167,16 @@
     (isearch-repeat (if isearch-forward 'forward))
     (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
     (ad-activate 'isearch-search)))
+
+(defvar school-directory "~/Documents/School")
+(defun my/search-school-directory ()
+  "Search for things in the school-directory."
+  (interactive)
+  (if (file-directory-p school-directory)
+      (counsel-find-file school-directory)
+    (message "School directory not found.")))
+
+(global-set-key (kbd "C-c o s") 'my/search-school-directory)
 
 ;; theme
 (load-theme 'modus-vivendi)
@@ -247,7 +256,7 @@
   :bind
   ("C-c c" . org-capture)
   ("C-c d" . my/dashboard)
-  ("C-c o" . my/org-file-search)
+  ("C-c o o" . my/org-file-search)
   :custom
   (org-directory "~/Documents/org")
   (org-default-notes-file (concat org-directory "/tasks.org"))
@@ -311,7 +320,7 @@
   (defun my/org-file-search ()
     "Search for Org files using Ivy."
     (interactive)
-    (let* ((org-directory "~/Documents/org")
+    (let* (
            (org-files (seq-filter (lambda (file) (string-suffix-p ".org" file)) (directory-files org-directory))))
       (ivy-read "Search Orgs: " org-files
                 :action (lambda (file)
