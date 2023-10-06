@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 current_path=$(pwd)
 # -s for symbolic links
 # -f to force creation
