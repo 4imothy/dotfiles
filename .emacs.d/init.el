@@ -182,10 +182,6 @@
 (load-theme 'modus-vivendi)
 
 ;; packages
-(defvar package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
-
 (require 'package)
 
 (package-initialize)
@@ -194,6 +190,11 @@
   (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t)
+;; (defvar package-archives '(("melpa" . "https://melpa.org/packages/")
+;;                          ("org" . "https://orgmode.org/elpa/")
+;;                          ("elpa" . "https://elpa.gnu.org/packages/")))
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 
 ;; theme
 ;;(load-theme 'wheatgrass)
@@ -253,6 +254,7 @@
   :hook
   (org-mode . org-indent-mode)
   (org-agenda-mode . (lambda () (hl-line-mode 1)))
+  (org-mode . (lambda () (mark-whole-buffer) (org-latex-preview) (deactivate-mark)))
   :bind
   ("C-c c" . org-capture)
   ("C-c d" . my/dashboard)
@@ -283,7 +285,7 @@
      (search . " %i %-12:c")))
   (org-agenda-remove-tags t)
   (org-agenda-span 14)
-  ;; (org-startup-with-latex-preview t)
+  ;; (org-startup-with-latex-preview t) ;; this is very slow for some reason and renders with white background and foreground
   (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
   (org-agenda-custom-commands
    '(("d" "Dashboard"
@@ -522,6 +524,10 @@
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
+(use-package treemacs
+  :bind
+  ("C-c t" . treemacs))
+
 (use-package markdown-mode)
 
 ;; python
@@ -567,7 +573,7 @@
 ;; go install golang.org/x/tools/gopls@latest
 (use-package go-mode)
 
-(load-file (concat user-emacs-directory "glsl-mode.el"))
+(use-package glsl-mode)
 
 (defun eglot-format-buffer-on-save ()
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
