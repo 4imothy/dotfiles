@@ -158,6 +158,7 @@
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
 
+;; M-e to move the point to the search string
 (defadvice isearch-search (after isearch-no-fail activate)
   "Ensure isearch continues in the same direction if no match is found."
   (unless isearch-success
@@ -532,10 +533,15 @@
 (use-package treemacs
   :bind
   ("C-c t" . treemacs)
-  :config
-  (setq treemacs-persist-file (concat user-emacs-directory "treemacs-persist.org"))
-  (setq treemacs-width 25)
+  :custom
+  (treemacs-persist-file (concat user-emacs-directory "treemacs-persist.org"))
+  (treemacs-width 25)
+  (treemacs-filewatch-mode t)
+  (treemacs-follow-mode t)
   )
+
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once))
 
 (use-package markdown-mode)
 
@@ -567,7 +573,6 @@
 ;; After brew install openjdk do the command shown by brew info openJDK
 ;; sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
 (setenv "JAVA_HOME" (shell-command-to-string "/usr/libexec/java_home"))
-
 
 ;; JavaScript
 ;; - npm install -g typescript typescript-language-server
