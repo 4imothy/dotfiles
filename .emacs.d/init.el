@@ -531,7 +531,11 @@
 
 (use-package treemacs
   :bind
-  ("C-c t" . treemacs))
+  ("C-c t" . treemacs)
+  :config
+  (setq treemacs-persist-file (concat user-emacs-directory "treemacs-persist.org"))
+  (setq treemacs-width 25)
+  )
 
 (use-package markdown-mode)
 

@@ -1,0 +1,11 @@
+* Default
+** org
+ - path :: ~/Documents/org
+** dotfiles
+ - path :: ~/Projects/dotfiles
+* clear_net
+** clear_net
+ - path :: ~/Projects/clear_net
+* open_render
+** open_render
+ - path :: ~/Projects/open_render
