@@ -27,7 +27,6 @@
 ;; start *scratch* with no message and not as a Lisp Interactiobn
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
-(setq doc-view-resolution 150)
 
 ;; font
 (set-face-attribute 'default nil :font "mononoki" :height 200)
@@ -209,6 +208,12 @@
   :bind
   ("C->" . 'mc/mark-next-like-this)
   ("C-<" . 'mc/mark-previous-like-this))
+
+(use-package pdf-tools
+  :config
+  (pdf-tools-install)
+  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+  )
 
 ;; suggestions
 (use-package ivy
