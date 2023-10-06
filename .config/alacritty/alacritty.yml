@@ -11,10 +11,10 @@ mouse:
 window:
   dimensions:
     columns: 100
-    lines: 35 
-  padding: 
+    lines: 35
+  padding:
     x: 0
-    y: 0 
+    y: 0
   decorations: buttonless
 
 # font
@@ -65,7 +65,7 @@ schemes:
       blue:    '0x5d81f6'
       magenta: '0x6c71c4'
       cyan:    '0x49a29d'
-      white:   '0xfdf6e3' 
+      white:   '0xfdf6e3'
 
   papercolor_light: &papercolor_light
     # Default colors
