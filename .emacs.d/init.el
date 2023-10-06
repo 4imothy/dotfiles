@@ -217,14 +217,34 @@
   )
 
 ;; suggestions
-(use-package ivy
+(use-package vertico
   :init
-  (ivy-mode 1))
+  (vertico-mode)
+  :custom
+  (vertico-scroll-margin 0)
+  (vertico-count 7)
+  (vertico-resize nil)
+  (vertico-directory-delete-char)
+  (vertico-directory-delete-word)
+  )
 
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-         ("C-x b" . counsel-ibuffer)
-         ("C-x C-f" . counsel-find-file)))
+;; Configure directory extension.
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  ;; More convenient directory navigation commands
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic)
+                     completion-category-defaults nil
+                     completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package which-key
   :custom
@@ -232,7 +252,7 @@
   :config
   (which-key-mode 1))
 
-;; modeline have to M-x nerd-icons-install-fonts to get icons
+;; run M-x nerd-icons-install-fonts
 (use-package doom-modeline
   :custom
   (doom-modeline-height 20)
@@ -542,6 +562,11 @@
 
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once))
+
+;; treemacs default icons are pixelly
+(use-package treemacs-nerd-icons
+  :config
+  (treemacs-load-theme "nerd-icons"))
 
 (use-package markdown-mode)
 
