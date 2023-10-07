@@ -6,11 +6,6 @@
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
-(defun save-after-capture-refile ()
-  (with-current-buffer (marker-buffer org-capture-last-stored-marker)
-    (save-buffer)))
-(advice-add 'org-capture-refile :after 'save-after-capture-refile)
-
 (server-start)
 
 ;; make fullscreen and edit menu items
@@ -280,7 +275,8 @@
   :hook
   (org-mode . org-indent-mode)
   (org-agenda-mode . (lambda () (hl-line-mode 1)))
-  (org-mode . (lambda () (mark-whole-buffer) (org-latex-preview) (deactivate-mark)))
+  ;; fix for the org-startup-with-latex-preview being slow
+  ;; (org-mode . (lambda () (mark-whole-buffer) (org-latex-preview) (deactivate-mark)))
   :bind
   ("C-c c" . org-capture)
   ("C-c d" . my/dashboard)
@@ -344,6 +340,10 @@
        ))))
   :config
   (set-face-underline 'org-ellipsis nil)
+  (defun save-after-capture-refile ()
+    (with-current-buffer (marker-buffer org-capture-last-stored-marker)
+      (save-buffer)))
+  (advice-add 'org-capture-refile :after 'save-after-capture-refile)
 
   (defun my/org-file-search ()
     "Search for Org files using Ivy."
@@ -454,6 +454,30 @@
        entry
        (file org-default-notes-file)
        "* TODO %?\n %i")))
+
+  (defvar keyword-colors
+    '(("jobs" . "#A3D4E4")
+      ("math_307" . "#A5D6A7")
+      ("math_421" . "#FFCC80")
+      ("csds_341" . "#D8B4E2")
+      ("phed_130" . "#D8B4E2")
+      ("csds_393" . "#EF9A9A")
+      ("econ_216" . "#81C7D4")
+      ("aim4" . "#FFF59D")
+      ("rwc" . "#B0BEC5")
+      ("medical" . "#D8B4E2")))
+
+  (defun my-org-agenda-custom-color ()
+    "Customize the appearance of Org Agenda lines with keywords."
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward (regexp-opt (mapcar #'car keyword-colors)) nil t)
+        (let ((keyword (match-string 0)))
+          (add-text-properties
+           (match-beginning 0) (match-end 0)
+           `(face (:foreground ,(cdr (assoc keyword keyword-colors)))))))))
+
+  (add-hook 'org-agenda-finalize-hook #'my-org-agenda-custom-color)
   )
 
 ;; math preview
