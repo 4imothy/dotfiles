@@ -185,19 +185,9 @@
   (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t)
-;; (defvar package-archives '(("melpa" . "https://melpa.org/packages/")
-;;                          ("org" . "https://orgmode.org/elpa/")
-;;                          ("elpa" . "https://elpa.gnu.org/packages/")))
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-
-;; theme
-;;(load-theme 'wheatgrass)
-;;(use-package solarized-theme
-;;  :custom
-;;  (solarized-use-variable-pitch nil) ; don't change the fonts
-;;  :config
-;;  (load-theme 'solarized-light t))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
 
 ;; better editing
 (use-package multiple-cursors
@@ -301,10 +291,10 @@
         ("DONE" . (:foreground "green" :weight bold))
         ("EVENT" . (:foreground "purple" :weight bold))))
   (org-agenda-prefix-format
-   '((agenda . " %?-10T %?-12t %s")
-     (todo . " %-10T %-16(or (org-entry-get (point) \"TIMESTAMP\") (org-entry-get (point) \"SCHEDULED\") (org-entry-get (point) \"DEADLINE\")) ")
-     (tags  . " %i %-12:c")
-     (search . " %i %-12:c")))
+      '((agenda . " %?-10T %?-12t %s")
+        (todo . " %-10T %-14(my/timestamp-format) ")
+        (tags  . " %i %-12:c")
+        (search . " %i %-12:c")))
   (org-agenda-remove-tags t)
   (org-agenda-span 14)
   ;; (org-startup-with-latex-preview t) ;; this is very slow for some reason and renders with white background and foreground
@@ -339,6 +329,15 @@
       ((org-agenda-window-setup 'only-window)
        ))))
   :config
+  (defun my/timestamp-format ()
+    "Custom function to format timestamps for TODO items."
+    (let ((timestamp
+           (or (org-entry-get (point) "TIMESTAMP")
+               (org-entry-get (point) "SCHEDULED")
+               (org-entry-get (point) "DEADLINE"))))
+      (if timestamp
+          (replace-regexp-in-string "[<>]" "" timestamp)
+        "")))
   (set-face-underline 'org-ellipsis nil)
   (defun save-after-capture-refile ()
     (with-current-buffer (marker-buffer org-capture-last-stored-marker)
