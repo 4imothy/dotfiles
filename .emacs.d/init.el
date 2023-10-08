@@ -573,15 +573,15 @@
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
-(use-package treemacs
-  :bind
-  ("C-c t" . treemacs)
-  :custom
-  (treemacs-persist-file (concat user-emacs-directory "treemacs-persist.org"))
-  (treemacs-width 25)
-  (treemacs-filewatch-mode t)
-  (treemacs-follow-mode t)
-  )
+;; (use-package treemacs
+;;   :bind
+;;   ("C-c t" . treemacs)
+;;   :custom
+;;   (treemacs-persist-file (concat user-emacs-directory "treemacs-persist.org"))
+;;   (treemacs-width 25)
+;;   (treemacs-filewatch-mode t)
+;;   (treemacs-follow-mode t)
+;;   )
 
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once))
