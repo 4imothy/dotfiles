@@ -165,11 +165,11 @@
 
 (defvar school-directory "~/Documents/School")
 (defun my/search-school-directory ()
-  "Search for things in the school-directory."
+  "Search for files in school directory using Vertico."
   (interactive)
-  (if (file-directory-p school-directory)
-      (counsel-find-file school-directory)
-    (message "School directory not found.")))
+  (let* ((all-files (directory-files school-directory))
+         (selected-file (completing-read "Search Files: " all-files)))
+      (find-file (expand-file-name selected-file school-directory))))
 
 (global-set-key (kbd "C-c o s") 'my/search-school-directory)
 
@@ -345,13 +345,12 @@
   (advice-add 'org-capture-refile :after 'save-after-capture-refile)
 
   (defun my/org-file-search ()
-    "Search for Org files using Ivy."
+    "Search for Org files using Vertico."
     (interactive)
-    (let* (
-           (org-files (seq-filter (lambda (file) (string-suffix-p ".org" file)) (directory-files org-directory))))
-      (ivy-read "Search Orgs: " org-files
-                :action (lambda (file)
-                          (find-file (expand-file-name file org-directory))))))
+    (let* ((org-files (seq-filter (lambda (file) (string-suffix-p ".org" file))
+                                  (directory-files org-directory)))
+           (selected-file (completing-read "Search Orgs: " org-files)))
+      (find-file (expand-file-name selected-file org-directory))))
 
   (defun my/dashboard ()
     "Launch the Org Agenda Dashboard custom command."
@@ -573,23 +572,22 @@
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
-;; (use-package treemacs
-;;   :bind
-;;   ("C-c t" . treemacs)
-;;   :custom
-;;   (treemacs-persist-file (concat user-emacs-directory "treemacs-persist.org"))
-;;   (treemacs-width 25)
-;;   (treemacs-filewatch-mode t)
-;;   (treemacs-follow-mode t)
-;;   )
 
-(use-package treemacs-icons-dired
-  :hook (dired-mode . treemacs-icons-dired-enable-once))
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
 
-;; treemacs default icons are pixelly
-(use-package treemacs-nerd-icons
+(use-package nerd-icons-completion
   :config
-  (treemacs-load-theme "nerd-icons"))
+  (nerd-icons-completion-mode))
+
+(use-package nerd-icons-ibuffer
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
 
 (use-package markdown-mode)
 
