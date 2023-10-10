@@ -109,8 +109,17 @@
                (abbreviated-pwd (if (string-prefix-p home pwd)
                                     (concat "~" (substring pwd (length home)))
                                   pwd))
-               (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#e9e2cb"))))
-          (concat "╭─[" colored-pwd "]" "\n" my/eshell-prompt-ending )))
+               (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#cba3e9")))
+               (env-name (getenv "VIRTUAL_ENV"))
+               (rel-env-path (when env-name
+                               (file-relative-name env-name pwd))))
+          (concat "╭─"
+                  "[" colored-pwd "]"
+                  (if rel-env-path
+                      (concat "(" (propertize rel-env-path 'face '(:foreground "#e9e2cb")) ")")
+                    "")
+                  "\n" my/eshell-prompt-ending
+                  )))
       eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
 
 (defun my/clear-buffers ()
@@ -454,16 +463,16 @@
        "* TODO %?\n %i")))
 
   (defvar keyword-colors
-    '(("jobs" . "#A3D4E4")
-      ("math_307" . "#A5D6A7")
-      ("math_421" . "#FFCC80")
-      ("csds_341" . "#D8B4E2")
-      ("phed_130" . "#D8B4E2")
-      ("csds_393" . "#EF9A9A")
-      ("econ_216" . "#81C7D4")
-      ("aim4" . "#FFF59D")
-      ("rwc" . "#B0BEC5")
-      ("medical" . "#D8B4E2")))
+    '(("jobs" . "#FFCCCC")
+      ("math_307" . "#CCFFCC")
+      ("math_421" . "#CCCCFF")
+      ("csds_341" . "#FFCCFF")
+      ("phed_130" . "#FFFFCC")
+      ("csds_393" . "#CCFFFF")
+      ("econ_216" . "#FFD9B3")
+      ("aim4" . "#FFE6B3")
+      ("rwc" . "#B3FFE6")
+      ("medical" . "#E6B3E6")))
 
   (defun my-org-agenda-custom-color ()
     "Customize the appearance of Org Agenda lines with keywords."
