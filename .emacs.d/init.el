@@ -102,17 +102,29 @@
             (eshell/alias "todo" "gret TODO")))
 
 (defvar my/eshell-prompt-ending "╰──% ")
+
+(defun my/put-tilde-in-path (path)
+  "Shorten PATH by replacing HOME with ~."
+  (let ((home (expand-file-name (getenv "HOME"))))
+    ;; Remove any trailing slash from the home directory
+    (setq home (if (string-suffix-p "/" home)
+                   (substring home 0 -1)
+                 home))
+    (if (or (string-prefix-p home path)
+            (string-prefix-p (substring home 1) path))
+        (if (string-prefix-p home path)
+            (concat "~" (substring path (length home)))
+          (concat "~" (substring path (1- (length home)))))
+      path)))
+
 (setq eshell-prompt-function
       (lambda ()
         (let* ((pwd (eshell/pwd))
                (home (expand-file-name (getenv "HOME")))
-               (abbreviated-pwd (if (string-prefix-p home pwd)
-                                    (concat "~" (substring pwd (length home)))
-                                  pwd))
-               (colored-pwd (propertize abbreviated-pwd 'face `(:foreground "#cba3e9")))
+               (colored-pwd (propertize (my/put-tilde-in-path pwd) 'face `(:foreground "#cba3e9")))
                (env-name (getenv "VIRTUAL_ENV"))
-               (rel-env-path (when env-name
-                               (file-relative-name env-name pwd))))
+               (rel-env-path (my/put-tilde-in-path (when env-name
+                               (file-relative-name env-name pwd)))))
           (concat "╭─"
                   "[" colored-pwd "]"
                   (if rel-env-path
