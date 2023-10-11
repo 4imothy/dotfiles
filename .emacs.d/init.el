@@ -93,7 +93,7 @@
 
 ;; keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-x p c") 'my/compile)
+(global-set-key (kbd "C-c p c") 'my/compile)
 (global-set-key (kbd "C-c e") 'eshell)
 
 (add-hook 'eshell-mode-hook
@@ -617,6 +617,9 @@
 ;; 2. put the pylsp in path
 (use-package python-mode)
 (use-package pyvenv
+  :bind
+  ("C-c p p a" . 'pyvenv-activate)
+  ("C-c p p d" . 'pyvenv-deactivate)
   :after python-mode
   :config
   (pyvenv-mode 1))
