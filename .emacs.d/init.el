@@ -534,11 +534,11 @@
 (defun my/compile ()
   "Compile depending on the context: project or LaTeX mode."
   (interactive)
-  (if (project-current)
-      (project-compile)
     (if (eq major-mode 'latex-mode)
         (call-interactively 'tex-compile)
-      (call-interactively 'compile))))
+      (if (project-current)
+          (project-compile)
+        (call-interactively 'compile))))
 
 ;; lsp
 (use-package eglot
