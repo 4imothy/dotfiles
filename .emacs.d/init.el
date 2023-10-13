@@ -145,9 +145,7 @@
                        (substring git-output 0 -1)
                      "(no branch)"))
            (status (shell-command-to-string (concat "cd " pwd " && git status --porcelain")))
-           (branch-color (cond
-                          ((string-match "M " status) "red")
-                          (t "green")))
+           (branch-color (if (string-match-p "[^\s]" status) "red" "green"))
            (branch-with-color (propertize branch 'face `(:foreground ,branch-color))))
       (concat "[" branch-with-color "]"))))
 
