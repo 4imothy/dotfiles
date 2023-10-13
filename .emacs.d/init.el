@@ -130,9 +130,27 @@
                   (if rel-env-path
                       (concat "(" (propertize rel-env-path 'face '(:foreground "#e9e2cb")) ")")
                     "")
+                  (curr-dir-git-branch-string pwd)
                   "\n" my/eshell-prompt-ending
                   )))
       eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
+
+(defun curr-dir-git-branch-string (pwd)
+  "Returns current git branch as a string, with different colors based on the status."
+  (interactive)
+  (when (and (eshell-search-path "git")
+             (locate-dominating-file pwd ".git"))
+    (let* ((git-output (shell-command-to-string (concat "cd " pwd " && git branch | grep '\\*' | sed -e 's/^\\* //'")))
+           (branch (if (> (length git-output) 0)
+                       (substring git-output 0 -1)
+                     "(no branch)"))
+           (status (shell-command-to-string (concat "cd " pwd " && git status --porcelain")))
+           (branch-color (cond
+                          ((string= (substring status 0 1) "M") "red")
+                          ((string= (substring status 0 1) "A") "yellow")
+                          (t "green")))
+           (branch-with-color (propertize branch 'face `(:foreground ,branch-color))))
+      (concat "[" branch-with-color "]"))))
 
 (defun my/clear-buffers ()
   (interactive)
@@ -243,7 +261,6 @@
               ("RET" . vertico-directory-enter)
               ("DEL" . vertico-directory-delete-char)
               ("M-DEL" . vertico-directory-delete-word))
-  ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package orderless
