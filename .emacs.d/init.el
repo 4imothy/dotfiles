@@ -130,12 +130,12 @@
                   (if rel-env-path
                       (concat "(" (propertize rel-env-path 'face '(:foreground "#e9e2cb")) ")")
                     "")
-                  (curr-dir-git-branch-string pwd)
+                  (my/curr-dir-git-info pwd)
                   "\n" my/eshell-prompt-ending
                   )))
       eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
 
-(defun curr-dir-git-branch-string (pwd)
+(defun my/curr-dir-git-info (pwd)
   "Returns current git branch as a string, with different colors based on the status."
   (interactive)
   (when (and (eshell-search-path "git")
