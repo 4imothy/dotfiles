@@ -32,7 +32,6 @@ link_dif() {
 emacs_dir=".emacs.d"
 # link_same "$emacs_dir/config.org"
 link_same "$emacs_dir/init.el"
-link_same "$emacs_dir/treemacs-persist.org"
 
 # this has to be an actual file telling emacs to automatically
 # follow git controlled symlinks
