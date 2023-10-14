@@ -76,7 +76,7 @@
   (my/dired-sort))
 
 ;; yes-or-no -> y-or-n
-(fset 'yes-or-no-p 'y-or-n-p)
+(setopt use-short-answers t)
 
 ;; change backups location
 (setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
