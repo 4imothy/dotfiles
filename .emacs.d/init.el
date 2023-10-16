@@ -199,13 +199,12 @@
     (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
     (ad-activate 'isearch-search)))
 
-(defvar school-directory "~/Documents/School")
+(defvar school-directory "~/Documents/school/")
 (defun my/search-school-directory ()
   "Search for files in school directory using Vertico."
   (interactive)
-  (let* ((all-files (directory-files school-directory))
-         (selected-file (completing-read "Search Files: " all-files)))
-      (find-file (expand-file-name selected-file school-directory))))
+  (let ((default-directory school-directory))
+    (call-interactively 'find-file)))
 
 (global-set-key (kbd "C-c o s") 'my/search-school-directory)
 
@@ -309,6 +308,7 @@
   :custom
   (org-directory "~/Documents/org")
   (org-default-notes-file (concat org-directory "/tasks.org"))
+  (org-outline-path-complete-in-steps nil)
   (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))
                         (org-default-notes-file . (:maxlevel . 2))))
   (org-image-actual-width 400)
