@@ -348,15 +348,15 @@
                 ))
        (todo "TODO|DOING"
              ((org-agenda-sorting-strategy '(timestamp-up))
-              (org-agenda-overriding-header "currents")))
+              (org-agenda-overriding-header "")))
        (todo "EVENT"
              ((org-agenda-sorting-strategy '(timestamp-up))
-              (org-agenda-overriding-header "events")))
+              (org-agenda-overriding-header "")))
        (agenda ""
                ((org-agenda-start-day "+1d")
                 (org-agenda-span 10)
                 (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
-                (org-agenda-overriding-header "ten days out")
+                (org-agenda-overriding-header "")
                 ))
        (todo "DONE"
              ((org-agenda-overriding-header "")))
