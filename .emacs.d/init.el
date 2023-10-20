@@ -327,7 +327,7 @@
         ("EVENT" . (:foreground "purple" :weight bold))))
   (org-agenda-prefix-format
       '((agenda . " %?-10T %?-12t %s")
-        (todo . " %-10T %-14(my/timestamp-format) ")
+        (todo . "%-10T%-14(my/timestamp-format) ")
         (tags  . " %i %-12:c")
         (search . " %i %-12:c")))
   (org-agenda-remove-tags t)
