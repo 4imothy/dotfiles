@@ -91,10 +91,20 @@
 (when (string= system-type "darwin")
   (defvar dired-use-ls-dired nil))
 
-;; keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-c p c") 'my/compile)
 (global-set-key (kbd "C-c e") 'eshell)
+
+(global-set-key (kbd "C-c p c") 'my/compile)
+(setq compile-command nil)
+(setq tex-compile-commands '(("latexmk -pdf -pvc %f")))
+(defun my/compile ()
+  "Compile depending on the context: project or LaTeX mode."
+  (interactive)
+    (if (eq major-mode 'latex-mode)
+        (call-interactively 'tex-compile)
+      (if (project-current)
+          (project-compile)
+        (call-interactively 'compile))))
 
 (add-hook 'eshell-mode-hook
           (lambda ()
@@ -536,23 +546,28 @@
   (plist-put org-format-latex-options :background nil)
   )
 
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
+
+(use-package nerd-icons-completion
+  :config
+  (nerd-icons-completion-mode))
+
+(use-package nerd-icons-ibuffer
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
+
 ;; coding
 ;; magit
 (use-package magit
   :bind ("C-x g"   . magit-status)
   )
-
-;; compiling
-(setq compile-command nil)
-(setq tex-compile-commands '(("latexmk -pdf -pvc %f")))
-(defun my/compile ()
-  "Compile depending on the context: project or LaTeX mode."
-  (interactive)
-    (if (eq major-mode 'latex-mode)
-        (call-interactively 'tex-compile)
-      (if (project-current)
-          (project-compile)
-        (call-interactively 'compile))))
 
 ;; lsp
 (use-package eglot
@@ -607,22 +622,13 @@
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
-
-(use-package nerd-icons
+(use-package yasnippet
   :custom
-  (nerd-icons-font-family "Symbols Nerd Font Mono")
+  (yas-snippet-dir "~/.emacs.d/snippets")
+  :config
+  (yas-global-mode 1)
   )
 
-(use-package nerd-icons-completion
-  :config
-  (nerd-icons-completion-mode))
-
-(use-package nerd-icons-ibuffer
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
-
-(use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
 
 (use-package markdown-mode)
 

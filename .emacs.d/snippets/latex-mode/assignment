@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# key: assignment
+# --
+\documentclass[article,12pt]{article}
+\usepackage{tims_shorts}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage[left=0.4in, right=0.4in, top=0.4in, bottom=0.4in]{geometry}
+
+\title{${1:Assignment Title}}
+\author{Timothy Cronin (tlc107)}
+\date{\today}
+
+\pagenumbering{gobble}
+
+\begin{document}
+
+\maketitle
+
+$0
+
+\end{document}
