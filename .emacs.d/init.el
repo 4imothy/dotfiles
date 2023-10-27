@@ -3,6 +3,7 @@
 ;; Nice customizations for Emacs.
 
 ;;; Code:
+;; TODO change the tag colors to use prebuilt colors
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
@@ -131,14 +132,14 @@
       (lambda ()
         (let* ((pwd (eshell/pwd))
                (home (expand-file-name (getenv "HOME")))
-               (colored-pwd (propertize (my/put-tilde-in-path pwd) 'face `(:foreground "#cba3e9")))
+               (colored-pwd (propertize (my/put-tilde-in-path pwd) 'face `(:foreground "MediumPurple1")))
                (env-name (getenv "VIRTUAL_ENV"))
                (rel-env-path (my/put-tilde-in-path (when env-name
                                (file-relative-name env-name pwd)))))
           (concat "╭─"
                   "[" colored-pwd "]"
                   (if rel-env-path
-                      (concat "(" (propertize rel-env-path 'face '(:foreground "#e9e2cb")) ")")
+                      (concat "(" (propertize rel-env-path 'face '(:foreground "LightPink1")) ")")
                     "")
                   (my/curr-dir-git-info pwd)
                   "\n" my/eshell-prompt-ending
@@ -155,7 +156,7 @@
                        (substring git-output 0 -1)
                      "(no branch)"))
            (status (shell-command-to-string (concat "cd " pwd " && git status --porcelain")))
-           (branch-color (if (string-match-p "[^\s]" status) "red" "green"))
+           (branch-color (if (string-match-p "[^\s]" status) "coral1" "SpringGreen2"))
            (branch-with-color (propertize branch 'face `(:foreground ,branch-color))))
       (concat "[" branch-with-color "]"))))
 
@@ -174,7 +175,7 @@
 
 (defun my-eshell-setup ()
   (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)
-  (setq-local face-remapping-alist '((eshell-prompt (:foreground "#40E0D0")))))
+  (setq-local face-remapping-alist '((eshell-prompt (:foreground "SeaGreen3")))))
 
 (add-hook 'eshell-mode-hook 'my-eshell-setup)
 
@@ -374,6 +375,15 @@
       ((org-agenda-window-setup 'only-window)
        ))))
   :config
+  (setq org-emphasis-alist
+  '(("*" (bold :foreground "CadetBlue4"))
+    ("/" italic)
+    ("_" underline)
+    ("=" org-verbatim verbatim)
+    ("~" org-code verbatim)
+    ("+"
+     (:strike-through t))
+    ))
   (defun my/timestamp-format ()
     "Custom function to format timestamps for TODO items."
     (let ((timestamp
@@ -404,16 +414,14 @@
   ;; (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
   ;; (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
 
-  (defvar solarized-green "#859900")
-  (defvar solarized-red "#dc322f")
   ;; from this question: https://emacs.stackexchange.com/questions/7375/can-i-format-cells-in-an-org-mode-table-differently-depending-on-a-formula
   ;; and this person: https://emacs.stackexchange.com/users/15307/erki-der-loony
   (defface positive-face
-    `((t :foreground ,solarized-green))
+    `((t :foreground "SpringGreen2"))
     "Indicates something positive.")
 
   (defface negative-face
-    `((t :foreground ,solarized-red))
+    `((t :foreground "salmon"))
     "Indicates something negative.")
 
   (defun my/match-positive-numbers (limit)
