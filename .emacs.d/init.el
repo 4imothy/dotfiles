@@ -3,7 +3,6 @@
 ;; Nice customizations for Emacs.
 
 ;;; Code:
-;; TODO change the tag colors to use prebuilt colors
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
