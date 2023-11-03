@@ -5,6 +5,7 @@
 ;;; Code:
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
+;; TODO change the defvar colors for tags to named colors
 
 (server-start)
 
@@ -329,7 +330,7 @@
   (org-ellipsis "⤵")
   (org-agenda-files (list org-default-notes-file))
   (org-todo-keywords
-   (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)" ))))
+   (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)"))))
   (org-todo-keyword-faces
       '(("TODO" . (:foreground "red" :weight bold))
         ("DOING" . (:foreground "orange" :weight bold))
@@ -347,7 +348,7 @@
   (org-agenda-custom-commands
    '(("d" "Dashboard"
       (
-       (tags "+day_plan"
+       (tags "+reminders"
                   ((org-agenda-overriding-header "")))
        (agenda ""
                ((org-agenda-start-day (org-today))
@@ -359,15 +360,16 @@
        (todo "TODO|DOING"
              ((org-agenda-sorting-strategy '(timestamp-up))
               (org-agenda-overriding-header "")))
-       (todo "EVENT"
-             ((org-agenda-sorting-strategy '(timestamp-up))
-              (org-agenda-overriding-header "")))
+
        (agenda ""
                ((org-agenda-start-day "+1d")
                 (org-agenda-span 10)
                 (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
                 (org-agenda-overriding-header "")
                 ))
+       (todo "EVENT"
+             ((org-agenda-sorting-strategy '(timestamp-up))
+              (org-agenda-overriding-header "")))
        (todo "DONE"
              ((org-agenda-overriding-header "")))
        )
@@ -635,7 +637,6 @@
   :config
   (yas-global-mode 1)
   )
-
 
 (use-package markdown-mode)
 
