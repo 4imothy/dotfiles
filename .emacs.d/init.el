@@ -110,7 +110,12 @@
 (add-hook 'eshell-mode-hook
           (lambda ()
             (eshell/alias "batt" "pmset -g batt | awk '/InternalBattery/ {print $3, $4}'")
-            (eshell/alias "todo" "gret TODO")))
+            (eshell/alias "todo" "gret TODO")
+            (my/eshell-setup)))
+
+(defun my/eshell-setup ()
+  (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)
+  (set-face-foreground 'eshell-prompt my/green))
 
 (defvar my/eshell-prompt-ending "╰──% ")
 
@@ -156,7 +161,7 @@
                        (substring git-output 0 -1)
                      "(no branch)"))
            (status (shell-command-to-string (concat "cd " pwd " && git status --porcelain")))
-           (branch-color (if (string-match-p "[^\s]" status) "coral1" "SpringGreen2"))
+           (branch-color (if (string-match-p "[^\s]" status) my/red my/green))
            (branch-with-color (propertize branch 'face `(:foreground ,branch-color))))
       (concat "[" branch-with-color "]"))))
 
@@ -172,12 +177,6 @@
 (add-hook 'ibuffer-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c k") 'my/clear-buffers)))
-
-(defun my-eshell-setup ()
-  (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)
-  (setq-local face-remapping-alist '((eshell-prompt (:foreground "SeaGreen3")))))
-
-(add-hook 'eshell-mode-hook 'my-eshell-setup)
 
 (setenv "SHELL" (shell-command-to-string "which zsh"))
 (defun my/eshell-maybe-bol ()
@@ -219,8 +218,31 @@
 
 (global-set-key (kbd "C-c o s") 'my/search-school-directory)
 
-;; theme
+;; theme and colors
 (load-theme 'modus-vivendi)
+
+(defvar my/red "firebrick4")
+(defvar my/light-red "tomato1")
+(defvar my/green "SpringGreen2")
+(defvar my/light-green "DarkSeaGreen1")
+(defvar my/orange "OrangeRed2")
+(defvar my/light-orange "light salmon")
+(defvar my/purple "dark orchid")
+(defvar my/light-purple "plum")
+(defvar my/blue "cadet blue")
+(defvar my/light-blue "light cyan")
+
+(defvar keyword-colors
+  '(("jobs" . "#FFCCCC")
+    ("math_307" . "#CCFFCC")
+    ("math_421" . "#CCCCFF")
+    ("csds_341" . "#FFCCFF")
+    ("phed_130" . "#FFFFCC")
+    ("csds_393" . "#CCFFFF")
+    ("econ_216" . "#FFD9B3")
+    ("aim4" . "#FFE6B3")
+    ("rwc" . "#B3FFE6")
+    ("medical" . "#E6B3E6")))
 
 ;; packages
 (require 'package)
@@ -329,13 +351,6 @@
   (org-fold-show-context-detail t)
   (org-ellipsis "⤵")
   (org-agenda-files (list org-default-notes-file))
-  (org-todo-keywords
-   (quote ((sequence "TODO(t)" "|" "DOING(g)" "|" "DONE(d)" "|" "EVENT(e)"))))
-  (org-todo-keyword-faces
-      '(("TODO" . (:foreground "red" :weight bold))
-        ("DOING" . (:foreground "orange" :weight bold))
-        ("DONE" . (:foreground "green" :weight bold))
-        ("EVENT" . (:foreground "purple" :weight bold))))
   (org-agenda-prefix-format
       '((agenda . " %?-10T %?-12t %s")
         (todo . "%-10T%-14(my/timestamp-format) ")
@@ -343,6 +358,8 @@
         (search . " %i %-12:c")))
   (org-agenda-remove-tags t)
   (org-agenda-span 14)
+  (org-todo-keywords
+      '("TODO(t)" "DOING(g)" "EVENT(e)" "LONG(l)" "DONE(d)"))
   ;; (org-startup-with-latex-preview t) ;; this is very slow for some reason and renders with white background and foreground
   (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
   (org-agenda-custom-commands
@@ -372,10 +389,38 @@
               (org-agenda-overriding-header "")))
        (todo "DONE"
              ((org-agenda-overriding-header "")))
+       (todo "LONG"
+             ((org-agenda-overriding-header "")))
        )
       ((org-agenda-window-setup 'only-window)
        ))))
   :config
+  (with-eval-after-load "org-faces"
+
+    (setq org-todo-keyword-faces
+          '(("TODO" . my/org-todo)
+            ("DOING" . my/org-doing)
+            ("DONE" . my/org-done)
+            ("EVENT" . my/org-event)
+            ("LONG" . my/org-long)))
+
+    (defun my/create-keyword-face (main-color background-color)
+      `((t :weight bold
+           :box (:line-width 2 :color ,main-color)
+           :foreground ,main-color
+           :background ,background-color)))
+
+    (defface my/org-todo (my/create-keyword-face my/red my/light-red)
+      "Face used to display state TODO.")
+    (defface my/org-done (my/create-keyword-face my/green my/light-green)
+      "Face used to display state DONE.")
+    (defface my/org-doing (my/create-keyword-face my/orange my/light-orange)
+      "Face used to display state DOING.")
+    (defface my/org-event (my/create-keyword-face my/purple my/light-purple)
+      "Face used to display state EVENT.")
+    (defface my/org-long (my/create-keyword-face my/blue my/light-blue)
+      "Face used to display state LONG.")
+    )
   (setq org-emphasis-alist
   '(("*" (bold :foreground "CadetBlue4"))
     ("/" italic)
@@ -418,11 +463,11 @@
   ;; from this question: https://emacs.stackexchange.com/questions/7375/can-i-format-cells-in-an-org-mode-table-differently-depending-on-a-formula
   ;; and this person: https://emacs.stackexchange.com/users/15307/erki-der-loony
   (defface positive-face
-    `((t :foreground "SpringGreen2"))
+    `((t :foreground ,my/green))
     "Indicates something positive.")
 
   (defface negative-face
-    `((t :foreground "salmon"))
+    `((t :foreground ,my/red))
     "Indicates something negative.")
 
   (defun my/match-positive-numbers (limit)
@@ -506,18 +551,6 @@
        entry
        (file org-default-notes-file)
        "* TODO %?\n %i")))
-
-  (defvar keyword-colors
-    '(("jobs" . "#FFCCCC")
-      ("math_307" . "#CCFFCC")
-      ("math_421" . "#CCCCFF")
-      ("csds_341" . "#FFCCFF")
-      ("phed_130" . "#FFFFCC")
-      ("csds_393" . "#CCFFFF")
-      ("econ_216" . "#FFD9B3")
-      ("aim4" . "#FFE6B3")
-      ("rwc" . "#B3FFE6")
-      ("medical" . "#E6B3E6")))
 
   (defun my-org-agenda-custom-color ()
     "Customize the appearance of Org Agenda lines with keywords."
