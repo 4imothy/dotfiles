@@ -5,7 +5,6 @@
 ;;; Code:
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
-;; TODO change the defvar colors for tags to named colors
 
 (server-start)
 
@@ -137,14 +136,14 @@
       (lambda ()
         (let* ((pwd (eshell/pwd))
                (home (expand-file-name (getenv "HOME")))
-               (colored-pwd (propertize (my/put-tilde-in-path pwd) 'face `(:foreground "MediumPurple1")))
+               (colored-pwd (propertize (my/put-tilde-in-path pwd) 'face `(:foreground ,my/purple)))
                (env-name (getenv "VIRTUAL_ENV"))
                (rel-env-path (my/put-tilde-in-path (when env-name
                                (file-relative-name env-name pwd)))))
           (concat "╭─"
                   "[" colored-pwd "]"
                   (if rel-env-path
-                      (concat "(" (propertize rel-env-path 'face '(:foreground "LightPink1")) ")")
+                      (concat "(" (propertize rel-env-path 'face '(:foreground ,my/light-purple)) ")")
                     "")
                   (my/curr-dir-git-info pwd)
                   "\n" my/eshell-prompt-ending
@@ -227,22 +226,12 @@
 (defvar my/light-green "DarkSeaGreen1")
 (defvar my/orange "OrangeRed2")
 (defvar my/light-orange "light salmon")
-(defvar my/purple "dark orchid")
+(defvar my/purple "orchid")
 (defvar my/light-purple "plum")
 (defvar my/blue "cadet blue")
 (defvar my/light-blue "light cyan")
-
-(defvar keyword-colors
-  '(("jobs" . "#FFCCCC")
-    ("math_307" . "#CCFFCC")
-    ("math_421" . "#CCCCFF")
-    ("csds_341" . "#FFCCFF")
-    ("phed_130" . "#FFFFCC")
-    ("csds_393" . "#CCFFFF")
-    ("econ_216" . "#FFD9B3")
-    ("aim4" . "#FFE6B3")
-    ("rwc" . "#B3FFE6")
-    ("medical" . "#E6B3E6")))
+(defvar my/brown "sandy brown")
+(defvar my/yellow "LightGoldenrod1")
 
 ;; packages
 (require 'package)
@@ -552,17 +541,29 @@
        (file org-default-notes-file)
        "* TODO %?\n %i")))
 
-  (defun my-org-agenda-custom-color ()
+  (defvar my/tag-colors
+    `(("jobs" . ,my/blue)
+      ("math_307" . ,my/green)
+      ("math_421" . ,my/orange)
+      ("csds_341" . ,my/purple)
+      ("phed_130" . ,my/light-purple)
+      ("csds_393" . ,my/light-blue)
+      ("econ_216" . ,my/brown)
+      ("aim4" . ,my/yellow)
+      ("rwc" . ,my/light-green)
+      ("medical" . ,my/light-red)))
+
+  (defun my/org-agenda-custom-color ()
     "Customize the appearance of Org Agenda lines with keywords."
     (save-excursion
       (goto-char (point-min))
-      (while (re-search-forward (regexp-opt (mapcar #'car keyword-colors)) nil t)
+      (while (re-search-forward (regexp-opt (mapcar #'car my/tag-colors)) nil t)
         (let ((keyword (match-string 0)))
           (add-text-properties
            (match-beginning 0) (match-end 0)
-           `(face (:foreground ,(cdr (assoc keyword keyword-colors)))))))))
+           `(face (:foreground ,(cdr (assoc keyword my/tag-colors)))))))))
 
-  (add-hook 'org-agenda-finalize-hook #'my-org-agenda-custom-color)
+  (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
   )
 
 ;; math preview
