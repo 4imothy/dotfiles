@@ -231,7 +231,8 @@
 (defvar my/blue "cadet blue")
 (defvar my/light-blue "light cyan")
 (defvar my/brown "sandy brown")
-(defvar my/yellow "LightGoldenrod1")
+(defvar my/yellow "DarkGoldenrod1")
+(defvar my/light-yellow "LightGoldenrod1")
 
 ;; packages
 (require 'package)
@@ -354,8 +355,6 @@
   (org-agenda-custom-commands
    '(("d" "Dashboard"
       (
-       (tags "+reminders"
-                  ((org-agenda-overriding-header "")))
        (agenda ""
                ((org-agenda-start-day (org-today))
                 (org-agenda-span 1)
@@ -364,9 +363,8 @@
                 (org-agenda-overriding-header "")
                 ))
        (todo "TODO|DOING"
-             ((org-agenda-sorting-strategy '(timestamp-up))
+             ((org-agenda-sorting-strategy '(timestamp-up priority-down))
               (org-agenda-overriding-header "")))
-
        (agenda ""
                ((org-agenda-start-day "+1d")
                 (org-agenda-span 10)
@@ -547,6 +545,7 @@
       ("math_421" . ,my/orange)
       ("csds_341" . ,my/purple)
       ("phed_130" . ,my/light-purple)
+      ("phed_24b" . ,my/light-purple)
       ("csds_393" . ,my/light-blue)
       ("econ_216" . ,my/brown)
       ("aim4" . ,my/yellow)
