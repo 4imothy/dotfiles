@@ -16,10 +16,10 @@
 (tooltip-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode 0)
+(windmove-default-keybindings)
 (setq inhibit-startup-screen t)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
-;; start *scratch* with no message and not as a Lisp Interactiobn
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
 
