@@ -1,79 +1,59 @@
-/* TODO need to fix the urlBar coloring on private mode cause only using white background */
 :root {
     --my-font-size: 13px;
-    --my-tab-start: 40vw;
-    --my-nav-bar-start: 60vw;
+    --my-tab-lshift: 40vw;
+    --my-nav-bar-rshift: 60vw;
 }
 
 #tabbrowser-tabs .tab-text{
     font-size: var(--my-font-size);
 }
 
+#urlbar {
+    font-size: var(--my-font-size);
+}
+
 #personal-bookmarks .bookmark-item > .toolbarbutton-icon {
-    height:10px !important;
-}
-
-/* Title bar */
-.titlebar-buttonbox {
-  display: none !important;
-}
-
-.titlebar-spacer {
-  display: none !important;
-}
-
-#TabsToolbar {
-  margin-left: var(--my-tab-start) !important; /* offset for url bar and icons */
+    height: 1vh !important;
 }
 
 #tabbrowser-tabs {
-  --tab-min-height: 29px !important;
+  --tab-min-height: 2vh !important;
   border: none !important;
   box-shadow: none !important;
 }
 
-/* Nav bar */
+.browserContainer > findbar {
+    order: -1 !important;
+    border-top: none !important;
+    border-bottom: 1px solid ThreeDShadow !important;
+}
+
+#TabsToolbar {
+  margin-left: var(--my-tab-lshift) !important;
+}
+
+/* Nav bar*/
 #nav-bar {
-  background: transparent !important;
-  margin-top: -36px !important;
-  margin-right: var(--my-nav-bar-start) !important; /* offset for tab bar */
-  padding-bottom: 1px !important; /* symmetry */
+    background: transparent !important;
+    margin-right: var(--my-nav-bar-rshift) !important;
+    margin-top: -4vh !important;
+}
+
+.titlebar-buttonbox {
+    display: none !important;
+}
+
+.titlebar-spacer {
+    display: none !important;
 }
 
 #unified-extensions-button{
-    width: 3px;
+    width: 0;
     padding-inline: 0 !important
 }
 
 #unified-extensions-button > .toolbarbutton-icon {
     width: 0 !important;
-}
-
-/* #back-button {
-  display: none !important;
-} */
-
-/* #forward-button {
-  display: none !important;
-} */
-
-/* #tracking-protection-icon-container {
-  display: none !important;
-} */
-
-#urlbar-container {
-  min-width: 175px !important;
-}
-
-#urlbar-background {
-  animation: none !important;
-}
-
-#urlbar {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  transition: min-width 0.2s;
 }
 
 #page-action-buttons {
@@ -84,41 +64,14 @@
   display: none !important;
 }
 
-:root{
-  --toolbar-field-background-color: var(--toolbar-field-non-lwt-bgcolor);
-  --toolbar-field-focus-background-color: var(--lwt-toolbar-field-focus,Field);
+#tracking-protection-icon-container {
+    display: none !important;
 }
 
-#urlbar-container,
-#urlbar {
-  position: static !important;
-  display: -moz-box !important;
-  font-size: var(--my-font-size)
+#page-action-buttons {
+    display: none !important;
 }
 
-.urlbarView {
-  position: absolute !important;
-  width: 40vw !important;
-  border-width: 1px 0;
-  top: calc(vnar(--urlbar-toolbar-height) + 1px);
-  background-color: hsla(0, 0%, 100%, 1);
-  border-radius: var(--toolbarbutton-border-radius);
-  z-index: 4;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-}
-
-#urlbar > #urlbar-input-container {
-  padding: 0px !important;
-  width: auto !important;
-  height: auto !important;
-}
-
-#urlbar > #urlbar-background {
-  display: none !important;
-}
-
-#urlbar > #urlbar-input-container::before {
-  content: "";
-  display: -moz-box;
-  height: 30px;
+#PanelUI-button {
+    display: none !important;
 }
