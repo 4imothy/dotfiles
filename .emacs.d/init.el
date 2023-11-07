@@ -244,8 +244,14 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")
-                           ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+
+;; (use-package rainbow-mode) This is failing right now for some reason, can't even package-install rainbow-mode
 
 ;; better editing
 (use-package multiple-cursors
@@ -760,4 +766,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(glsl-mode which-key rust-mode pyvenv python-mode prettier-js org-fragtog multiple-cursors markdown-mode magit go-mode doom-modeline counsel corfu)))
+   '(rainbow-mode glsl-mode which-key rust-mode pyvenv python-mode prettier-js org-fragtog multiple-cursors markdown-mode magit go-mode doom-modeline counsel corfu)))
