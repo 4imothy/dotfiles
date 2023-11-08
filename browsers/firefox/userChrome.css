@@ -1,7 +1,9 @@
 :root {
     --my-font-size: 13px;
-    --my-tab-lshift: 40vw;
-    --my-nav-bar-rshift: 60vw;
+    --my-tab-lshift: 30vw;
+    --my-nav-bar-rshift: 70vw;
+    --my-nav-bar-dshift: 36px;
+    --my-bookmarks-height: 15px;
 }
 
 #tabbrowser-tabs .tab-text{
@@ -13,7 +15,7 @@
 }
 
 #personal-bookmarks .bookmark-item > .toolbarbutton-icon {
-    height: 1.5vh !important;
+    height: var(--my-bookmarks-height) !important;
 }
 
 #tabbrowser-tabs {
@@ -25,18 +27,21 @@
 .browserContainer > findbar {
     order: -1 !important;
     border-top: none !important;
-    border-bottom: 1px solid ThreeDShadow !important;
 }
 
 #TabsToolbar {
-  margin-left: var(--my-tab-lshift) !important;
+    margin-left: var(--my-tab-lshift) !important;
 }
 
 /* Nav bar*/
 #nav-bar {
     background: transparent !important;
     margin-right: var(--my-nav-bar-rshift) !important;
-    margin-top: -4vh !important;
+    margin-top: calc(-1 *var(--my-nav-bar-dshift)) !important;
+}
+
+#urlbar-container {
+  min-width: 175px !important;
 }
 
 .titlebar-buttonbox {
@@ -78,4 +83,11 @@
 
 #tabs-newtab-button {
      display:none !important;
+}
+
+
+#urlbar-container { max-width: 10px !important; }
+
+#urlbar[breakout-extend] {
+    width: 50vw !important;
 }
