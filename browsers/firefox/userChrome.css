@@ -13,7 +13,7 @@
 }
 
 #personal-bookmarks .bookmark-item > .toolbarbutton-icon {
-    height: 1vh !important;
+    height: 1.5vh !important;
 }
 
 #tabbrowser-tabs {
@@ -74,4 +74,8 @@
 
 #PanelUI-button {
     display: none !important;
+}
+
+#tabs-newtab-button {
+     display:none !important;
 }
