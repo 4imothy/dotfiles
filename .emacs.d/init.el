@@ -60,6 +60,24 @@
 
 (add-hook 'before-save-hook 'add-newline-at-end-if-missing)
 
+;; theme and colors
+(load-theme 'modus-vivendi)
+(load-theme 'modus-vivendi)
+
+(defvar my/red "#FF6B6B")
+(defvar my/light-red "#FFD6E2")
+(defvar my/green "#98FB98")
+(defvar my/light-green "#98FB98")
+(defvar my/orange "#F4A460")
+(defvar my/light-orange "#FFDAB9")
+(defvar my/purple "#BA55D3")
+(defvar my/light-purple "#D8BFD8")
+(defvar my/blue "#B0C4DE")
+(defvar my/light-blue "#E0FFFF")
+(defvar my/brown "#DEB887")
+(defvar my/yellow "#FAFAD2")
+(defvar my/light-yellow "#FFFACD")
+
 ;; Dired
 ;; from: https://www.emacswiki.org/emacs/DiredSortDirectoriesFirst
 (defun my/dired-sort ()
@@ -217,23 +235,6 @@
 
 (global-set-key (kbd "C-c o s") 'my/search-school-directory)
 
-;; theme and colors
-(load-theme 'modus-vivendi)
-
-(defvar my/red "lightcoral")
-(defvar my/light-red "mistyrose")
-(defvar my/green "lightseagreen")
-(defvar my/light-green "palegreen")
-(defvar my/orange "sandybrown")
-(defvar my/light-orange "peachpuff")
-(defvar my/purple "MediumOrchid")
-(defvar my/light-purple "thistle")
-(defvar my/blue "lightsteelblue")
-(defvar my/light-blue "lightcyan")
-(defvar my/brown "burlywood")
-(defvar my/yellow "lightgoldenrodyellow")
-(defvar my/light-yellow "lemonchiffon")
-
 ;; packages
 (require 'package)
 
@@ -247,11 +248,13 @@
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(unless package-archive-contents
-  (package-refresh-contents))
+;; (package-refresh-contents)
 
-
-;; (use-package rainbow-mode) This is failing right now for some reason, can't even package-install rainbow-mode
+(use-package rainbow-mode
+  :hook (emacs-lisp-mode text-mode lisp-mode)
+  :custom
+  (rainbow-x-colors nil)
+  )
 
 ;; better editing
 (use-package multiple-cursors
