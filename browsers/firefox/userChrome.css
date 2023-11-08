@@ -1,4 +1,3 @@
-/* TODO remove the space between reload and URL bar*/
 :root {
     --my-font-size: 13px;
     --my-tab-lshift: 30vw;
@@ -13,6 +12,14 @@
 
 #urlbar {
     font-size: var(--my-font-size);
+}
+
+#urlbar-container {
+    width: 12vw  !important;
+}
+
+#urlbar[breakout-extend] {
+    width: 50vw !important;
 }
 
 #personal-bookmarks .bookmark-item > .toolbarbutton-icon {
@@ -39,10 +46,6 @@
     background: transparent !important;
     margin-right: var(--my-nav-bar-rshift) !important;
     margin-top: calc(-1 *var(--my-nav-bar-dshift)) !important;
-}
-
-#urlbar-container {
-  min-width: 175px !important;
 }
 
 .titlebar-buttonbox {
@@ -86,9 +89,14 @@
      display:none !important;
 }
 
+#urlbar[breakout],
+#urlbar[breakout][breakout-extend] {
+    top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+    left: 0 !important;
+}
 
-#urlbar-container { max-width: 10px !important; }
-
-#urlbar[breakout-extend] {
-    width: 50vw !important;
+#urlbar[breakout][breakout-extend] > #urlbar-input-container,
+#urlbar-input-container {
+    height: var(--urlbar-height) !important;
+    padding-inline: unset !important;
 }
