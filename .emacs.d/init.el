@@ -1,12 +1,35 @@
 ;;; init.el --- Timothy's cool init file
 ;;; Commentary:
 ;; Nice customizations for Emacs.
+;; TODO add nice default configs to search for
 
 ;;; Code:
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
 (server-start)
+
+(defvar school-directory "~/Documents/school/")
+(defvar my-configurations
+  '(("Math 307" "~/Documents/school/math_307/notes.org" "~/Documents/school/math_307/textbook_needs_errata.pdf")
+    ("Math 421" "~/Documents/school/math_421/notes.org" nil)))
+
+(defun my-open-two-files-vertically (a b)
+  (delete-other-windows)
+  (find-file a)
+  (when b
+    (split-window-right)
+    (other-window 1)
+    (find-file b)))
+
+(defun my-pick-configuration ()
+  (interactive)
+  (let* ((chosen-config (completing-read "Pick a configuration: " my-configurations nil t))
+         (selected-config (assoc chosen-config my-configurations)))
+    (when selected-config
+      (my-open-two-files-vertically (cadr selected-config) (caddr selected-config)))))
+
+(global-set-key (kbd "C-c o c") 'my-pick-configuration)
 
 ;; make fullscreen and edit menu items
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
@@ -226,7 +249,6 @@
     (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
     (ad-activate 'isearch-search)))
 
-(defvar school-directory "~/Documents/school/")
 (defun my/search-school-directory ()
   "Search for files in school directory using Vertico."
   (interactive)
