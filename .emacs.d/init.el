@@ -9,27 +9,21 @@
 
 (server-start)
 
-(defvar school-directory "~/Documents/school/")
-(defvar my-configurations
-  '(("Math 307" "~/Documents/school/math_307/notes.org" "~/Documents/school/math_307/textbook_needs_errata.pdf")
-    ("Math 421" "~/Documents/school/math_421/notes.org" nil)))
-
-(defun my-open-two-files-vertically (a b)
-  (delete-other-windows)
-  (find-file a)
-  (when b
-    (split-window-right)
-    (other-window 1)
-    (find-file b)))
-
-(defun my-pick-configuration ()
-  (interactive)
-  (let* ((chosen-config (completing-read "Pick a configuration: " my-configurations nil t))
-         (selected-config (assoc chosen-config my-configurations)))
-    (when selected-config
-      (my-open-two-files-vertically (cadr selected-config) (caddr selected-config)))))
-
-(global-set-key (kbd "C-c o c") 'my-pick-configuration)
+(defvar my/school-dir "~/Documents/school/")
+(defvar my/307-dir (expand-file-name "math_307" my/school-dir))
+(defvar my/421-dir (expand-file-name "math_421" my/school-dir))
+(defvar my/307-textbook (expand-file-name "textbook_needs_errata.pdf" my/307-dir))
+(defvar my/window-configs
+  (list
+    (list "307 Notes"
+          (expand-file-name "notes.org" my/307-dir)
+          my/307-textbook)
+    (list "307 HW"
+          my/307-textbook
+          nil)
+    (list "421 Notes"
+          (expand-file-name "notes.org" my/421-dir)
+          nil)))
 
 ;; make fullscreen and edit menu items
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
@@ -134,8 +128,8 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c e") 'eshell)
-
 (global-set-key (kbd "C-c p c") 'my/compile)
+(global-set-key (kbd "C-c o w") 'my/pick-window-config)
 (setq compile-command nil)
 (setq tex-compile-commands '(("latexmk -pdf -pvc %f")))
 (defun my/compile ()
@@ -205,6 +199,43 @@
            (branch-with-color (propertize branch 'face `(:foreground ,branch-color))))
       (concat "[" branch-with-color "]"))))
 
+(setenv "SHELL" (shell-command-to-string "which zsh"))
+(defun my/eshell-maybe-bol ()
+  (interactive)
+  (let ((p (point)))
+    (eshell-bol)
+    (if (= p (point))
+        (beginning-of-line))))
+
+(defun my/fit-file (file)
+  (when (string-suffix-p ".pdf" file)
+    (pdf-view-fit-page-to-window))
+  )
+
+(defun my/open-two-files-vertically (a b)
+  (delete-other-windows)
+  (find-file a)
+  (when (not b)
+    (my/fit-file a))
+  (when b
+    (split-window-right)
+    (my/fit-file a)
+    (other-window 1)
+    (find-file b)
+    (my/fit-file b)
+    (other-window 1)
+    ))
+
+(defun my/pick-window-config ()
+  (interactive)
+  (let* ((chosen-config (completing-read "Pick a configuration: " my/window-configs nil t))
+         (selected-config (assoc chosen-config my/window-configs))
+         (file-a (if selected-config (car (cdr selected-config))))
+         (file-b (if selected-config (car (cdr (cdr selected-config))))))
+    (when selected-config
+      (my/open-two-files-vertically file-a file-b))))
+
+;; ibuffer
 (defun my/clear-buffers ()
   (interactive)
   (mapc (lambda (buffer)
@@ -218,15 +249,6 @@
           (lambda ()
             (local-set-key (kbd "C-c k") 'my/clear-buffers)))
 
-(setenv "SHELL" (shell-command-to-string "which zsh"))
-(defun my/eshell-maybe-bol ()
-  (interactive)
-  (let ((p (point)))
-    (eshell-bol)
-    (if (= p (point))
-        (beginning-of-line))))
-
-;; ibuffer
 (setq ibuffer-saved-filter-groups
       (quote (("default"
                ("main"  (not (name . "^\\*")))
@@ -252,7 +274,7 @@
 (defun my/search-school-directory ()
   "Search for files in school directory using Vertico."
   (interactive)
-  (let ((default-directory school-directory))
+  (let ((default-directory my/school-dir))
     (call-interactively 'find-file)))
 
 (global-set-key (kbd "C-c o s") 'my/search-school-directory)
