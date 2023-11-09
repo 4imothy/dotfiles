@@ -460,7 +460,17 @@
       "Face used to display state EVENT.")
     (defface my/org-long (my/create-keyword-face my/blue my/light-blue)
       "Face used to display state LONG.")
+    (set-face-attribute 'org-level-1 nil :inherit 'outline-1 :height 1.3)
+    (set-face-attribute 'org-level-2 nil :inherit 'outline-2 :height 1.25)
+    (set-face-attribute 'org-level-3 nil :inherit 'outline-3 :height 1.2)
+    (set-face-attribute 'org-level-4 nil :inherit 'outline-4 :height 1.15)
+    (set-face-attribute 'org-level-5 nil :inherit 'outline-5 :height 1.1)
+    (set-face-attribute 'org-level-6 nil :inherit 'outline-6 :height 1.05)
+    (set-face-attribute 'org-level-7 nil :inherit 'outline-7 :height 1.0)
+    (set-face-attribute 'org-level-8 nil :inherit 'outline-8 :height 1.0)
+    (set-face-attribute 'org-tag nil :height 0.6)
     )
+
   (setq org-emphasis-alist
   '(("*" (bold :foreground "CadetBlue4"))
     ("/" italic)
@@ -792,25 +802,3 @@
 ;; - brew install zig
 ;; - LSP:
 ;; -brew install zls
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
- '(org-level-6 ((t (:inherit outline-6 :height 1.05))))
- '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
- '(org-level-8 ((t (:inherit outline-8 :height 1.0))))
- '(org-tag ((t (:weight bold :height 0.6)))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(rainbow-mode glsl-mode which-key rust-mode pyvenv python-mode prettier-js org-fragtog multiple-cursors markdown-mode magit go-mode doom-modeline counsel corfu)))
