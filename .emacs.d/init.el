@@ -9,10 +9,15 @@
 
 (server-start)
 
-(defvar my/school-dir "~/Documents/school/")
+;; TODO change these to concats so it is faster
+(defvar my/docs-dir "~/Documents")
+(defvar my/school-dir (expand-file-name "school" my/docs-dir))
 (defvar my/307-dir (expand-file-name "math_307" my/school-dir))
 (defvar my/421-dir (expand-file-name "math_421" my/school-dir))
 (defvar my/307-textbook (expand-file-name "textbook_needs_errata.pdf" my/307-dir))
+(defvar my/apps-dir (expand-file-name "applications" my/docs-dir))
+(defvar my/cover-letter-dir (expand-file-name "cover_letter" my/apps-dir))
+(defvar my/resume-dir (expand-file-name "resume" my/apps-dir))
 (defvar my/window-configs
   (list
     (list "307 Notes"
@@ -23,7 +28,16 @@
           nil)
     (list "421 Notes"
           (expand-file-name "notes.org" my/421-dir)
-          nil)))
+          nil)
+    (list "cover letter"
+          (expand-file-name "cover_letter.tex" my/cover-letter-dir)
+          (expand-file-name "cover_letter.pdf" my/cover-letter-dir)
+          )
+    (list "resume"
+          (expand-file-name "resume.tex" my/resume-dir)
+          (expand-file-name "resume.pdf" my/resume-dir)
+          )
+    ))
 
 ;; make fullscreen and edit menu items
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
