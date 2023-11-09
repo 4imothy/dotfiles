@@ -10,32 +10,32 @@
 (server-start)
 
 ;; TODO change these to concats so it is faster
-(defvar my/docs-dir "~/Documents")
-(defvar my/school-dir (expand-file-name "school" my/docs-dir))
-(defvar my/307-dir (expand-file-name "math_307" my/school-dir))
-(defvar my/421-dir (expand-file-name "math_421" my/school-dir))
-(defvar my/307-textbook (expand-file-name "textbook_needs_errata.pdf" my/307-dir))
-(defvar my/apps-dir (expand-file-name "applications" my/docs-dir))
-(defvar my/cover-letter-dir (expand-file-name "cover_letter" my/apps-dir))
-(defvar my/resume-dir (expand-file-name "resume" my/apps-dir))
+(defvar my/docs-dir "~/Documents/")
+(defvar my/school-dir (concat my/docs-dir "school/"))
+(defvar my/307-dir (concat my/school-dir "math_307/"))
+(defvar my/421-dir (concat my/school-dir "math_421/"))
+(defvar my/307-textbook (concat my/307-dir "textbook_needs_errata.pdf"))
+(defvar my/apps-dir (concat my/docs-dir "applications/"))
+(defvar my/cover-letter-dir (concat my/apps-dir "cover_letter/"))
+(defvar my/resume-dir (concat my/apps-dir "resume/"))
 (defvar my/window-configs
   (list
     (list "307 Notes"
-          (expand-file-name "notes.org" my/307-dir)
+          (concat my/307-dir "notes.org")
           my/307-textbook)
     (list "307 HW"
           my/307-textbook
           nil)
     (list "421 Notes"
-          (expand-file-name "notes.org" my/421-dir)
+          (concat my/421-dir "notes.org")
           nil)
     (list "cover letter"
-          (expand-file-name "cover_letter.tex" my/cover-letter-dir)
-          (expand-file-name "cover_letter.pdf" my/cover-letter-dir)
+          (concat my/cover-letter-dir "cover_letter.tex")
+          (concat my/cover-letter-dir "cover_letter.pdf")
           )
     (list "resume"
-          (expand-file-name "resume.tex" my/resume-dir)
-          (expand-file-name "resume.pdf" my/resume-dir)
+          (concat my/resume-dir "resume.tex")
+          (concat my/resume-dir "resume.pdf")
           )
     ))
 
