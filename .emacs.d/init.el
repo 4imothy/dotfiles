@@ -159,6 +159,7 @@
           (lambda ()
             (eshell/alias "batt" "pmset -g batt | awk '/InternalBattery/ {print $3, $4}'")
             (eshell/alias "todo" "gret TODO")
+            (eshell/alias "clear" "clear-scrollback")
             (my/eshell-setup)))
 
 (defun my/eshell-setup ()
@@ -430,7 +431,7 @@
                 (org-agenda-overriding-header "")
                 ))
        (todo "TODO|DOING"
-             ((org-agenda-sorting-strategy '(timestamp-up priority-down))
+             ((org-agenda-sorting-strategy '(priority-down timestamp-up))
               (org-agenda-overriding-header "")))
        (agenda ""
                ((org-agenda-start-day "+1d")
