@@ -641,7 +641,7 @@
            `(face (:foreground ,(cdr (assoc keyword my/tag-colors)))))))))
 
   (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
-  )
+  (setq org-default-priority ?C))
 
 ;; math preview
 (use-package org-fragtog
