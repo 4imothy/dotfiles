@@ -1,7 +1,6 @@
 ;;; init.el --- Timothy's cool init file
 ;;; Commentary:
 ;; Nice customizations for Emacs.
-;; TODO add nice default configs to search for
 
 ;;; Code:
 ;; useful for quickly debugging emacs
@@ -9,7 +8,22 @@
 
 (server-start)
 
-;; TODO change these to concats so it is faster
+;; things that will be changed often
+
+(defvar my/red "#FF6B6B")
+(defvar my/light-red "#FFD6E2")
+(defvar my/green "#98FB98")
+(defvar my/light-green "#98FB98")
+(defvar my/orange "#F4A460")
+(defvar my/light-orange "#FFDAB9")
+(defvar my/purple "#BA55D3")
+(defvar my/light-purple "#D8BFD8")
+(defvar my/blue "#B0C4DE")
+(defvar my/light-blue "#E0FFFF")
+(defvar my/brown "#DEB887")
+(defvar my/yellow "#FAFAD2")
+(defvar my/light-yellow "#FFFACD")
+
 (defvar my/docs-dir "~/Documents/")
 (defvar my/school-dir (concat my/docs-dir "school/"))
 (defvar my/307-dir (concat my/school-dir "math_307/"))
@@ -39,7 +53,7 @@
           )
     ))
 
-;; make fullscreen and edit menu items
+;; Basic styling
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -53,61 +67,33 @@
 (setq ring-bell-function 'ignore)
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
-
-;; font
 (set-face-attribute 'default nil :font "mononoki" :height 200)
-
-;; tabs
-(setq-default tab-width 4
-              indent-tabs-mode nil)
-(setq-default c-basic-offset 4)
-(setq-default python-indent-offset 4)
-
-;; enable line and column numbers
 (column-number-mode)
-
-;; enable line numbers for some modes
 (dolist (mode '(text-mode-hook
                 prog-mode-hook
                 conf-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
+(load-theme 'modus-vivendi)
 
-;; line wrapping
+;; Buffer things
+(setq-default tab-width 4
+              indent-tabs-mode nil)
+(setq-default c-basic-offset 4)
+(setq-default python-indent-offset 4)
 (global-visual-line-mode)
-
-;; make command prefixes show fast
-(setq echo-keystrokes 0.01)
-
-;; remove whitespace on save
 (add-hook 'before-save-hook 'whitespace-cleanup)
-
 (defun add-newline-at-end-if-missing ()
   "Add a newline at the end of the buffer if it's missing."
   (interactive)
   (save-excursion
     (goto-char (point-max))
-    (unless (bolp) ; Check if the point is already at the beginning of a line
+    (unless (bolp)
       (insert "\n"))))
-
 (add-hook 'before-save-hook 'add-newline-at-end-if-missing)
 
-;; theme and colors
-(load-theme 'modus-vivendi)
-(load-theme 'modus-vivendi)
-
-(defvar my/red "#FF6B6B")
-(defvar my/light-red "#FFD6E2")
-(defvar my/green "#98FB98")
-(defvar my/light-green "#98FB98")
-(defvar my/orange "#F4A460")
-(defvar my/light-orange "#FFDAB9")
-(defvar my/purple "#BA55D3")
-(defvar my/light-purple "#D8BFD8")
-(defvar my/blue "#B0C4DE")
-(defvar my/light-blue "#E0FFFF")
-(defvar my/brown "#DEB887")
-(defvar my/yellow "#FAFAD2")
-(defvar my/light-yellow "#FFFACD")
+;; mini buffer
+(setq echo-keystrokes 0.01)
+(setopt use-short-answers t)
 
 ;; Dired
 ;; from: https://www.emacswiki.org/emacs/DiredSortDirectoriesFirst
@@ -124,8 +110,8 @@
   "Sort Dired listings with directories first before adding mark."
   (my/dired-sort))
 
-;; yes-or-no -> y-or-n
-(setopt use-short-answers t)
+(when (string= system-type "darwin")
+  (defvar dired-use-ls-dired nil))
 
 ;; change backups location
 (setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
@@ -136,23 +122,25 @@
       kept-old-versions 5    ; and how many of the old
       )
 
-;; fix error: `ls does not support --dired`
-(when (string= system-type "darwin")
-  (defvar dired-use-ls-dired nil))
+;; env
+(setenv "SHELL" (shell-command-to-string "which zsh"))
+(setenv "JAVA_HOME" (shell-command-to-string "/usr/libexec/java_home"))
 
+;; global-key-bindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c e") 'eshell)
 (global-set-key (kbd "C-c p c") 'my/compile)
 (global-set-key (kbd "C-c o w") 'my/pick-window-config)
+(global-set-key (kbd "C-c o s") 'my/search-school-directory)
 (setq compile-command nil)
-(setq tex-compile-commands '(("latexmk -pdf -pvc %f")))
+(defvar tex-compile-commands '(("latexmk -pdf -pvc %f")))
 (defun my/compile ()
   "Compile depending on the context: project or LaTeX mode."
   (interactive)
     (if (eq major-mode 'latex-mode)
         (call-interactively 'tex-compile)
       (if (project-current)
-          (project-compile)
+          (call-interactively 'project-compile)
         (call-interactively 'compile))))
 
 (add-hook 'eshell-mode-hook
@@ -214,7 +202,6 @@
            (branch-with-color (propertize branch 'face `(:foreground ,branch-color))))
       (concat "[" branch-with-color "]"))))
 
-(setenv "SHELL" (shell-command-to-string "which zsh"))
 (defun my/eshell-maybe-bol ()
   (interactive)
   (let ((p (point)))
@@ -275,8 +262,6 @@
 
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
-
-;; M-e to move the point to the search string
 (defadvice isearch-search (after isearch-no-fail activate)
   "Ensure isearch continues in the same direction if no match is found."
   (unless isearch-success
@@ -292,7 +277,8 @@
   (let ((default-directory my/school-dir))
     (call-interactively 'find-file)))
 
-(global-set-key (kbd "C-c o s") 'my/search-school-directory)
+(defun eglot-format-buffer-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 
 ;; packages
 (require 'package)
@@ -314,6 +300,16 @@
   :custom
   (rainbow-x-colors nil)
   )
+
+;; (use-package evil
+;;   :config
+;;   (setq evil-emacs-state-cursor `(,my/purple box))
+;;   (setq evil-normal-state-cursor `(,my/green box))
+;;   (setq evil-visual-state-cursor `(,my/light-blue box))
+;;   (setq evil-insert-state-cursor `(,my/light-yellow box))
+;;   (setq evil-replace-state-cursor `(,my/orange bar))
+;;   (setq evil-operator-state-cursor `(,my/orange hollow))
+;;   (evil-mode 1))
 
 ;; better editing
 (use-package multiple-cursors
@@ -641,7 +637,8 @@
            `(face (:foreground ,(cdr (assoc keyword my/tag-colors)))))))))
 
   (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
-  (setq org-default-priority ?C))
+  (setq org-default-priority ?C)
+  )
 
 ;; math preview
 (use-package org-fragtog
@@ -781,7 +778,6 @@
 ;; Java
 ;; After brew install openjdk do the command shown by brew info openJDK
 ;; sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
-(setenv "JAVA_HOME" (shell-command-to-string "/usr/libexec/java_home"))
 
 ;; JavaScript
 ;; - npm install -g typescript typescript-language-server
@@ -794,14 +790,12 @@
 
 ;; go lang
 ;; go install golang.org/x/tools/gopls@latest
-(use-package go-mode)
+(use-package go-mode
+  :hook
+  (go-mode . eglot-format-buffer-on-save)
+  )
 
 (use-package glsl-mode)
-
-(defun eglot-format-buffer-on-save ()
-  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
-(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
-
 
 ;; Other languages not setup yet
 ;; Markdown
