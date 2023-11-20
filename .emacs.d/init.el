@@ -9,15 +9,6 @@
 (server-start)
 
 ;; things that will be changed often
-(defun diary-last-day-of-month (date)
-"Return `t` if DATE is the last day of the month."
-  (let* ((day (calendar-extract-day date))
-         (month (calendar-extract-month date))
-         (year (calendar-extract-year date))
-         (last-day-of-month
-            (calendar-last-day-of-month month year)))
-    (= day last-day-of-month)))
-
 (defvar my/red "#FF6B6B")
 (defvar my/light-red "#FFD6E2")
 (defvar my/green "#98FB98")
@@ -151,8 +142,12 @@
 (defun my/compile ()
   "Compile depending on the context: project or LaTeX mode."
   (interactive)
-    (if (eq major-mode 'latex-mode)
+  (if (eq major-mode 'latex-mode)
+      (progn
+        (delete-other-windows)
+        (split-window-horizontally)
         (call-interactively 'tex-compile)
+        )
       (if (project-current)
           (call-interactively 'project-compile)
         (call-interactively 'compile))))
@@ -502,11 +497,6 @@
     (set-face-attribute 'org-level-8 nil :inherit 'outline-8 :height 1.0)
     (set-face-attribute 'org-tag nil :height 0.6)
     )
-
-  (progn
-    (defface my/org-bold
-      `((t :foreground ,my/red))
-      "Custom for bold in org-mode."))
   (setq org-emphasis-alist
         `(("*" (:weight bold :foreground ,my/blue))
           ("/" italic)
@@ -514,6 +504,15 @@
           ("=" org-verbatim verbatim)
           ("~" org-code verbatim)
           ("+" (:strike-through t))))
+
+  (defun diary-last-day-of-month (date)
+    "Return `t` if DATE is the last day of the month."
+    (let* ((day (calendar-extract-day date))
+           (month (calendar-extract-month date))
+           (year (calendar-extract-year date))
+           (last-day-of-month
+            (calendar-last-day-of-month month year)))
+      (= day last-day-of-month)))
   (defun my/timestamp-format ()
     "Custom function to format timestamps for TODO items."
     (let ((timestamp
