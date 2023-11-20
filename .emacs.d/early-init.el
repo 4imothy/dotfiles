@@ -11,11 +11,10 @@
 ;;(set-face-attribute 'default nil :background "#fdf6e3" :foreground "#657b83")
 ;;(set-face-attribute 'mode-line nil :background "#fdf6e3" :foreground "#657b83")
 
-(defvar my/gc-cons-threshold gc-cons-threshold)
 (setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold my/gc-cons-threshold)))
+            (setq gc-cons-threshold (expt 2 23))))
 (setq vc-follow-symlinks t)
 
 ;;; early-init.el ends here
