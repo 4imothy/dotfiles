@@ -9,11 +9,19 @@
 (server-start)
 
 ;; things that will be changed often
+(defun diary-last-day-of-month (date)
+"Return `t` if DATE is the last day of the month."
+  (let* ((day (calendar-extract-day date))
+         (month (calendar-extract-month date))
+         (year (calendar-extract-year date))
+         (last-day-of-month
+            (calendar-last-day-of-month month year)))
+    (= day last-day-of-month)))
 
 (defvar my/red "#FF6B6B")
 (defvar my/light-red "#FFD6E2")
 (defvar my/green "#98FB98")
-(defvar my/light-green "#98FB98")
+(defvar my/light-green "#c5fec3")
 (defvar my/orange "#F4A460")
 (defvar my/light-orange "#FFDAB9")
 (defvar my/purple "#BA55D3")
@@ -21,8 +29,14 @@
 (defvar my/blue "#B0C4DE")
 (defvar my/light-blue "#E0FFFF")
 (defvar my/brown "#DEB887")
+(defvar my/brown "#f5d7ac")
 (defvar my/yellow "#FAFAD2")
 (defvar my/light-yellow "#FFFACD")
+(defvar my/turquoise "#8dcace")
+(defvar my/light-turquoise "#AFEEEE")
+(defvar my/gray "#808080")
+(defvar my/light-gray "#D3D3D3")
+
 
 (defvar my/docs-dir "~/Documents/")
 (defvar my/school-dir (concat my/docs-dir "school/"))
@@ -402,6 +416,7 @@
   (org-hide-emphasis-markers t)
   (org-tags-column 1)
   (org-agenda-tags-column 0)
+  (org-agenda-include-diary t)
   (org-fold-show-context-detail t)
   (org-ellipsis "⤵")
   (org-agenda-files (list org-default-notes-file))
@@ -413,7 +428,7 @@
   (org-agenda-remove-tags t)
   (org-agenda-span 14)
   (org-todo-keywords
-      '("TODO(t)" "DOING(g)" "EVENT(e)" "LONG(l)" "DONE(d)"))
+      '("TODO(t)" "DOING(g)" "EVENT(e)" "LONG(l)" "DONE(d)" "REMINDER(r)"))
   ;; (org-startup-with-latex-preview t) ;; this is very slow for some reason and renders with white background and foreground
   (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
   (org-agenda-custom-commands
@@ -442,6 +457,8 @@
              ((org-agenda-overriding-header "")))
        (todo "LONG"
              ((org-agenda-overriding-header "")))
+       (todo "REMINDER"
+             ((org-agenda-overriding-header "")))
        )
       ((org-agenda-window-setup 'only-window)
        ))))
@@ -453,7 +470,9 @@
             ("DOING" . my/org-doing)
             ("DONE" . my/org-done)
             ("EVENT" . my/org-event)
-            ("LONG" . my/org-long)))
+            ("LONG" . my/org-long)
+            ("REMINDER" . my/org-reminder)
+            ))
 
     (defun my/create-keyword-face (main-color background-color)
       `((t :weight bold
@@ -471,6 +490,8 @@
       "Face used to display state EVENT.")
     (defface my/org-long (my/create-keyword-face my/blue my/light-blue)
       "Face used to display state LONG.")
+    (defface my/org-reminder (my/create-keyword-face my/turquoise my/light-turquoise)
+      "Face used to display state LONG.")
     (set-face-attribute 'org-level-1 nil :inherit 'outline-1 :height 1.3)
     (set-face-attribute 'org-level-2 nil :inherit 'outline-2 :height 1.25)
     (set-face-attribute 'org-level-3 nil :inherit 'outline-3 :height 1.2)
@@ -482,15 +503,17 @@
     (set-face-attribute 'org-tag nil :height 0.6)
     )
 
+  (progn
+    (defface my/org-bold
+      `((t :foreground ,my/red))
+      "Custom for bold in org-mode."))
   (setq org-emphasis-alist
-  '(("*" (bold :foreground "CadetBlue4"))
-    ("/" italic)
-    ("_" underline)
-    ("=" org-verbatim verbatim)
-    ("~" org-code verbatim)
-    ("+"
-     (:strike-through t))
-    ))
+        `(("*" (:weight bold :foreground ,my/blue))
+          ("/" italic)
+          ("_" underline)
+          ("=" org-verbatim verbatim)
+          ("~" org-code verbatim)
+          ("+" (:strike-through t))))
   (defun my/timestamp-format ()
     "Custom function to format timestamps for TODO items."
     (let ((timestamp
@@ -498,7 +521,11 @@
                (org-entry-get (point) "SCHEDULED")
                (org-entry-get (point) "DEADLINE"))))
       (if timestamp
-          (replace-regexp-in-string "[<>]" "" timestamp)
+          (if (string-match "<%%(diary-last-day-of-month date)>" timestamp)
+              (let ((date-str (match-string 1 timestamp))
+                    (cal-date (org-eval-in-calendar `(diary-last-day-of-month ,date-str))))
+                (format-time-string "%Y-%m-%d" cal-date))
+            (replace-regexp-in-string "[<>]" "" timestamp))
         "")))
   (set-face-underline 'org-ellipsis nil)
   (defun save-after-capture-refile ()
@@ -615,6 +642,8 @@
 
   (defvar my/tag-colors
     `(("jobs" . ,my/blue)
+      ("projects" . ,my/purple)
+      ("money" . ,my/light-green)
       ("math_307" . ,my/green)
       ("math_421" . ,my/orange)
       ("csds_341" . ,my/purple)
@@ -746,6 +775,11 @@
   (yas-global-mode 1)
   )
 
+(use-package avy
+  :bind
+  ("C-'" . 'avy-goto-char)
+  )
+
 (use-package markdown-mode)
 
 ;; python
@@ -811,3 +845,16 @@
 ;; - brew install zig
 ;; - LSP:
 ;; -brew install zls
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(avy yasnippet which-key vertico rust-mode rainbow-mode pyvenv python-mode prettier-js pdf-tools org-fragtog orderless nerd-icons-ibuffer nerd-icons-dired nerd-icons-completion multiple-cursors markdown-mode magit go-mode glsl-mode evil doom-modeline corfu)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
