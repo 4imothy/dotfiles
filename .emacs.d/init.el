@@ -9,25 +9,40 @@
 (server-start)
 
 ;; things that will be changed often
-(defvar my/red "#FF6B6B")
-(defvar my/light-red "#FFD6E2")
-(defvar my/green "#98FB98")
-(defvar my/light-green "#c5fec3")
-(defvar my/orange "#F4A460")
-(defvar my/light-orange "#FFDAB9")
-(defvar my/purple "#BA55D3")
-(defvar my/light-purple "#D8BFD8")
-(defvar my/blue "#B0C4DE")
-(defvar my/light-blue "#E0FFFF")
-(defvar my/brown "#DEB887")
-(defvar my/brown "#f5d7ac")
-(defvar my/yellow "#FAFAD2")
-(defvar my/light-yellow "#FFFACD")
-(defvar my/turquoise "#8dcace")
-(defvar my/light-turquoise "#AFEEEE")
-(defvar my/gray "#808080")
-(defvar my/light-gray "#D3D3D3")
+(defvar my/red "#FF6F61")
+(defvar my/light-red "#FFB6B0")
+(defvar my/green "#77DD77")
+(defvar my/light-green "#B5EAD7")
+(defvar my/orange "#FFB347")
+(defvar my/light-orange "#FFD180")
+(defvar my/purple "#C882C8")
+(defvar my/light-purple "#E8C9E8")
+(defvar my/blue "#8AB6D6")
+(defvar my/light-blue "#BFD3E6")
+(defvar my/brown "#D2B48C")
+(defvar my/light-brown "#F4E4D3")
+(defvar my/yellow "#FFF081")
+(defvar my/light-yellow "#FFFAE6")
+(defvar my/turquoise "#71C7D7")
+(defvar my/light-turquoise "#AEDFFA")
+(defvar my/gray "#A0A0A0")
+(defvar my/light-gray "#DDDDDD")
 
+;; everforest colors maybe use: https://github.com/sainnhe/everforest
+; #d3c6aa
+; #e67e80
+; #e69875
+; #dbbc7f
+; #a7c080
+; #83c092
+; #7fbbb3
+; #d699b6
+; #7a8478
+; #859289
+; #9da9a0
+; #a7c080
+; #d3c6aa
+; #e67e80
 
 (defvar my/docs-dir "~/Documents/")
 (defvar my/school-dir (concat my/docs-dir "school/"))
@@ -72,7 +87,7 @@
 (setq ring-bell-function 'ignore)
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
-(set-face-attribute 'default nil :font "mononoki" :height 200)
+(set-face-attribute 'default nil :font "mononoki" :height 190)
 (column-number-mode)
 (dolist (mode '(text-mode-hook
                 prog-mode-hook
