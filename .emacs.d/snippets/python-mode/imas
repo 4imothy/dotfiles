@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: imas
+# key: imas
+# --
+import ${1:lib} as ${3:alias}
+$0
