@@ -746,7 +746,10 @@
   :hook
   (emacs-lisp-mode . flymake-mode)
   :bind (("C-c f d"   . flymake-show-buffer-diagnostics)
-         ("C-c f D" . flymake-show-project-diagnostics))
+         ("C-c f D" . flymake-show-project-diagnostics)
+         ("C-c f ." . flymake-goto-next-error)
+         ("C-c f ," . flymake-goto-prev-error)
+         )
   :hook
   (after-save-hook . my/flymake-refresh-errors)
   :custom
@@ -793,6 +796,8 @@
   :bind
   ("C-'" . 'avy-goto-char)
   )
+
+(use-package git-modes)
 
 (use-package markdown-mode)
 
