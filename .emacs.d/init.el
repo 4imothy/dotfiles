@@ -774,7 +774,6 @@
   (corfu-auto-prefix 2)
   (corfu-auto-delay 0)
   (corfu-popupinfo-delay '(0.5 . 0.2))
-  (corfu-preview-current 'insert)
   (corfu-count 4)
   :bind
   (:map corfu-map
