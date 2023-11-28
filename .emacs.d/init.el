@@ -426,7 +426,6 @@
   (org-hide-emphasis-markers t)
   (org-tags-column 1)
   (org-agenda-tags-column 0)
-  (org-agenda-include-diary t)
   (org-fold-show-context-detail t)
   (org-ellipsis "⤵")
   (org-agenda-files (list org-default-notes-file))
