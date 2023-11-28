@@ -77,7 +77,7 @@
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(set-fringe-mode 5)
+(set-fringe-mode 0)
 (tooltip-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode 0)
@@ -93,7 +93,6 @@
                 prog-mode-hook
                 conf-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
-(load-theme 'modus-vivendi)
 
 ;; Buffer things
 (setq-default tab-width 4
@@ -318,6 +317,10 @@
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 ;; (package-refresh-contents)
+
+(use-package modus-themes
+  :init
+  (load-theme 'modus-vivendi-tritanopia t))
 
 (use-package rainbow-mode
   :hook (emacs-lisp-mode text-mode lisp-mode)
@@ -867,11 +870,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("e5ce8ca9850b68052affa5b3cc69bb97abf7a8a76e1088ea3907fdabeaeb5036" default))
  '(package-selected-packages
    '(avy yasnippet which-key vertico rust-mode rainbow-mode pyvenv python-mode prettier-js pdf-tools org-fragtog orderless nerd-icons-ibuffer nerd-icons-dired nerd-icons-completion multiple-cursors markdown-mode magit go-mode glsl-mode evil doom-modeline corfu)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
