@@ -475,8 +475,6 @@
       ((org-agenda-window-setup 'only-window)
        ))))
   :config
-  (with-eval-after-load 'org
-    (bind-key "C-'" nil org-mode-map))
   (with-eval-after-load "org-faces"
 
     (setq org-todo-keyword-faces
@@ -797,7 +795,7 @@
 
 (use-package avy
   :bind
-  ("C-'" . 'avy-goto-char)
+  ("C-." . 'avy-goto-char)
   )
 
 (use-package git-modes)
