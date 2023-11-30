@@ -320,7 +320,7 @@
 
 (use-package modus-themes
   :init
-  (load-theme 'modus-vivendi-tritanopia t))
+  (load-theme 'modus-vivendi-tinted t))
 
 (use-package rainbow-mode
   :hook (emacs-lisp-mode text-mode lisp-mode)
@@ -871,6 +871,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e5ce8ca9850b68052affa5b3cc69bb97abf7a8a76e1088ea3907fdabeaeb5036" default))
+   '("b40f11c174e7e475508f1e2c1cfca354d37212494c143a494f27239c7d71a294" "e5ce8ca9850b68052affa5b3cc69bb97abf7a8a76e1088ea3907fdabeaeb5036" default))
  '(package-selected-packages
    '(avy yasnippet which-key vertico rust-mode rainbow-mode pyvenv python-mode prettier-js pdf-tools org-fragtog orderless nerd-icons-ibuffer nerd-icons-dired nerd-icons-completion multiple-cursors markdown-mode magit go-mode glsl-mode evil doom-modeline corfu)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
