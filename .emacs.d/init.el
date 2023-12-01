@@ -804,6 +804,8 @@
 
 (use-package markdown-mode)
 
+(use-package yaml-mode)
+
 ;; python
 ;; 1. *Command:* /pip3 install python-lsp-server[all]/
 ;; 2. put the pylsp in path
