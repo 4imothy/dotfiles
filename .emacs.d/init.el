@@ -741,7 +741,9 @@
   ;; (python-mode . eglot-ensure)
   (eglot . eglot-ensure)
   :custom
-  (eglot-ignored-server-capabilities '(:hoverProvider)))
+  (eglot-ignored-server-capabilities '(:hoverProvider))
+  :bind ("C-c p r "   . eglot-rename)
+  )
 
 ;; syntax reports
 (use-package flymake
