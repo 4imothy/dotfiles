@@ -12,6 +12,10 @@ brew_deps() {
     brew deps --tree --installed $1
 }
 
+def_latex() {
+    latexmk -pvc -pdf *.tex
+}
+
 sddg() {
     query="$*"
     open "https://www.duckduckgo.com/?q=${query}"
