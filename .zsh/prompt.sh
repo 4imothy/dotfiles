@@ -31,7 +31,7 @@ colored_branch() {
         if [ -n "$git_status" ]; then
             # Red if unstaged changes
             return_status="%F{1}$current_branch%f "
-        elif [ -n "$(git log origin/$current_branch..$current_branch)" ]; then
+        elif [ -n "$(git log origin/$current_branch $current_branch)" ]; then
             # Yellow if staged but unpushed changes
             return_status="%F{3}$current_branch%f "
         else
