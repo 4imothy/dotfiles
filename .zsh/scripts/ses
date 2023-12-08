@@ -22,6 +22,7 @@ if [ -z $TMUX ]; then
     else
         tmux new-session -s $selected_name -c $selected
     fi
+    exit 0
 fi
 
 if [ -n $TMUX ] && [ $tmux_has_session = f ]; then
