@@ -1,6 +1,6 @@
 ### Dotfiles
 
-These are my dotfiles mostly for *[zsh](https://zsh.org)* and *[emacs](https://www.gnu.org/software/emacs/)*
+These are my dotfiles mostly for *[zsh](https://zsh.org)*, *[emacs](https://www.gnu.org/software/emacs/)*, *[vim](https://www.vim.org/)*
 
 #### Shell Prompt (no [oh-my-zsh](https://ohmyz.sh))
 **Features for *zsh***
