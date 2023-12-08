@@ -19,26 +19,25 @@ update_cursor() {
 }
 
 colored_branch() {
-    local git_dir
-    git_dir=$(git rev-parse --git-dir 2>/dev/null)
-    # git_dir= # if delay is too long
+    if [ $SHOW_BRANCH_IN_PROMPT -eq 1 ]; then
+        local git_dir=$(git rev-parse --git-dir 2>/dev/null)
+        if [ -n "$git_dir" ]; then
+            local git_status="$(git status --porcelain)"
+            local current_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+            local return_status=""
 
-    if [ -n "$git_dir" ]; then
-        local git_status="$(git status --porcelain)"
-        local current_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-        local return_status=""
-
-        if [ -n "$git_status" ]; then
-            # Red if unstaged changes
-            return_status="%F{1}$current_branch%f "
-        elif [ -n "$(git log origin/$current_branch..$current_branch)" ]; then
-            # Yellow if staged but unpushed changes
-            return_status="%F{3}$current_branch%f "
-        else
-            # Green if up to date with this branch's origin
-            return_status="%F{2}$current_branch%f "
+            if [ -n "$git_status" ]; then
+                # Red if unstaged changes
+                return_status="%F{1}$current_branch%f "
+            elif [ -n "$(git log origin/$current_branch..$current_branch)" ]; then
+                # Yellow if staged but unpushed changes
+                return_status="%F{3}$current_branch%f "
+            else
+                # Green if up to date with this branch's origin
+                return_status="%F{2}$current_branch%f "
+            fi
+            echo $return_status
         fi
-        echo $return_status
     fi
 }
 
