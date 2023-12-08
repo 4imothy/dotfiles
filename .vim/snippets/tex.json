@@ -1,0 +1,11 @@
+{
+"begin": {
+           "prefix": "begin",
+           "body": [
+              "\\begin{${1:environment}}",
+              "\\item $0",
+              "\\end{$1}"
+           ],
+           "description": "Begin Environment Snippet"
+        }
+}
