@@ -1,11 +1,6 @@
 #!/bin/sh
 
 current_path=$(pwd)
-# -s for symbolic links
-# -f to force creation
-# If a directory, or symlink to a directory, already exists
-# with the target name, the symlink will be created inside it
-# use `-n` to get around this
 ln_flags="-sfn"
 
 link_with_flags () {
@@ -18,39 +13,24 @@ link_same() {
   link_with_flags "$current_path/$path" "$HOME/$path"
 }
 
-# for when path relative to this folder is different from path relative to $HOME
-link_dif() {
-  organize_path=$1
-  path=$2
-  link_with_flags "$current_path/$organize_path/$path" "$HOME/$path"
-}
-
-# things that have the same path relative to this
-# directory and $HOME
 emacs_dir=".emacs.d"
-# link_same "$emacs_dir/config.org"
+cp "$current_path/$emacs_dir/early-init.el" "$HOME/$emacs_dir/early-init.el"
 link_same "$emacs_dir/init.el"
 link_same "$emacs_dir/snippets"
-
-# this has to be an actual file telling emacs to automatically
-# follow git controlled symlinks
-cp "$current_path/$emacs_dir/early-init.el" "$HOME/$emacs_dir/early-init.el"
 
 config_dir=".config"
 link_same "$config_dir/alacritty"
 link_same "$config_dir/iterm2"
 link_same "$config_dir/helix"
-link_same "$config_dir/nvim/init.vim"
-link_same "$config_dir/nvim/coc-settings.json"
-link_same "$config_dir/nvim/.eslintrc.js"
+link_same "$config_dir/zathura"
 
 org_path="zsh"
-link_dif $org_path ".zshrc"
-link_dif $org_path ".zshenv"
-link_dif $org_path ".hushlogin"
-link_dif $org_path "sourced"
-org_path="tmux"
-link_dif $org_path ".tmux.conf"
+link_same ".zshenv"
+link_same ".hushlogin"
+link_same ".zsh"
+link_same ".tmux.conf"
+link_same ".latexmkrc"
+link_same ".vimrc"
 
 org_path="browsers/firefox/"
 file="userChrome.css"
@@ -59,7 +39,6 @@ file="userChrome.css"
 link_with_flags "$current_path/$org_path/$file" "$HOME/Library/Application Support/Firefox/Profiles/xecm18k5.default-release/chrome/$file"
 link_with_flags "$current_path/browsers/qutebrowser" "$HOME/.qutebrowser"
 link_with_flags "$current_path/obsidian" "$HOME/Documents/Vault/.obsidian/snippets"
-link_with_flags "$current_path/$emacs_dir/.latexmkrc" "$HOME/"
 
 # latex
 texmf_home=$(kpsewhich -var-value TEXMFHOME)
