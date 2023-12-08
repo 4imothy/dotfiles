@@ -17,6 +17,7 @@ set encoding=utf-8
 set timeoutlen=1000
 set ttimeoutlen=0
 set clipboard+=unnamed
+set splitbelow
 
 filetype on
 filetype plugin on
@@ -40,6 +41,7 @@ let g:mapleader = ","
 map <leader>n :bnext<cr>
 map <leader>p :bprevious<cr>
 map <leader>d :bdelete<cr>
+map <leader>t :term++rows=10<cr>
 nnoremap <silent> <leader>e :LspDocumentDiagnostics<CR>
 imap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 smap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
