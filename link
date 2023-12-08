@@ -31,6 +31,7 @@ link_same ".zsh"
 link_same ".tmux.conf"
 link_same ".latexmkrc"
 link_same ".vimrc"
+link_same ".vim"
 
 org_path="browsers/firefox/"
 file="userChrome.css"
