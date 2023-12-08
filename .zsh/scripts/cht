@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+selected=`cat $ZDOTDIR/scripts/cht_languages | fzf`
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+read "?Enter Query: "
+query=$REPLY
+
+url="cht.sh/$selected/$query"
+if [ -n "$TMUX" ]; then
+    tmux split-window -h zsh -c "echo \"curl $url\" & curl $url & while [ : ]; do sleep 1; done"
+else
+    echo curl $url & curl $url
+fi

@@ -1,29 +1,11 @@
-# NEWLINE=$'\n'
-# teal colors
-# firstLine="%F{049}╭─%/%f"
-# secondLine="%F{043}╰─❱%f%F{037}❱%f%F{031}❱%f %F{111}"
-
-# lavender with red yellow green
-# firstLine="%F{105}╭─%/%f%k"
-# secondLine="%F{104}╰─%f%F{9}❱%f%F{11}❱%f%F{10}❱%f%F{123} "
-
-# grayscale
-# firstLine="%F{242}╭─%/%f%k"
-# secondLine="%F{243}╰─%f%F{244}❱%f%F{245}❱%f%F{246}❱%f%F{248}
-
-#
-# firstLine="%F{214}╭─%f%F{076}%/%f%k"
-# secondLine="%F{214}╰─%f%F{166}❱%f%F{167}❱%f%F{168}❱%f%F{191}"
-
-# sunset
-# firstLine="%F{135}╭─%f%F{075}%/%f%k"
-# secondLine="%F{169}╰─%f%F{168}❱%f%F{167}❱%f%F{166}❱%f%F{173}"
-
-# PROMPT="${firstLine}${NEWLINE}${secondLine} "
-
 # return virtual enviornment if it exists
 function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`')'
+}
+
+update_cursor() {
+    echo -ne '\e[2 q'
+    echo -ne '\e]12;#d3c6aa\007'
 }
 
 # Function to truncate the current directory name
@@ -69,16 +51,17 @@ truncate_dir() {
 
 update_prompt() {
     # Set the PROMPT variable to the truncated version of the current directory
-    local prefix="%F{073}$(virtualenv_info)%f"
+    local prefix="%F{12}$(virtualenv_info)%f"
     # local path_string="%F{075}~%f"
-    local path_string="%F{075}$(truncate_dir)%f"
+    local path_string="%F{14}$(truncate_dir)%f"
     local prompt_string="»❱"
-    local line_indicator="%F{217}⦿%f"
-
+    # »❱
+    local line_indicator="%F{5}✼%f"
+    #㊀⚛
     # Make prompt_string red if the previous command failed.
-    local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
+    local return_status="%(?:%F{10}$prompt_string%f:%F{9}$prompt_string%f)"
 
-    full="${prefix} ${path_string} ${line_indicator} ${return_status}%F{177}"
+    full="${prefix} ${path_string} ${line_indicator} ${return_status}%F{4}"
     PROMPT="%B${full} "
 }
 
@@ -91,12 +74,12 @@ preexec(){
 }
 
 del-prompt-accept-line() {
-    local prefix="%F{073}$(virtualenv_info)%f"
+    local prefix="%F{12}$(virtualenv_info)%f"
     local prompt_string="»❱"
-    local return_status="%(?:%F{114}$prompt_string%f:%F{196}$prompt_string%f)"
-    local path_string="%F{075}$(truncate_dir)%f"
+    local return_status="%(?:%F{10}$prompt_string%f:%F{9}$prompt_string%f)"
+    local path_string="%F{6}$(truncate_dir)%f"
     local OLD_PROMPT="$PROMPT"
-    PROMPT="${prefix} ${path_string} ${return_status}%F{177} "
+    PROMPT="${prefix} ${path_string} ${return_status}%F{4} "
     zle reset-prompt
     PROMPT="$OLD_PROMPT"
     zle accept-line
@@ -105,9 +88,12 @@ zle -N del-prompt-accept-line
 bindkey "^M" del-prompt-accept-line
 
 # Set the precmd function to update_prompt
-if [[ ! "$precmd_functions" == *update_prompt* ]]; then
-    precmd_functions+=(update_prompt)
-fi
+funcs=("update_prompt" "update_cursor")
+for f in "${funcs[@]}"; do
+    if [[ "$precmd_functions" != *"$f"* ]]; then
+        precmd_functions+=($f)
+    fi
+done
 
 # autoload -Uz vcs_info
 # precmd_vcs_info() { vcs_info }
