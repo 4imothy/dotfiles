@@ -1,7 +1,5 @@
-# return virtual enviornment if it exists
 virtualenv_info() {
     [ $VIRTUAL_ENV ] && echo "%F{12}(`basename $VIRTUAL_ENV`)%f "
-    # local prefix="%F{12}$(virtualenv_info)%f"
 }
 
 final_char() {
