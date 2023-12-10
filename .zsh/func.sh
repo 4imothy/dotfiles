@@ -1,10 +1,8 @@
-mcd()
-{
+mcd() {
     test -d "$1" || mkdir "$1" && cd "$1"
 }
 
-batt()
-{
+batt() {
     pmset -g batt | grep -E "([0-9]+\%).*" -o --colour=auto | cut -f1 -d';'
 }
 
@@ -13,7 +11,7 @@ brew_deps() {
 }
 
 def_latex() {
-    latexmk -pvc -pdf *.tex
+    latexmk -pvc -pdf --interaction=nonstopmode *.tex
 }
 
 sddg() {
