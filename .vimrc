@@ -41,12 +41,14 @@ for f in globpath('~/.vim', '*.vim', 0, 1, 0)
         execute 'source' f
 endfor
 
+let g:netrw_banner = 0
 let g:mapleader = ","
-map <leader>n :bnext<cr>
-map <leader>p :bprevious<cr>
-map <leader>d :bdelete<cr>
-map <leader>t :term++rows=10<cr>
-nnoremap <silent> <leader>e :LspDocumentDiagnostics<CR>
+nnoremap <leader>n :bnext<cr>
+nnoremap <leader>p :bprevious<cr>
+nnoremap <leader>d :bdelete<cr>
+nnoremap <leader>t :term++rows=10<cr>
+nnoremap <leader>s :Explore<CR>
+nnoremap <leader>e :LspDocumentDiagnostics<CR>
 imap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 smap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 
