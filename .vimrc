@@ -130,3 +130,4 @@ endfunction
 
 autocmd BufWritePre * :call TrimWhiteSpace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
+autocmd FileType tex,txt,md setlocal spell spelllang=en_us
