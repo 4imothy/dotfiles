@@ -23,6 +23,12 @@ filetype on
 filetype plugin on
 filetype indent on
 
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    source $MYVIMRC
+endif
+
 syntax on
 call plug#begin()
 
