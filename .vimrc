@@ -18,6 +18,7 @@ set timeoutlen=1000
 set ttimeoutlen=0
 set clipboard+=unnamed
 set splitbelow
+set directory=$HOME/.vim/swapfiles/
 
 filetype on
 filetype plugin on

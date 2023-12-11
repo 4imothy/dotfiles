@@ -3,6 +3,7 @@
 .vim/plugged
 .vim/autoload
 .vim/.netrwhist
+.vim/swapfiles
 zsh/sourced/fetch.sh
 browsers/qutebrowser/qutebrowser.html
 browsers/qutebrowser/greasemonkey/
