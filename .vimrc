@@ -19,6 +19,7 @@ set ttimeoutlen=0
 set clipboard+=unnamed
 set splitbelow
 set directory=$HOME/.vim/swapfiles/
+let g:netrw_liststyle = 3
 
 filetype on
 filetype plugin on
@@ -54,7 +55,7 @@ nnoremap <leader>n :bnext<cr>
 nnoremap <leader>p :bprevious<cr>
 nnoremap <leader>d :bdelete<cr>
 nnoremap <leader>t :term++rows=10<cr>
-nnoremap <leader>s :Explore<CR>
+nnoremap <leader>s :open .<CR>
 nnoremap <leader>e :LspDocumentDiagnostics<CR>
 imap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 smap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
