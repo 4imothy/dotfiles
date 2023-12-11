@@ -82,12 +82,13 @@ let g:everforest_background = 'soft'
 let g:everforest_better_performance = 1
 colorscheme everforest
 
-function TrimWhiteSpace()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-endfunction
+fun! StripTrailingWhitespace()
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
+endfun
 
-autocmd BufWritePre * :call TrimWhiteSpace()
+autocmd BufWritePre * :call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
 autocmd FileType tex,txt,md setlocal spell spelllang=en_us
