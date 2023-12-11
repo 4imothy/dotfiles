@@ -11,6 +11,10 @@ path() {
     echo "%F{6}$(truncate_dir)%f "
 }
 
+line_indicator() {
+    echo "%F{5}✼%f "
+}
+
 update_cursor() {
     echo -ne '\e[2 q'
     echo -ne '\e]12;#d3c6aa\007'
@@ -36,9 +40,7 @@ colored_branch() {
     fi
 }
 
-# Function to truncate the current directory name
 truncate_dir() {
-    # Get the current directory name
     local dir=$(pwd)
 
     if [[ "$dir" == "/" ]]; then
@@ -52,7 +54,6 @@ truncate_dir() {
         echo $prompt
         return
     fi
-    # Split the directory name into an array using '/' as the delimiter
     local dirs=(${(s:/:)dir})
 
     if [[ $dir == $HOME/* ]]; then
@@ -60,28 +61,36 @@ truncate_dir() {
         shift dirs
         shift dirs
     else
-        # Initialize the prompt string
         local prompt=""
     fi
-    # Iterate over the array of directory names
+
     for d in "${dirs[@]:0:-1}"; do
-        # Truncate the directory name to the first four letters
         local truncated=${d[1,PAR_DIR_PRINT_LIMIT]}
-        # Append the truncated directory name to the prompt string
         prompt="$prompt/$truncated"
     done
 
     prompt="$prompt/${dirs[-1]}"
-    # Return the prompt string
     echo $prompt
 }
 
 update_prompt() {
-    local line_indicator="%F{5}✼%f "
-
-    full="$(virtualenv_info)$(path)$(colored_branch)${line_indicator}$(final_char)%F{4}"
+    full="$(virtualenv_info)$(path)$(colored_branch)$(line_indicator)$(final_char)%F{4}"
     PROMPT="%B${full}"
 }
+
+del_prompt_accept_line() {
+    local OLD_PROMPT="$PROMPT"
+
+    OLD_PROMPT="${OLD_PROMPT//\%B}"
+    OLD_PROMPT="${OLD_PROMPT//$(line_indicator)}"
+
+    PROMPT="$OLD_PROMPT"
+    zle reset-prompt
+    zle accept-line
+}
+
+zle -N del_prompt_accept_line
+bindkey "^M" del_prompt_accept_line
 
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
@@ -91,17 +100,6 @@ preexec(){
     print -Pn "%f%b"
 }
 
-del_prompt_accept_line() {
-    local OLD_PROMPT="$PROMPT"
-    PROMPT="$(virtualenv_info)$(path)$(colored_branch)$(final_char)%F{4}"
-    zle reset-prompt
-    PROMPT="$OLD_PROMPT"
-    zle accept-line
-}
-
-zle -N del_prompt_accept_line
-bindkey "^M" del_prompt_accept_line
-
 # Set the precmd function to update_prompt
 funcs=("update_prompt" "update_cursor")
 for f in "${funcs[@]}"; do
@@ -109,12 +107,3 @@ for f in "${funcs[@]}"; do
         precmd_functions+=($f)
     fi
 done
-
-# autoload -Uz vcs_info
-# precmd_vcs_info() { vcs_info }
-# precmd_functions+=( precmd_vcs_info )
-# setopt prompt_subst
-# zstyle ':vcs_info:*' check-for-changes true
-# zstyle ':vcs_info:git*' formats "%s  %r/%S %b (%a) %m%u%c "
-# zstyle ':vcs_info:git*' formats "%b %u %c"
-# RPROMPT="%f %F{229}${vcs_info_msg_0_}%f"
