@@ -7,6 +7,3 @@ setopt SHARE_HISTORY
 for file in "$ZDOTDIR"/*.sh; do
     source "$file"
 done
-
-
-
