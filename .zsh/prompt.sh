@@ -66,7 +66,7 @@ truncate_dir() {
     # Iterate over the array of directory names
     for d in "${dirs[@]:0:-1}"; do
         # Truncate the directory name to the first four letters
-        local truncated=${d[1,4]}
+        local truncated=${d[1,PAR_DIR_PRINT_LIMIT]}
         # Append the truncated directory name to the prompt string
         prompt="$prompt/$truncated"
     done
