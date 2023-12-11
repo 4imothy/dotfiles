@@ -9,6 +9,8 @@ zstyle ':completion:*:*:*:*:descriptions' format '%F{magenta}-- %d --%f'
 zstyle '*' single-ignored complete
 setopt ALWAYS_TO_END
 
-for FILE in $ZDOTDIR/completions/*; do
-    source $FILE
-done
+my_completions="$ZDOTDIR/completions"
+
+if [[ " $fpath " != *" $my_completions "* ]]; then
+    fpath=($my_completions $fpath)
+fi
