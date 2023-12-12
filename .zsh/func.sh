@@ -11,7 +11,16 @@ brew_deps() {
 }
 
 def_latex() {
-    latexmk -pvc -pdf --interaction=nonstopmode *.tex
+    if [ -z "$1" ]; then
+        latexmk -pvc -pdf --interaction=nonstopmode *.tex
+    else
+        if [[ ! "$1" =~ \.tex$ ]]; then
+            filename="$1.tex"
+        else
+            filename="$1"
+        fi
+        latexmk -pvc -pdf --interaction=nonstopmode "$filename"
+    fi
 }
 
 sddg() {
