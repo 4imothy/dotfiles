@@ -44,6 +44,7 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
+Plug 'easymotion/vim-easymotion'
 
 call plug#end()
 
@@ -54,10 +55,11 @@ endfor
 let g:mapleader = ","
 nnoremap <leader>n :bnext<cr>
 nnoremap <leader>p :bprevious<cr>
-nnoremap <leader>d :bdelete<cr>
+nnoremap <leader>x :bdelete<cr>
 nnoremap <leader>t :term++rows=10<cr>
-nnoremap <leader>s :open .<CR>
-nnoremap <leader>e :LspDocumentDiagnostics<CR>
+nnoremap <leader>e :open .<CR>
+nnoremap <leader>d :LspDocumentDiagnostics<CR>
+map <Leader>s <Plug>(easymotion-prefix)
 imap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 smap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 
