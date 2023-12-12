@@ -16,8 +16,7 @@ line_indicator() {
 }
 
 update_cursor() {
-    echo -ne '\e[2 q'
-    echo -ne '\e]12;#d3c6aa\007'
+    echo -n "\e]12;$DEFAULT_CURSOR_COLOR\007"
 }
 
 colored_branch() {

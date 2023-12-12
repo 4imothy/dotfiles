@@ -8,37 +8,56 @@ setopt transientrprompt
 
 vim_ins_mode="%F{7}❮%f%F{7}INS%f%F{7}❯%f"
 vim_cmd_mode="%F{7}❮%f%F{7}NOR%f%F{7}❯%f"
-function zle-line-init {
-    setRP
-    zle reset-prompt
+
+zle-line-init() {
+set_rp
+zle reset-prompt
 }
-function setRP {
+
+set_rp() {
     RPS1="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
     RPS2=$RPS1
 }
 
-function zle-keymap-select {
-    # if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-    #     echo -ne '\e[2 q'
-    # elif [[ ${KEYMAP} == main ]] ||
-    #  [[ ${KEYMAP} == viins ]] ||
-    #  [[ ${KEYMAP} = '' ]] ||
-    #  [[ $1 = 'beam' ]]; then
-    #      echo -ne '\e[6 q'
-    # fi
-    setRP
-    zle reset-prompt
+vi_update_cursor_color() {
+    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+        echo -ne "\e]12;$NORMAL_CURSOR_COLOR\007"
+    elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+            echo -ne "\e]12;$DEFAULT_CURSOR_COLOR\007"
+    fi
+}
+
+vi_update_cursor_shape() {
+    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+        echo -ne '\e[2 q'
+    elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+            echo -ne '\e[6 q'
+    fi
+}
+
+zle-keymap-select() {
+if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
+    vi_update_cursor_shape "$@"
+fi
+if [ $VI_CHANGE_CURSOR_COLOR -eq 1 ]; then
+    vi_update_cursor_color "$@"
+fi
+set_rp
+zle reset-prompt
 }
 
 zle -N zle-keymap-select
 zle -N zle-line-init
-setRP
+set_rp
 
 reset_cursor() {
-    # use beam on new prompt
     echo -ne '\e[6 q'
 }
-# use block always
+
 if [[ ! "$precmd_functions" == *reset_cursor* ]]; then
-#    precmd_functions+=(reset_cursor)
+    if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
+        precmd_functions+=(reset_cursor)
+    fi
 fi
