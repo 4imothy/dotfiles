@@ -77,6 +77,9 @@ update_prompt() {
     PROMPT="%B${full}"
 }
 
+PROMPT="%B$(virtualenv_info)$(path)$(colored_branch)$(line_indicator)$(final_char)%F{4}"
+setopt promptsubst
+
 del_prompt_accept_line() {
     local OLD_PROMPT="$PROMPT"
 
@@ -99,8 +102,8 @@ preexec(){
     print -Pn "%f%b"
 }
 
-# Set the precmd function to update_prompt
-funcs=("update_prompt" "update_cursor")
+# funcs=("update_prompt" "update_cursor")
+funcs=("update_cursor")
 for f in "${funcs[@]}"; do
     if [[ "$precmd_functions" != *"$f"* ]]; then
         precmd_functions+=($f)
