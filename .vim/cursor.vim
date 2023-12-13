@@ -12,8 +12,4 @@ if &term =~ '256color'
     endif
 endif
 
-autocmd VimEnter * call EnterNormal()
-
-function! EnterNormal()
-    normal! i
-endfunction
+autocmd VimEnter * normal! i
