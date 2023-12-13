@@ -73,7 +73,8 @@ nnoremap <leader>x :bdelete<cr>
 nnoremap <leader>t :term++rows=10<cr>
 nnoremap <leader>e :open .<CR>
 nnoremap <leader>d :LspDocumentDiagnostics<CR>
-map <Leader>s <Plug>(easymotion-prefix)
+map <leader>s <Plug>(easymotion-s)
+map <leader>f <Plug>(easymotion-f)
 imap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 smap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 
