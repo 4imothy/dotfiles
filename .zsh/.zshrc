@@ -9,6 +9,7 @@ export LSCOLORS=fxfxcxdxbxegedabagacfx
 # one for insert and one for normal, start with empty and then
 # add on the things that are needed, this should need less
 # functions in pre(cmd/exec) and less stuff in cursor.vim
+# TODO configure ability to show git information in the RPROMPT
 export VI_CHANGE_CURSOR_SHAPE=1
 export VI_CHANGE_CURSOR_COLOR=1
 export DEFAULT_CURSOR_COLOR=#d3c6aa
