@@ -16,7 +16,7 @@ line_indicator() {
 }
 
 set_cursor_color() {
-    echo -n "\e]12;$DEFAULT_CURSOR_COLOR\007"
+    echo -ne $SET_DEFAULT_CURSOR_COLOR
 }
 
 colored_branch() {
@@ -95,7 +95,7 @@ reset_fg(){
     print -Pn "%f%b"
 }
 
-add_function_to_precmd "update_prompt"
-add_function_to_precmd "set_cursor_color"
-add_function_to_preexec "reset_fg"
-add_function_to_preexec "set_cursor_color"
+add_to_precmd "update_prompt"
+add_to_precmd "set_cursor_color"
+add_to_preexec "reset_fg"
+add_to_preexec "set_cursor_color"

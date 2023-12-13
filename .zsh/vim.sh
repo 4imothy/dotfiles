@@ -21,19 +21,19 @@ set_rp() {
 
 vi_update_cursor_color() {
     if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-        echo -ne "\e]12;$NORMAL_CURSOR_COLOR\x7"
+        echo -ne $SET_NORMAL_CURSOR_COLOR
     elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
         [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-            echo -ne "\e]12;$DEFAULT_CURSOR_COLOR\x7"
+            echo -ne $SET_DEFAULT_CURSOR_COLOR
     fi
 }
 
 vi_update_cursor_shape() {
     if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-        echo -ne '\e[2 q'
+        echo -ne $SET_BLOCK_CURSOR
     elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
         [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-            echo -ne '\e[6 q'
+            echo -ne $SET_BEAM_CURSOR
     fi
 }
 
@@ -57,6 +57,6 @@ reset_cursor_shape() {
 }
 
 if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
-    add_function_to_preexec "reset_cursor_shape"
-    add_function_to_precmd "reset_cursor_shape"
+    add_to_preexec "reset_cursor_shape"
+    add_to_precmd "reset_cursor_shape"
 fi
