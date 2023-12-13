@@ -53,6 +53,9 @@ zle reset-prompt
 
 zle -N zle-keymap-select
 zle -N zle-line-init
+if [ $SET_RPROMPT -eq 1 ]; then
+    set_rp
+fi
 
 reset_cursor_shape() {
     echo -ne '\e[6 q'
