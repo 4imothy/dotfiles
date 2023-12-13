@@ -21,10 +21,10 @@ set_rp() {
 
 vi_update_cursor_color() {
     if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-        echo -ne "\e]12;$NORMAL_CURSOR_COLOR\007"
+        echo -ne "\e]12;$NORMAL_CURSOR_COLOR\x7"
     elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
         [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-            echo -ne "\e]12;$DEFAULT_CURSOR_COLOR\007"
+            echo -ne "\e]12;$DEFAULT_CURSOR_COLOR\x7"
     fi
 }
 
@@ -52,12 +52,11 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 set_rp
 
-reset_cursor() {
+reset_cursor_shape() {
     echo -ne '\e[6 q'
 }
 
-if [[ ! "$precmd_functions" == *reset_cursor* ]]; then
-    if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
-        precmd_functions+=(reset_cursor)
-    fi
+if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
+    add_function_to_preexec "reset_cursor_shape"
+    reset_cursor_shape
 fi

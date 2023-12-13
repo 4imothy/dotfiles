@@ -15,7 +15,7 @@ line_indicator() {
     echo "%F{5}✼%f "
 }
 
-update_cursor() {
+set_cursor_color() {
     echo -n "\e]12;$DEFAULT_CURSOR_COLOR\007"
 }
 
@@ -91,17 +91,11 @@ del_prompt_accept_line() {
 zle -N del_prompt_accept_line
 bindkey "^M" del_prompt_accept_line
 
-export CLICOLOR=1
-export LSCOLORS=fxfxcxdxbxegedabagacfx
-
-preexec(){
-    # change back to normal color
+reset_fg(){
     print -Pn "%f%b"
 }
 
-funcs=("update_prompt" "update_cursor")
-for f in "${funcs[@]}"; do
-    if [[ "$precmd_functions" != *"$f"* ]]; then
-        precmd_functions+=($f)
-    fi
-done
+add_function_to_precmd "update_prompt"
+add_function_to_preexec "reset_fg"
+add_function_to_preexec "set_cursor_color"
+set_cursor_color
