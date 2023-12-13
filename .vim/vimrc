@@ -93,17 +93,17 @@ endif
 let g:airline_symbols.branch = ''
 let g:airline_symbols.dirty=''
 
-if has('termguicolors')
-    set termguicolors
-endif
 set background=dark
 if $COLORTERM == 'truecolor'
+    if has('termguicolors')
+        set termguicolors
+    endif
     let g:everforest_background = 'soft'
     let g:everforest_better_performance = 1
     let g:airline_theme = 'everforest'
     colorscheme everforest
 else
-    colorscheme koehler
+    colorscheme default
 endif
 
 fun! StripTrailingWhitespace()
