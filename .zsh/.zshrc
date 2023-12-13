@@ -5,7 +5,7 @@ export PAR_DIR_PRINT_LIMIT=2
 export VI_CHANGE_CURSOR_SHAPE=1
 export VI_CHANGE_CURSOR_COLOR=1
 export DEFAULT_CURSOR_COLOR=#d3c6aa
-export NORMAL_CURSOR_COLOR=#dbbc7f
+export NORMAL_CURSOR_COLOR=#83c092
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
