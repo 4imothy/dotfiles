@@ -10,13 +10,14 @@ vim_ins_mode="%F{7}❮%f%F{7}INS%f%F{7}❯%f"
 vim_cmd_mode="%F{7}❮%f%F{7}NOR%f%F{7}❯%f"
 
 zle-line-init() {
-set_rp
+if [ $SET_RPROMPT -eq 1 ]; then
+    set_rp
+fi
 zle reset-prompt
 }
 
 set_rp() {
-    RPS1="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
-    RPS2=$RPS1
+    RPROMPT="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
 }
 
 vi_update_cursor_color() {
@@ -44,13 +45,14 @@ fi
 if [ $VI_CHANGE_CURSOR_COLOR -eq 1 ]; then
     vi_update_cursor_color "$@"
 fi
-set_rp
+if [ $SET_RPROMPT -eq 1 ]; then
+    set_rp
+fi
 zle reset-prompt
 }
 
 zle -N zle-keymap-select
 zle -N zle-line-init
-set_rp
 
 reset_cursor_shape() {
     echo -ne '\e[6 q'
