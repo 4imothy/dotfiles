@@ -96,6 +96,6 @@ reset_fg(){
 }
 
 add_function_to_precmd "update_prompt"
+add_function_to_precmd "set_cursor_color"
 add_function_to_preexec "reset_fg"
 add_function_to_preexec "set_cursor_color"
-set_cursor_color

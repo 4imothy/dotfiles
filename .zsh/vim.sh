@@ -58,5 +58,5 @@ reset_cursor_shape() {
 
 if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
     add_function_to_preexec "reset_cursor_shape"
-    reset_cursor_shape
+    add_function_to_precmd "reset_cursor_shape"
 fi
