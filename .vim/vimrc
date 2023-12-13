@@ -26,9 +26,14 @@ filetype plugin on
 filetype indent on
 
 if has('persistent_undo')
-  set undofile
-  let &undodir=$HOME . '/.vim/undodir/'
-  call mkdir(&undodir, "p")
+    set undofile
+    let &undodir=$HOME . '/.vim/undodir/'
+    if filewritable(&undodir) == 0 && exists("*mkdir")
+        call mkdir(&undodir, "p", 0700)
+    endif
+    set undofile
+    set undolevels=1000
+    set undoreload=10000
 endif
 
 let &t_ZH="\e[3m"
