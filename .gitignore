@@ -5,6 +5,7 @@
 .vim/.netrwhist
 .vim/swapfiles
 .vim/undodir
+.zsh/.zcompdump
 zsh/sourced/fetch.sh
 browsers/qutebrowser/qutebrowser.html
 browsers/qutebrowser/greasemonkey/
