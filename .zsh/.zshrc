@@ -23,6 +23,7 @@ export SET_RPROMPT=0
 bindkey -v
 setopt SHARE_HISTORY
 
+# TODO change this to be add to array
 add_to_precmd() {
     if [[ "$precmd_functions" != *"$1"* ]]; then
         precmd_functions+=("$1")
