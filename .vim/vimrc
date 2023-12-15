@@ -13,6 +13,7 @@ set signcolumn=no
 set hlsearch
 set encoding=utf-8
 set timeoutlen=1000
+set updatetime=0 " fix for floating disappearing on swap file writing, https://github.com/prabirshrestha/vim-lsp/issues/1510
 set ttimeoutlen=0
 set clipboard+=unnamed
 set splitbelow
