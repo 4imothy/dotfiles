@@ -1,11 +1,15 @@
 source ~/.vim/shared_vars.vim
 
+let g:lsp_semantic_enabled=1
 let g:lsp_diagnostics_enabled=1
-let g:lsp_diagnostics_float_insert_mode_enabled=0
-let g:lsp_diagnostics_float_cursor= 1
-let g:lsp_diagnostics_float_delay=0
-let g:lsp_float_max_width=0
+let g:lsp_completion_documentation_enabled=1
 let g:lsp_completion_documentation_delay=0
+
+let g:lsp_preview_float=1
+let g:lsp_diagnostics_float_insert_mode_enabled=0
+let g:lsp_diagnostics_float_cursor=1
+let g:lsp_float_max_width=-1
+let g:lsp_diagnostics_float_delay=0
 
 if executable('texlab')
     au User lsp_setup call lsp#register_server({
@@ -62,6 +66,7 @@ let g:lsp_diagnostics_virtual_text_prefix='⨉ '
 let g:lsp_diagnostics_virtual_text_padding_left=1
 
 let g:lsp_diagnostics_echo_cursor=0
+let g:lsp_diagnostics_echo_delay=0
 
 let g:lsp_diagnostics_signs_enabled=1
 let g:lsp_diagnostics_signs_error={'text': g:error_char}
