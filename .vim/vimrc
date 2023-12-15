@@ -18,13 +18,16 @@ set clipboard+=unnamed
 set splitbelow
 set directory=$HOME/.vim/swapfiles/
 set hidden
+set background=dark
+set pumheight=5
+syntax on
+filetype on
+filetype plugin on
+filetype indent on
 
 if ($TERM ==# 'alacritty' || $TERM ==# 'xterm' )
     set term=xterm-256color
 endif
-filetype on
-filetype plugin on
-filetype indent on
 
 if has('persistent_undo')
     set undofile
@@ -46,7 +49,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     source $MYVIMRC
 endif
 
-syntax on
 call plug#begin()
 
 Plug 'sainnhe/everforest'
@@ -55,8 +57,10 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
-Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -88,27 +92,13 @@ let g:vsnip_snippet_dir = expand('~/.vim/snippets')
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = ''
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.branch = ''
-let g:airline_symbols.dirty=''
-
-set background=dark
 if $COLORTERM == 'truecolor'
     if has('termguicolors')
         set termguicolors
     endif
-    let g:everforest_background = 'soft'
-    let g:everforest_better_performance = 1
-    let g:airline_theme = 'everforest'
+    let g:everforest_background='soft'
+    let g:everforest_better_performance=1
+    let g:airline_theme='everforest'
     colorscheme everforest
 else
     colorscheme default
