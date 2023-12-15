@@ -1,6 +1,5 @@
 # cursor switching for vim
 # Remove mode switching delay.
-export EDITOR='vim'
 bindkey "^?" backward-delete-char
 
 KEYTIMEOUT=5
@@ -20,31 +19,20 @@ set_rp() {
     RPROMPT="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
 }
 
-vi_update_cursor_color() {
+vi_update_cursor() {
     if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-        echo -ne $SET_NORMAL_CURSOR_COLOR
+        echo -ne $SET_NORMAL_CURSOR
     elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
         [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-            echo -ne $SET_DEFAULT_CURSOR_COLOR
-    fi
-}
-
-vi_update_cursor_shape() {
-    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-        echo -ne $SET_BLOCK_CURSOR
-    elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
-        [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-            echo -ne $SET_BEAM_CURSOR
+            echo -ne $SET_INSERT_CURSOR
     fi
 }
 
 zle-keymap-select() {
-if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
-    vi_update_cursor_shape "$@"
+if [[ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]] || [[ $VI_CHANGE_CURSOR_COLOR -eq 1 ]]; then
+    vi_update_cursor "$@"
 fi
-if [ $VI_CHANGE_CURSOR_COLOR -eq 1 ]; then
-    vi_update_cursor_color "$@"
-fi
+
 if [ $SET_RPROMPT -eq 1 ]; then
     set_rp
 fi
@@ -57,11 +45,11 @@ if [ $SET_RPROMPT -eq 1 ]; then
     set_rp
 fi
 
-reset_cursor_shape() {
-    echo -ne '\e[6 q'
+reset_cursor() {
+    echo -ne $SET_INSERT_CURSOR
 }
 
 if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
-    add_to_preexec "reset_cursor_shape"
-    add_to_precmd "reset_cursor_shape"
+    add_to_array preexec_functions "reset_cursor"
+    add_to_array precmd_functions "reset_cursor"
 fi

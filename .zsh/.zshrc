@@ -5,34 +5,29 @@ export PAR_DIR_PRINT_LIMIT=2
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
-# TODO this should instead by done with two escape sequences
-# one for insert and one for normal, start with empty and then
-# add on the things that are needed, this should need less
-# functions in pre(cmd/exec) and less stuff in cursor.vim
 # TODO configure ability to show git information in the RPROMPT
 export VI_CHANGE_CURSOR_SHAPE=1
 export VI_CHANGE_CURSOR_COLOR=1
 export DEFAULT_CURSOR_COLOR=#d3c6aa
 export NORMAL_CURSOR_COLOR=#83c092
-export SET_DEFAULT_CURSOR_COLOR="\e]12;$DEFAULT_CURSOR_COLOR\x7"
-export SET_NORMAL_CURSOR_COLOR="\e]12;$NORMAL_CURSOR_COLOR\x7"
-export SET_BLOCK_CURSOR="\e[2 q"
-export SET_BEAM_CURSOR="\e[6 q"
+
+if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
+    export SET_NORMAL_CURSOR="\e[2 q"
+    export SET_INSERT_CURSOR="\e[6 q"
+fi
+if [ $VI_CHANGE_CURSOR_COLOR -eq 1 ]; then
+    export SET_NORMAL_CURSOR="${SET_NORMAL_CURSOR}\e]12;$NORMAL_CURSOR_COLOR\x7"
+    export SET_INSERT_CURSOR="${SET_INSERT_CURSOR}\e]12;$DEFAULT_CURSOR_COLOR\x7"
+fi
+
 export SET_RPROMPT=0
 
 bindkey -v
 setopt SHARE_HISTORY
 
-# TODO change this to be add to array
-add_to_precmd() {
-    if [[ "$precmd_functions" != *"$1"* ]]; then
-        precmd_functions+=("$1")
-    fi
-}
-
-add_to_preexec() {
-    if [[ "$preexec_functions" != *"$1"* ]]; then
-        preexec_functions+=("$1")
+add_to_array() {
+   if [[ ! " $1 " =~ " $2" ]]; then
+        eval "$1+=(\"$2\")"
     fi
 }
 

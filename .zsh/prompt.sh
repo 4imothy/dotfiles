@@ -95,7 +95,7 @@ reset_fg(){
     print -Pn "%f%b"
 }
 
-add_to_precmd "update_prompt"
-add_to_precmd "set_cursor_color"
-add_to_preexec "reset_fg"
-add_to_preexec "set_cursor_color"
+add_to_array precmd_functions "update_prompt"
+add_to_array precmd_functions "set_cursor_color"
+add_to_array preexec_functions "reset_fg"
+add_to_array preexec_functions "set_cursor_color"
