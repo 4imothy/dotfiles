@@ -1,7 +1,5 @@
 my_completions="$ZDOTDIR/completions"
-if [[ " $fpath " != *" $my_completions "* ]]; then
-    fpath=($my_completions $fpath)
-fi
+add_to_array fpath $my_completions
 
 autoload -U compinit
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
