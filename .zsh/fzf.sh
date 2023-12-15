@@ -1,8 +1,5 @@
-# Base16 Everforest
-# Scheme author: Sainnhe Park (https://github.com/sainnhe)
-# Template author: Tinted Theming (https://github.com/tinted-theming)
-
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
+export FZF_DEFAULT_OPTS='-m --height 50% --border --layout=reverse'
 
 _add_fzf_colors() {
     local colors="
