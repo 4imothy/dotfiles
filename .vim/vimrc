@@ -17,6 +17,7 @@ set ttimeoutlen=0
 set clipboard+=unnamed
 set splitbelow
 set directory=$HOME/.vim/swapfiles/
+set hidden
 
 if ($TERM ==# 'alacritty' || $TERM ==# 'xterm' )
     set term=xterm-256color
@@ -38,8 +39,6 @@ endif
 
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
-let g:netrw_liststyle=0
-let g:netrw_banner = 0
 
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -59,6 +58,8 @@ Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'easymotion/vim-easymotion'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -75,10 +76,17 @@ nnoremap <leader>e :open .<CR>
 nnoremap <leader>d :LspDocumentDiagnostics<CR>
 map <leader>s <Plug>(easymotion-s)
 map <leader>w <Plug>(easymotion-w)
+nnoremap <silent> <leader>e :Files<CR>
+nnoremap <silent> <Leader>f :Rg<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <Leader>/ :BLines<CR>
+
 imap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 smap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 
 let g:vsnip_snippet_dir = expand('~/.vim/snippets')
+
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep = ''
@@ -112,7 +120,3 @@ fun! StripTrailingWhitespace()
   %s/\s\+$//e
   call cursor(l, c)
 endfun
-
-autocmd BufWritePre * :call StripTrailingWhitespace()
-autocmd BufNewFile,BufRead *.tex :set filetype=tex
-autocmd FileType tex,txt,md setlocal spell spelllang=en_us
