@@ -120,3 +120,7 @@ fun! StripTrailingWhitespace()
   %s/\s\+$//e
   call cursor(l, c)
 endfun
+
+autocmd BufWritePre * :call StripTrailingWhitespace()
+autocmd BufNewFile,BufRead *.tex :set filetype=tex
+autocmd FileType tex,txt,md setlocal spell spelllang=en_us
