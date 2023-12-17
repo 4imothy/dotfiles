@@ -75,9 +75,11 @@ truncate_dir() {
 update_prompt() {
     full="$(virtualenv_info)$(path)$(colored_branch)$(line_indicator)$(final_char)%F{4}"
     PROMPT="%B${full}"
+    tput cnorm
 }
 
 del_prompt_accept_line() {
+    tput civis
     local OLD_PROMPT="$PROMPT"
 
     OLD_PROMPT="${OLD_PROMPT//\%B}"
