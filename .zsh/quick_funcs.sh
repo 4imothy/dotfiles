@@ -1,3 +1,10 @@
+fe() {
+    selected=$(fzf)
+    if [[ -n $selected ]]; then
+        $EDITOR $selected
+    fi
+}
+
 mcd() {
     test -d "$1" || mkdir "$1" && cd "$1"
 }

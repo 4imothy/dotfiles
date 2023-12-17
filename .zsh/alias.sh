@@ -3,7 +3,6 @@ alias ch="history -p; clear"
 alias ct='clear; history -p; clear; tmux clear-history; clear'
 alias todo="gret TODO"
 alias e="vim"
-alias fe="vim \$(fzf)"
 
 alias gs='git status'
 alias ga='git add'
