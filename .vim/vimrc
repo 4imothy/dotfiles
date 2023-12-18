@@ -17,10 +17,10 @@ set ttimeoutlen=0
 set updatetime=0 " fix for floating disappearing on swap file writing, https://github.com/prabirshrestha/vim-lsp/issues/1510
 set clipboard+=unnamed
 set splitbelow
-set directory=$HOME/.vim/swapfiles/
 set hidden
 set background=dark
 set pumheight=5
+set directory=$HOME/.vim/swapfiles/
 syntax on
 filetype on
 filetype plugin on
@@ -30,9 +30,12 @@ if ($TERM ==# 'alacritty' || $TERM ==# 'xterm' )
     set term=xterm-256color
 endif
 
+let g:my_vim_dir = expand('~/.vim')
+
 if has('persistent_undo')
     set undofile
-    let &undodir=expand('~/.vim/undodir/')
+    let &undodir=g:my_vim_dir . '/undodir/'
+
     if filewritable(&undodir) == 0 && exists("*mkdir")
         call mkdir(&undodir, "p", 0700)
     endif
