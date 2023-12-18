@@ -1,5 +1,7 @@
 source ~/.vim/shared_vars.vim
 
+let g:c_syntax_for_h = 1
+
 let g:lsp_semantic_enabled=1
 let g:lsp_diagnostics_enabled=1
 let g:lsp_completion_documentation_enabled=1

@@ -32,7 +32,7 @@ endif
 
 if has('persistent_undo')
     set undofile
-    let &undodir=$HOME . '/.vim/undodir/'
+    let &undodir=expand('~/.vim/undodir/')
     if filewritable(&undodir) == 0 && exists("*mkdir")
         call mkdir(&undodir, "p", 0700)
     endif
@@ -40,6 +40,8 @@ if has('persistent_undo')
     set undolevels=1000
     set undoreload=10000
 endif
+
+let g:vsnip_snippet_dir=expand('~/.vim/snippets/')
 
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
@@ -93,8 +95,6 @@ command! -bang -nargs=* Rg
 
 imap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 smap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
-
-let g:vsnip_snippet_dir = expand('~/.vim/snippets')
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
