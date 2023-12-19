@@ -1,7 +1,7 @@
 # theme = "solarized_dark"
 # theme = "everforest_light"
 theme = "everforest_dark_no_italics"
-# theme = "papercolor-light"  
+# theme = "papercolor-light"
 # theme = "adwaita-dark"
 
 [editor]
@@ -17,7 +17,7 @@ normal = "block"
 select = "underline"
 
 [editor.file-picker]
-hidden = false 
+hidden = false
 
 [editor.statusline]
 left = ["spacer","mode", "spinner"]
@@ -34,7 +34,7 @@ character = "|"
 [editor.soft-wrap]
 enable = true
 wrap-indicator = ""
- 
+
 [keys.normal]
 # esc = ["collapse_selection", "keep_primary_selection"]
 minus = "repeat_last_motion" # - to repeat
