@@ -8,3 +8,4 @@ if &term =~ '256color'
 endif
 
 autocmd VimEnter * normal! i
+autocmd VimResume * normal! i
