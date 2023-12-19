@@ -3,20 +3,20 @@
 bindkey "^?" backward-delete-char
 
 KEYTIMEOUT=5
-setopt transientrprompt
+export DEFAULT_CURSOR_COLOR=#d3c6aa
+export NORMAL_CURSOR_COLOR=#83c092
 
-vim_ins_mode="%F{7}❮%f%F{7}INS%f%F{7}❯%f"
-vim_cmd_mode="%F{7}❮%f%F{7}NOR%f%F{7}❯%f"
+if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
+    export SET_NORMAL_CURSOR="\e[2 q"
+    export SET_INSERT_CURSOR="\e[6 q"
+fi
+if [ $VI_CHANGE_CURSOR_COLOR -eq 1 ]; then
+    export SET_NORMAL_CURSOR="${SET_NORMAL_CURSOR}\e]12;$NORMAL_CURSOR_COLOR\x7"
+    export SET_INSERT_CURSOR="${SET_INSERT_CURSOR}\e]12;$DEFAULT_CURSOR_COLOR\x7"
+fi
 
 zle-line-init() {
-if [ $SET_RPROMPT -eq 1 ]; then
-    set_rp
-fi
 zle reset-prompt
-}
-
-set_rp() {
-    RPROMPT="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
 }
 
 vi_update_cursor() {
@@ -32,19 +32,10 @@ zle-keymap-select() {
 if [[ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]] || [[ $VI_CHANGE_CURSOR_COLOR -eq 1 ]]; then
     vi_update_cursor "$@"
 fi
-
-if [ $SET_RPROMPT -eq 1 ]; then
-    set_rp
-fi
 zle reset-prompt
 }
 
 zle -N zle-keymap-select
-zle -N zle-line-init
-if [ $SET_RPROMPT -eq 1 ]; then
-    set_rp
-fi
-
 reset_cursor() {
     echo -ne $SET_INSERT_CURSOR
 }
