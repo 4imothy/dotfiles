@@ -1,13 +1,15 @@
 source ~/.vim/shared_vars.vim
 
-let g:c_syntax_for_h = 1
+let g:c_syntax_for_h=1
 
+let g:lsp_document_highlight_enabled=0
 let g:lsp_semantic_enabled=1
 let g:lsp_diagnostics_enabled=1
 let g:lsp_completion_documentation_enabled=1
 let g:lsp_completion_documentation_delay=0
 
 let g:lsp_preview_float=1
+let g:lsp_hover_ui='float'
 let g:lsp_diagnostics_float_insert_mode_enabled=0
 let g:lsp_diagnostics_float_cursor=1
 let g:lsp_float_max_width=-1

@@ -83,7 +83,11 @@ nnoremap <leader>p :bprevious<cr>
 nnoremap <leader>x :bdelete<cr>
 nnoremap <leader>t :term++rows=10<cr>
 nnoremap <leader>e :open .<CR>
-nnoremap <leader>d :LspDocumentDiagnostics<CR>
+
+nnoremap <leader>dd :LspDocumentDiagnostics<CR>
+nnoremap <leader>dn :LspNextDiagnostic<CR>
+nnoremap <leader>dp :LspPreviousDiagnostic<CR>
+nnoremap <leader>h :LspHover<CR>
 map <leader>s <Plug>(easymotion-s)
 map <leader>w <Plug>(easymotion-w)
 nnoremap <silent> <leader>e :Files<CR>
