@@ -68,7 +68,7 @@ let g:lsp_float_max_width=-1
 let g:lsp_diagnostics_float_delay=0
 
 let g:lsp_diagnostics_virtual_text_align='right'
-let g:lsp_diagnostics_virtual_text_prefix='⨉'
+" let g:lsp_diagnostics_virtual_text_prefix='⨉'
 let g:lsp_diagnostics_virtual_text_padding_left=1
 
 let g:lsp_diagnostics_float_insert_mode_enabled=0

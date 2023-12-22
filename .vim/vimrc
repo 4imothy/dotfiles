@@ -5,7 +5,7 @@ set nowritebackup
 set shiftwidth=4
 set tabstop=4
 set expandtab
-set wrap
+set nowrap
 set incsearch
 set ignorecase
 set smartcase
@@ -127,4 +127,4 @@ endfun
 
 autocmd BufWritePre * :call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
-autocmd FileType tex,txt,md setlocal spell spelllang=en_us
+autocmd FileType tex,txt,md setlocal spell spelllang=en_us wrap
