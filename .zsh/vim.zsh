@@ -8,7 +8,7 @@ export NORMAL_CURSOR_COLOR=#83c092
 
 if [ $VI_CHANGE_CURSOR_SHAPE -eq 1 ]; then
     export SET_NORMAL_CURSOR="\e[2 q"
-    export SET_INSERT_CURSOR="\e[6 q"
+    export SET_INSERT_CURSOR="\e[3 q"
 fi
 if [ $VI_CHANGE_CURSOR_COLOR -eq 1 ]; then
     export SET_NORMAL_CURSOR="${SET_NORMAL_CURSOR}\e]12;$NORMAL_CURSOR_COLOR\x7"

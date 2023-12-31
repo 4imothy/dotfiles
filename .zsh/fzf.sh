@@ -1,4 +1,4 @@
-export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS='-m --height 50% --border --layout=reverse'
 
 _add_fzf_colors() {
