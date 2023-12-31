@@ -5,7 +5,8 @@ set nowritebackup
 set shiftwidth=4
 set tabstop=4
 set expandtab
-set nowrap
+set wrap
+set linebreak
 set incsearch
 set ignorecase
 set smartcase
@@ -21,6 +22,8 @@ set hidden
 set background=dark
 set pumheight=5
 set directory=$HOME/.vim/swapfiles/
+set noshowmode
+set shortmess+=c
 syntax on
 filetype on
 filetype plugin on
@@ -98,7 +101,7 @@ nnoremap <leader><leader>r :LspRename<CR>
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --hidden --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   'rg --hidden --column --line-number --no-heading --color=always --follow --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
 inoremap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
@@ -127,4 +130,4 @@ endfun
 
 autocmd BufWritePre * :call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
-autocmd FileType tex,txt,md setlocal spell spelllang=en_us wrap
+autocmd FileType tex,txt,md setlocal spell spelllang=en_us wrap linebreak
