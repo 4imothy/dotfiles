@@ -24,6 +24,7 @@ set pumheight=5
 set directory=$HOME/.vim/swapfiles/
 set noshowmode
 set shortmess+=c
+set scrolloff=5
 syntax on
 filetype on
 filetype plugin on
@@ -84,7 +85,8 @@ let g:mapleader = ","
 nnoremap <leader>n :bnext<cr>
 nnoremap <leader>p :bprevious<cr>
 nnoremap <leader>x :bdelete<cr>
-nnoremap <leader>t :term++rows=10<cr>
+" tnoremap <leader>x :bdelete!<cr>
+nnoremap <leader>t :terminal ++curwin<cr>
 nnoremap <leader>e :open .<CR>
 map <leader>s <Plug>(easymotion-s)
 map <leader>w <Plug>(easymotion-w)
@@ -92,6 +94,7 @@ nnoremap <silent> <leader>e :Files<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
+
 
 nnoremap <leader><leader>d :LspDocumentDiagnostics<CR>
 nnoremap <leader><leader>n :LspNextDiagnostic<CR>
@@ -131,3 +134,4 @@ endfun
 autocmd BufWritePre * :call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
 autocmd FileType tex,txt,md setlocal spell spelllang=en_us wrap linebreak
+autocmd TerminalWinOpen * nnoremap <buffer> <leader>x :bdelete!<CR>
