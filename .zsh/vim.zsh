@@ -20,10 +20,10 @@ zle reset-prompt
 }
 
 vi_update_cursor() {
-    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+    if [[ ${KEYMAP} == vicmd ]]; then
         echo -ne $SET_NORMAL_CURSOR
     elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
-        [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+        [[ ${KEYMAP} = '' ]]; then
             echo -ne $SET_INSERT_CURSOR
     fi
 }
