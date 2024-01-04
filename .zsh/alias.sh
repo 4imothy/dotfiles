@@ -1,8 +1,9 @@
 alias c="clear"
 alias ch="history -p; clear"
 alias ct='clear; history -p; clear; tmux clear-history; clear'
-alias todo="gret TODO"
+alias todo="tgrep TODO"
 alias e="vim"
+alias tg="tgrep"
 
 alias gs='git status'
 alias ga='git add'
