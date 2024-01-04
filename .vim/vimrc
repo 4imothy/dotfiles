@@ -82,19 +82,22 @@ for f in globpath('~/.vim', '*.vim', 0, 1, 0)
 endfor
 
 let g:mapleader = ","
+nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+
 nnoremap <leader>n :bnext<cr>
 nnoremap <leader>p :bprevious<cr>
 nnoremap <leader>x :bdelete<cr>
-" tnoremap <leader>x :bdelete!<cr>
 nnoremap <leader>t :terminal ++curwin<cr>
 nnoremap <leader>e :open .<CR>
-map <leader>s <Plug>(easymotion-s)
-map <leader>w <Plug>(easymotion-w)
+noremap <leader>c :call CommentLines()<CR>
+noremap <leader>u :call UncommentLines()<CR>
+noremap <leader>s <Plug>(easymotion-s)
+noremap <leader>w <Plug>(easymotion-w)
 nnoremap <silent> <leader>e :Files<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
-
 
 nnoremap <leader><leader>d :LspDocumentDiagnostics<CR>
 nnoremap <leader><leader>n :LspNextDiagnostic<CR>
@@ -129,6 +132,22 @@ fun! StripTrailingWhitespace()
   let c = col(".")
   %s/\s\+$//e
   call cursor(l, c)
+endfun
+
+fun! RegexLiteral(str)
+    return escape(a:str, "*$.^/")
+endfun
+
+fun! CommentLines()
+    if b:Comment != ""
+        exe ":s/^\\(\\s*\\)/\\1".escape(b:Comment, '/')." /e"
+        exe ":s/$/ ".escape(b:EndComment, '/')."/e"
+    endif
+endfun
+
+fun! UncommentLines()
+    exe ":s/^\\(\\s*\\)".RegexLiteral(b:Comment)."\\s*/\\1/e"
+    exe ":s/\\s*".RegexLiteral(b:EndComment)."\\s*$//e"
 endfun
 
 autocmd BufWritePre * :call StripTrailingWhitespace()
