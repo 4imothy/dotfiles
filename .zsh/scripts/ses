@@ -3,8 +3,8 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    poss_cmd="find ~/Projects ~/Documents/applications ~/Documents/school -mindepth 1 -maxdepth 1 -type d -not -name '.git'"
-    selected=$(eval ${poss_cmd} | fzf)
+    poss="find ~/Projects ~/Documents/notes ~/Documents/applications ~/Documents/school -mindepth 0 -maxdepth 1 -type d -not -name '.git'"
+    selected=$(eval ${poss} | fzf)
 fi
 
 if [[ -z $selected ]]; then
