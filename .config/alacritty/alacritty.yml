@@ -8,9 +8,6 @@ mouse:
       args: []
 
 window:
-  dimensions:
-    columns: 100
-    lines: 35
   padding:
     x: 5
     y: 5
