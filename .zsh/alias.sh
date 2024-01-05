@@ -2,8 +2,10 @@ alias c="clear"
 alias ch="history -p; clear"
 alias ct='clear; history -p; clear; tmux clear-history; clear'
 alias todo="tgrep TODO"
-alias e="vim"
+alias e="$EDITOR"
 alias tg="tgrep"
+alias todo="tgrep TODO"
+alias todom="tgrep TODO -m"
 
 alias gs='git status'
 alias ga='git add'
