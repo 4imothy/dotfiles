@@ -134,13 +134,19 @@ fun! StripTrailingWhitespace()
 endfun
 
 function! ToggleComment()
-    if getline(".") =~ '^' . b:comment
-        execute 'silent s/^' . b:comment.'\( \)\?//g'
-        execute 'silent s/ ' . b:end_comment .'$//g'
-    elseif getline(".") =~ '^\s*$'
+    if getline(".") =~ '^\s*$'
+        return
+    endif
+
+    let current_line = getline(".")
+    let current_line = substitute(current_line, '^\s*', '', '')
+
+    if current_line =~ '^' . b:comment
+        execute 'silent s/^\s*' . b:comment.'\( \)\?//g'
+        execute 'silent s/\s*' . b:end_comment .'$//g'
     else
-        execute 'silent s/^/' . b:comment .' /g'
-        execute 'silent s/$/\ ' . b:end_comment .'/g'
+        execute 'silent s/^\s*/&' . b:comment .' /g'
+        execute 'silent s/\s*$/\ ' . b:end_comment .'/g'
     endif
 endfunction
 
