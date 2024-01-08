@@ -5,13 +5,13 @@ set nowritebackup
 set shiftwidth=4
 set tabstop=4
 set expandtab
-set wrap
 set linebreak
 set incsearch
 set ignorecase
 set smartcase
 set signcolumn=no
 set hlsearch
+set nowrap
 set encoding=utf-8
 set timeoutlen=1000
 set ttimeoutlen=0
@@ -25,6 +25,8 @@ set directory=$HOME/.vim/swapfiles/
 set noshowmode
 set shortmess+=c
 set scrolloff=5
+set fillchars+=vert:│
+
 syntax on
 filetype on
 filetype plugin on
@@ -74,6 +76,7 @@ Plug 'prabirshrestha/asyncomplete-file.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'mbbill/undotree'
 
 call plug#end()
 
@@ -89,6 +92,7 @@ nnoremap <leader>n :bnext<cr>
 nnoremap <leader>p :bprevious<cr>
 nnoremap <leader>x :bdelete<cr>
 nnoremap <leader>t :terminal ++curwin<cr>
+nnoremap <leader>u :call EnterUndotree()<cr>
 nnoremap <leader>e :open .<CR>
 noremap <leader>c :call ToggleComment()<CR>
 noremap <leader>s <Plug>(easymotion-s)
@@ -154,3 +158,18 @@ autocmd BufWritePre * :call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
 autocmd FileType tex,txt,md setlocal spell spelllang=en_us wrap linebreak
 autocmd TerminalWinOpen * nnoremap <buffer> <leader>x :bdelete!<CR>
+
+" https://github.com/mbbill/undotree/issues/156
+function! EnterUndotree()
+    execute 'UndotreeShow'
+
+    let is_glitched = getreg('%') == 'undotree_2'
+
+    if is_glitched
+        wincmd w
+        wincmd w
+        wincmd p
+    else
+        execute 'UndotreeFocus'
+    endif
+endfunction
