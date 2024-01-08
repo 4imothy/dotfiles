@@ -156,7 +156,7 @@ endfunction
 
 autocmd BufWritePre * :call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
-autocmd FileType tex,txt,md setlocal spell spelllang=en_us wrap linebreak
+autocmd FileType tex,txt,markdown setlocal spell spelllang=en_us wrap linebreak
 autocmd TerminalWinOpen * nnoremap <buffer> <leader>x :bdelete!<CR>
 
 " https://github.com/mbbill/undotree/issues/156
