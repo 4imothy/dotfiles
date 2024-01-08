@@ -117,8 +117,6 @@ zle -N del_prompt_accept_line
 bindkey "^M" del_prompt_accept_line
 
 add_to_array precmd_functions "update_prompt"
+add_to_array preexec_functions "reset_fg"
 add_to_array precmd_functions "set_cursor_color"
-if [ $SUGGESTIONS -eq 0 ]; then
-    add_to_array preexec_functions "reset_fg"
-fi
 add_to_array preexec_functions "set_cursor_color"
