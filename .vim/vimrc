@@ -26,6 +26,7 @@ set noshowmode
 set shortmess+=c
 set scrolloff=5
 set fillchars+=vert:│
+set spellcapcheck=
 
 syntax on
 filetype on
@@ -93,7 +94,6 @@ nnoremap <leader>p :bprevious<cr>
 nnoremap <leader>x :bdelete<cr>
 nnoremap <leader>t :terminal ++curwin<cr>
 nnoremap <leader>u :call EnterUndotree()<cr>
-nnoremap <leader>e :open .<CR>
 noremap <leader>c :call ToggleComment()<CR>
 noremap <leader>s <Plug>(easymotion-s)
 noremap <leader>w <Plug>(easymotion-w)
@@ -153,6 +153,12 @@ function! ToggleComment()
         execute 'silent s/\s*$/\ ' . b:end_comment .'/g'
     endif
 endfunction
+
+for d in glob('~/.vim/spell/*.add', 1, 1)
+    if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+        silent exec 'mkspell! ' . fnameescape(d)
+    endif
+endfor
 
 autocmd BufWritePre * :call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
