@@ -24,9 +24,15 @@ set pumheight=5
 set directory=$HOME/.vim/swapfiles/
 set noshowmode
 set shortmess+=c
+set guioptions-=e
+set laststatus=2
 set scrolloff=5
 set fillchars+=vert:│
 set spellcapcheck=
+
+" TODO using something like the BufTabLine but put stars around when the name
+" comes from the process I think this functionality exists in some other
+" plugin i don't remember bufferline?
 
 syntax on
 filetype on
@@ -80,6 +86,29 @@ Plug 'mbbill/undotree'
 
 call plug#end()
 
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --hidden --column --line-number --no-heading --color=always --follow --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+inoremap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
+snoremap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
+
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+
+if $COLORTERM == 'truecolor'
+    if has('termguicolors')
+        set termguicolors
+    endif
+    let g:everforest_background='soft'
+    let g:everforest_better_performance=1
+    let g:airline_theme='everforest'
+
+    colorscheme everforest
+else
+    colorscheme desert
+endif
+
 for f in globpath('~/.vim', '*.vim', 0, 1, 0)
         execute 'source' f
 endfor
@@ -101,33 +130,15 @@ nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
 
-nnoremap <leader><leader>d :LspDocumentDiagnostics<CR>
+" TODO make this call a function which autorefreshes that window on save of
+" the buffer
+" :h vim-lsp /g:lsp_work_done_progress_enabled
+
+nnoremap <leader><leader>d :LspDocumentDiagnostics --buffers=*<CR>
 nnoremap <leader><leader>n :LspNextDiagnostic<CR>
 nnoremap <leader><leader>p :LspPreviousDiagnostic<CR>
 nnoremap <leader><leader>h :LspHover<CR>
 nnoremap <leader><leader>r :LspRename<CR>
-
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --hidden --column --line-number --no-heading --color=always --follow --smart-case -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
-
-inoremap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
-snoremap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
-
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-
-if $COLORTERM == 'truecolor'
-    if has('termguicolors')
-        set termguicolors
-    endif
-    let g:everforest_background='soft'
-    let g:everforest_better_performance=1
-    let g:airline_theme='everforest'
-    colorscheme everforest
-else
-    colorscheme default
-endif
 
 fun! StripTrailingWhitespace()
   let l = line(".")
@@ -162,6 +173,7 @@ endfor
 autocmd BufWritePre * :call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.tex :set filetype=tex
 autocmd FileType tex,txt,markdown setlocal spell spelllang=en_us wrap linebreak
+autocmd FileType markdown setlocal conceallevel=3
 autocmd TerminalWinOpen * nnoremap <buffer> <leader>x :bdelete!<CR>
 
 " https://github.com/mbbill/undotree/issues/156

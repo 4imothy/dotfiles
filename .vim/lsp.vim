@@ -11,6 +11,24 @@ let g:lsp_preview_float=1
 let g:lsp_diagnostics_virtual_text_enabled=0
 let g:lsp_diagnostics_float_cursor=1
 
+let my_autoupdate_diag_list = 0
+
+function! s:on_textDocumentDiagnostics(x) abort
+    if get(getloclist(0, {'winid':0}), 'winid', 0)
+        :LspDocumentDiagnostics --buffers=*<cr>
+        wincmd p
+    endif
+endfunction
+
+if my_autoupdate_diag_list
+    let g:lsp_work_done_progress_enabled=1
+    au User lsp_setup call lsp#callbag#pipe(
+                \ lsp#stream(),
+                \ lsp#callbag#filter({x-> has_key(x, 'response') && !has_key(x['response'], 'error') && get(x['response'], 'method', '') == 'textDocument/publishDiagnostics'}),
+                \ lsp#callbag#subscribe({ 'next':{x->s:on_textDocumentDiagnostics(x)} }),
+                \ )
+endif
+
 if executable('texlab')
     au User lsp_setup call lsp#register_server({
                 \ 'name': 'texlab',
@@ -73,7 +91,7 @@ let g:lsp_float_max_width=-1
 let g:lsp_diagnostics_float_delay=0
 
 let g:lsp_diagnostics_virtual_text_align='right'
-" let g:lsp_diagnostics_virtual_text_prefix='⨉'
+let g:lsp_diagnostics_virtual_text_prefix='⨉'
 let g:lsp_diagnostics_virtual_text_padding_left=1
 
 let g:lsp_diagnostics_float_insert_mode_enabled=0
