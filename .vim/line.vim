@@ -18,6 +18,23 @@ endif
 let g:airline_symbols.branch = ''
 let g:airline_symbols.dirty=''
 let g:airline#extensions#tabline#ignore_bufadd_pat = 'defx|gundo|nerd_tree|startify|tagbar|undotree|vimfiler'
+let g:airline_section_z='%3p%%'
+let g:airline#extensions#wordcount#filetypes=[]
+
+let g:airline_mode_map = {
+  \ '__' : '-',
+  \ 'n' : 'N',
+  \ 'niI' : 'N',
+  \ 'i' : 'I',
+  \ 'R' : 'R',
+  \ 'c' : 'C',
+  \ 'v' : 'V',
+  \ 'V' : 'V',
+  \ '' : 'V',
+  \ 's' : 'S',
+  \ 'S' : 'S',
+  \ '' : 'S',
+  \ }
 
 " custom status line
 " function! s:statusline_expr()
