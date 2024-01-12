@@ -1,5 +1,5 @@
 export HISTFILE="$HOME/.zsh_history"
-export EDITOR='vim'
+export EDITOR=nvim
 export SHOW_BRANCH_IN_PROMPT=0
 export SHOW_BRANCH_IN_RPROMPT=1
 export PAR_DIR_PRINT_LIMIT=2
