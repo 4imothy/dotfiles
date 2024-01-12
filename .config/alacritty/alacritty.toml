@@ -1,0 +1,17 @@
+import = ["/Users/timothy/.config/alacritty/colors.toml"]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 20.0
+
+[font.normal]
+family = "mononoki"
+
+[window]
+decorations = "buttonless"
+
+[window.padding]
+x = 5
+y = 5
