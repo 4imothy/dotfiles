@@ -4,9 +4,10 @@ return {
     config = function()
         require("telescope").setup({
             defaults = {
+                scroll_strategy = 'limit',
                 mappings = {
                     i = {
-                        ["<Esc>"] = require('telescope.actions').close,    
+                        ["<Esc>"] = require('telescope.actions').close,
                     },
                 },
                 vimgrep_arguments = require('rg').base_command,

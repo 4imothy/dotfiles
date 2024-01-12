@@ -1,3 +1,4 @@
+-- TODO the loclist
 return {
     'neovim/nvim-lspconfig',
     config = function()
@@ -28,6 +29,7 @@ return {
                 vim.keymap.set('n', 'gn', vim.lsp.buf.rename, opts)
                 vim.keymap.set({ 'n', 'v' }, 'gca', vim.lsp.buf.code_action, opts)
                 vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+                vim.keymap.set('n', 'gq', vim.diagnostic.setloclist)
             end,
         })
     end,
