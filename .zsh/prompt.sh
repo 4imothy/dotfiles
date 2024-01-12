@@ -72,9 +72,9 @@ truncate_dir() {
 
 fg_color() {
     if [ $SUGGESTIONS -eq 1 ]; then
-        local fg_color="%F{4}"
+        echo ""
     else
-        local fg_color=""
+        echo "%F{4}"
     fi
 }
 

@@ -23,6 +23,7 @@ link_same "$config_dir/alacritty"
 link_same "$config_dir/iterm2"
 link_same "$config_dir/helix"
 link_same "$config_dir/zathura"
+link_same "$config_dir/nvim"
 
 org_path="zsh"
 link_same ".zshenv"

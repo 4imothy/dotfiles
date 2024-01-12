@@ -68,6 +68,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     source $MYVIMRC
 endif
 
+" TODO vim-lsp slows down editor for large files, try ALE or vim9lsp
+" I guess swap to neovim, IDK but that is kind of annoying
 call plug#begin()
 
 Plug 'sainnhe/everforest'

@@ -1,11 +1,11 @@
 .DS_Store
 .emacs.d/ltximg
 .vim/plugged
-.vim/spell/*.spl
 .vim/autoload
 .vim/.netrwhist
 .vim/swapfiles
 .vim/undodir
+*.spl
 .zsh/.zcompdump
 .zsh/external
 zsh/sourced/fetch.sh
@@ -15,3 +15,5 @@ browsers/qutebrowser/specific_cookies.py
 browsers/qutebrowser/startpage/
 browsers/qutebrowser/bookmarks/
 browsers/qutebrowser/quickmarks
+lazy-lock.json
+
