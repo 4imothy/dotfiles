@@ -11,7 +11,7 @@ return {
             sections = {
                 lualine_a = {},
                 lualine_b = {'FugitiveHead', 'diff', 'diagnostics'},
-                lualine_c = {'filename'},
+                lualine_c = {{'filename', path = 1}},
                 lualine_x = {'encoding', 'filetype'},
                 lualine_y = {'progress'},
                 lualine_z = {}

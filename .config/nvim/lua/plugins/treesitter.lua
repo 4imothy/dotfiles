@@ -12,6 +12,7 @@ return {
                 "python",
                 "vimdoc",
                 "latex",
+                "comment",
             },
             highlight = {
                 enable = true,
