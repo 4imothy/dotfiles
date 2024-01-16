@@ -1,4 +1,26 @@
 {
+
+    "bf": {
+        "prefix": "bf",
+        "body": [
+            "\\textbf{$1}"
+        ]
+    },
+
+    "em": {
+        "prefix": "em",
+        "body": [
+            "\\emph{$1}"
+        ]
+    },
+
+    "it": {
+        "prefix": "it",
+        "body": [
+            "\\item $1"
+        ]
+    },
+
     "begin": {
         "prefix": "begin",
         "body": [
@@ -21,6 +43,44 @@
             "\\section*{$1}",
             "",
             "$0"
+        ]
+    },
+
+    "spread": {
+        "prefix": "spread",
+        "body": [
+            "{$1_{$2}, \\ldots, $3_{$4}"
+        ]
+    },
+
+    "bracks": {
+        "prefix": "bracks",
+        "body": [
+            "\\lbrack{$1}\\rbrack"
+        ]
+    },
+
+
+    "angles": {
+        "prefix": "angles",
+        "body": [
+            "\\langle{$1}\\rangle"
+        ]
+    },
+
+
+    "bmat": {
+        "prefix": "bmat",
+        "body": [
+            "\\begin{bmatrix}"
+        ]
+    },
+
+
+    "emat": {
+        "prefix": "emat",
+        "body": [
+            "\\end{bmatrix}"
         ]
     },
 
@@ -50,5 +110,49 @@
             "\\end{document}"
         ],
         "description": "Assignment Template"
+    },
+
+    "mR": {
+        "prefix": "mR",
+        "body": [
+            "\\mathbb{R}"
+        ]
+    },
+
+    "mC": {
+        "prefix": "mC",
+        "body": [
+            "\\mathbb{C}"
+        ]
+    },
+
+    "mQ": {
+        "prefix": "mQ",
+        "body": [
+            "\\mathbb{Q}"
+        ]
+    },
+
+
+    "mN": {
+        "prefix": "mN",
+        "body": [
+            "\\mathbb{N}"
+        ]
+    },
+
+    "mZ": {
+        "prefix": "mZ",
+        "body": [
+            "\\mathbb{Z}"
+        ]
+    },
+
+
+    "mF": {
+        "prefix": "mF",
+        "body": [
+            "\\mathbb{F}"
+        ]
     }
 }

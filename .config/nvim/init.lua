@@ -28,9 +28,10 @@ vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
 vim.opt.undolevels=1000
 vim.opt.undoreload=10000
+vim.opt.guicursor = 'a:block,i:hor10'
 
 vim.g.mapleader = ','
-vim.opt.guicursor = 'a:block,i:hor10'
+vim.g.tex_flavor = 'tex'
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -61,6 +62,7 @@ vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuz
 vim.keymap.set("n", "<leader>-", require('oil').open)
 vim.keymap.set('n', '<leader>s', '<Plug>(easymotion-s)')
 vim.keymap.set('n', '<leader>w', '<Plug>(easymotion-w)')
+vim.keymap.set('n', '<leader>\\', vim.cmd.nohlsearch)
 vim.api.nvim_set_keymap("i", "<Tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
 vim.api.nvim_set_keymap("s", "<Tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
 
