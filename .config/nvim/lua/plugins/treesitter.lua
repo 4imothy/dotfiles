@@ -12,6 +12,7 @@ return {
                 "python",
                 "vimdoc",
                 "latex",
+                "racket",
                 "comment",
             },
             highlight = {
