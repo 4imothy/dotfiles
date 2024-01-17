@@ -88,7 +88,6 @@
         "prefix": "assignment",
         "body": [
             "\\documentclass[article,12pt]{article}",
-            "\\usepackage{tims_shorts}",
             "\\usepackage{enumitem}",
             "\\usepackage{amsmath}",
             "\\usepackage{amssymb}",
