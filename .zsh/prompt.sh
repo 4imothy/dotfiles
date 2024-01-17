@@ -20,20 +20,25 @@ set_cursor_color() {
 }
 
 colored_branch() {
-    local git_dir=$(git rev-parse --git-dir 2>/dev/null)
+    local git_dir
+    git_dir=$(git rev-parse --git-dir 2>/dev/null)
+
     if [ -n "$git_dir" ]; then
-        local git_status="$(git status --porcelain)"
-        local current_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+        local git_status
+        git_status="$(git status --porcelain)"
+        local current_branch
+        current_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
         local return_status=""
 
         if [ -n "$git_status" ]; then
             return_status="%F{1}$current_branch%f"
-        elif [ -n "$(git log origin/$current_branch..$current_branch)" ]; then
+        elif git rev-parse --quiet --verify origin/$current_branch > /dev/null && [ -n "$(git log origin/$current_branch..$current_branch)" ]; then
             return_status="%F{3}$current_branch%f"
         else
             return_status="%F{2}$current_branch%f"
         fi
-        echo $return_status
+
+        echo "$return_status"
     fi
 }
 
