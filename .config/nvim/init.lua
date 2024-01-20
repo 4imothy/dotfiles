@@ -21,6 +21,7 @@ vim.opt.writebackup = false
 vim.opt.linebreak = true
 vim.opt.laststatus = 3
 vim.opt.scrolloff = 3
+vim.opt.conceallevel = 3
 vim.opt.shortmess:append 'c'
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
