@@ -8,6 +8,7 @@
 \RequirePackage{enumitem}
 \usepackage[dvipsnames]{xcolor}
 \RequirePackage{environ}
+\RequirePackage{listings}
 \RequirePackage{tcolorbox}
 \RequirePackage{titlesec}
 \RequirePackage[left=0.4in, right=0.4in, top=0.4in, bottom=0.4in]{geometry}
