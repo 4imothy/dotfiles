@@ -15,10 +15,6 @@ line_indicator() {
     echo "%F{5}✼%f "
 }
 
-set_cursor_color() {
-    echo -ne $SET_DEFAULT_CURSOR_COLOR
-}
-
 colored_branch() {
     local git_dir
     git_dir=$(git rev-parse --git-dir 2>/dev/null)
@@ -123,5 +119,3 @@ bindkey "^M" del_prompt_accept_line
 
 add_to_array precmd_functions "update_prompt"
 add_to_array preexec_functions "reset_fg"
-add_to_array precmd_functions "set_cursor_color"
-add_to_array preexec_functions "set_cursor_color"
