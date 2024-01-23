@@ -4,6 +4,7 @@
 \LoadClass{article}
 
 \RequirePackage{amsmath}
+\RequirePackage{tims_shorts}
 \RequirePackage{amssymb}
 \RequirePackage{enumitem}
 \usepackage[dvipsnames]{xcolor}
@@ -26,10 +27,6 @@
 \titleformat{\subsubsection}
   {\normalfont\normalsize\bfseries\color{Turquoise}}
   {\thesubsubsection}{1em}{}
-
-\newenvironment{alphlist}{\begin{enumerate}[label={(\alph*)}]}{\end{enumerate}}
-\newenvironment{romanlist}{\begin{enumerate}[label={(\roman*)}]}{\end{enumerate}}
-\newenvironment{arabiclist}{\begin{enumerate}[label={(\arabic*)}]}{\end{enumerate}}
 
 \tcbuselibrary{theorems}
 
