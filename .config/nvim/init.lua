@@ -29,7 +29,7 @@ vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
 vim.opt.undolevels=1000
 vim.opt.undoreload=10000
-vim.opt.guicursor = 'a:block,i:hor10'
+vim.opt.guicursor = 'a:block,i:hor30'
 
 vim.g.mapleader = ','
 vim.g.tex_flavor = 'tex'
@@ -56,6 +56,7 @@ vim.keymap.set('n', '<leader>n', vim.cmd.bnext)
 vim.keymap.set('n', '<leader>p', vim.cmd.bprevious)
 vim.keymap.set('n', '<leader>x', vim.cmd.bdelete)
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+vim.keymap.set('n', '<leader>t', vim.cmd.term)
 vim.keymap.set('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )
 vim.keymap.set('n', '<leader>f', require('telescope.builtin').live_grep)
 vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers)
@@ -84,6 +85,12 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt.linebreak = true
         vim.opt.wrap = true
         vim.opt.spelllang='en_us'
+    end,
+})
+
+vim.api.nvim_create_autocmd('TermOpen', {
+    callback = function()
+        vim.opt.spell = false
     end,
 })
 
