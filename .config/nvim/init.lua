@@ -21,7 +21,7 @@ vim.opt.writebackup = false
 vim.opt.linebreak = true
 vim.opt.laststatus = 3
 vim.opt.scrolloff = 3
-vim.opt.conceallevel = 3
+vim.opt.conceallevel = 2
 vim.opt.shortmess:append 'c'
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
@@ -78,7 +78,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "tex", "txt", "markdown" },
+    pattern = { "tex", "txt", "markdown", "norg" },
     callback = function()
         vim.opt.spellcapcheck = ''
         vim.opt.spell = true
