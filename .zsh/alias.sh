@@ -5,6 +5,7 @@ alias todo="tgrep TODO"
 alias e="$EDITOR"
 alias tg="tgrep"
 alias todo="tgrep TODO"
+alias venv="source venv/bin/activate"
 alias todom="tgrep TODO -m"
 
 alias gs='git status'

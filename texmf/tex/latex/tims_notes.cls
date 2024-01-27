@@ -3,12 +3,8 @@
 
 \LoadClass{article}
 
-\RequirePackage{amsmath}
 \RequirePackage{tims_shorts}
-\RequirePackage{amssymb}
-\RequirePackage{enumitem}
 \usepackage[dvipsnames]{xcolor}
-\RequirePackage{environ}
 \RequirePackage{listings}
 \RequirePackage{tcolorbox}
 \RequirePackage{titlesec}

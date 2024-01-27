@@ -1,6 +1,13 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{tims_shorts}
 
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{enumitem}
+\RequirePackage{graphicx}
+
+\setkeys{Gin}{width=0.6\linewidth}
+
 \newenvironment{alphlist}{\begin{enumerate}[label={(\alph*)}]}{\end{enumerate}}
 \newenvironment{romanlist}{\begin{enumerate}[label={(\roman*)}]}{\end{enumerate}}
 \newenvironment{arabiclist}{\begin{enumerate}[label={(\arabic*)}]}{\end{enumerate}}

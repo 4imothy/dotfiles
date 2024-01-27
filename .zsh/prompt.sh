@@ -1,3 +1,4 @@
+# TODO setup to show the relative path to the cwd
 virtualenv_info() {
     [ $VIRTUAL_ENV ] && echo "%F{12}(`basename $VIRTUAL_ENV`)%f "
 }
