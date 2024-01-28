@@ -6,6 +6,7 @@ return {
         require("neorg").setup {
             load = {
                 ["core.defaults"] = {},
+                -- TODO uncomment on stable 0.10.0 ["core.ui.calendar"] = {},
                 ["core.concealer"] = {
                     config = {
                         icons = {

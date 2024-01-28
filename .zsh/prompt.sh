@@ -81,6 +81,7 @@ fg_color() {
 }
 
 update_prompt() {
+    tput civis
     local branch=""
     if [ $SHOW_BRANCH_IN_PROMPT -eq 1 ]; then
         branch="$(colored_branch) "
@@ -97,7 +98,6 @@ reset_fg(){
 }
 
 del_prompt_accept_line() {
-    tput civis
     local OLD_PROMPT="$PROMPT"
 
     OLD_PROMPT="${OLD_PROMPT//\%B}"
