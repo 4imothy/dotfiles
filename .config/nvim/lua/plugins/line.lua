@@ -5,8 +5,10 @@ return {
             options = {
                 icons_enabled = false,
                 use_mode_colors = false,
-                component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''},
+                component_separators = { left = '', right = ''},
+                section_separators = { left = '', right = ''},
+                -- component_separators = { left = '', right = ''},
+                -- section_separators = { left = '', right = ''},
             },
             sections = {
                 lualine_a = {},
