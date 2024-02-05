@@ -1,3 +1,5 @@
+vim.cmd("source ~/Projects/dotfiles/.vim/treegrep.vim")
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.encoding= 'UTF-8'
@@ -21,15 +23,17 @@ vim.opt.writebackup = false
 vim.opt.linebreak = true
 vim.opt.laststatus = 3
 vim.opt.scrolloff = 3
-vim.opt.conceallevel = 2
+vim.opt.conceallevel = 0
+vim.opt.shortmess:append 'I'
 vim.opt.shortmess:append 'c'
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
-vim.opt.undolevels=1000
-vim.opt.undoreload=10000
+vim.opt.undolevels = 1000
+vim.opt.undoreload = 10000
 vim.opt.guicursor = 'a:block,i:hor30'
+vim.opt.foldlevelstart = 99
 
 vim.g.mapleader = ','
 vim.g.tex_flavor = 'tex'
