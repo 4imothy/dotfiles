@@ -4,14 +4,10 @@ return {
         opts.default_file_explorer = true
         opts.view_options = {
             show_hidden = true,
-            cursorline = true  
+            cursorline = true
         }
         opts.columns = {
             'permissions',
-        }
-        opts.buf_options = {
-            buflisted = true,
-            bufhidden = 'hide',
         }
         opts.win_options = {
             cursorline = true,
