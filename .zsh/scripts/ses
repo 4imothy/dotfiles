@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    poss="find ~/Projects ~/Documents/research ~/Documents/applications ~/Documents/school -mindepth 0 -maxdepth 1 -type d -not -name '.git'"
+    poss="find ~/Projects ~/Documents/notes ~/Documents/research ~/Documents/applications ~/Documents/school -mindepth 0 -maxdepth 1 -type d -not -name '.git'"
     selected=$(eval ${poss} | fzf)
 fi
 
