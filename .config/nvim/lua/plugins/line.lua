@@ -19,14 +19,16 @@ return {
                 lualine_z = {}
             },
             tabline = {
-                lualine_a = {{'buffers',
-                symbols = {
-                    modified = '[+]',
-                    alternate_file = '',
-                    directory = '',
+                lualine_a = {
+                    {
+                        'buffers',
+                        symbols = {
+                            modified = '[+]',
+                            alternate_file = '',
+                            directory = '',
+                        },
+                    }
                 },
-            }
-            },
                 lualine_b = {},
                 lualine_c = {},
                 lualine_x = {},
