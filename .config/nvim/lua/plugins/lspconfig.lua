@@ -15,6 +15,25 @@ return {
         lspconfig.texlab.setup({
             capabilities = capabilities
         })
+        lspconfig.ltex.setup({
+            capabilities = capabilities,
+            use_spellfile = false,
+            filetypes= { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd", "context", "html", "xhtml" },
+            settings = {
+                ltex = {
+                    language = "auto",
+                    diagnosticSeverity = "information",
+                    additionalRules = {
+                        languageModel = '~/Projects/dotfiles/ngrams/',
+                    },
+                    disabledRules = {
+                        ["en-US"] = {
+                            "MORFOLOGIK_RULE_EN_US",
+                        },
+                    },
+                },
+            }
+        })
         vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
         vim.api.nvim_create_autocmd('LspAttach', {

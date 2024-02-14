@@ -1,4 +1,5 @@
 .DS_Store
+ngrams
 .emacs.d/ltximg
 .vim/plugged
 .vim/autoload
