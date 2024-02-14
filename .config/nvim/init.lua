@@ -60,7 +60,6 @@ vim.keymap.set('n', '<leader>n', vim.cmd.bnext)
 vim.keymap.set('n', '<leader>p', vim.cmd.bprevious)
 vim.keymap.set('n', '<leader>x', vim.cmd.bdelete)
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
-vim.keymap.set('n', '<leader>t', vim.cmd.term)
 vim.keymap.set('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )
 vim.keymap.set('n', '<leader>f', require('telescope.builtin').live_grep)
 vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers)
@@ -69,20 +68,30 @@ vim.keymap.set("n", "<leader>-", require('oil').open)
 vim.keymap.set('n', '<leader>s', '<Plug>(easymotion-s)')
 vim.keymap.set('n', '<leader>w', '<Plug>(easymotion-w)')
 vim.keymap.set('n', '<leader>\\', vim.cmd.nohlsearch)
-vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
-vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
-vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+vim.keymap.set("n", "<leader>tt", function() require("trouble").toggle() end)
+vim.keymap.set("n", "<leader>tw", function() require("trouble").toggle("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>td", function() require("trouble").toggle("document_diagnostics") end)
 vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
 vim.api.nvim_set_keymap("i", "<Tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
 vim.api.nvim_set_keymap("s", "<Tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
 
 vim.api.nvim_create_autocmd('BufWritePre', {
-  group = vim.api.nvim_create_augroup('trim_trailing_whitespace', {}),
-  callback = function()
-    local win_view = vim.fn.winsaveview()
-    vim.cmd([[keeppatterns %s/\s\+$//e]])
-    vim.fn.winrestview(win_view)
-  end,
+    group = vim.api.nvim_create_augroup('trim_trailing_whitespace', {}),
+    callback = function()
+        local win_view = vim.fn.winsaveview()
+        vim.cmd([[keeppatterns %s/\s\+$//e]])
+        vim.fn.winrestview(win_view)
+    end
+})
+
+vim.api.nvim_create_autocmd({"VimEnter", "VimResized"}, {
+    callback = function()
+        if vim.o.columns - vim.o.numberwidth >= 78 then
+            vim.o.textwidth = 78
+        else
+            vim.o.textwidth = vim.o.columns - vim.o.numberwidth
+        end
+    end
 })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -93,13 +102,13 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt.linebreak = true
         vim.opt.wrap = true
         vim.opt.spelllang='en_us'
-    end,
+    end
 })
 
 vim.api.nvim_create_autocmd('TermOpen', {
     callback = function()
         vim.opt.spell = false
-    end,
+    end
 })
 
 local spell_path = vim.fn.stdpath('config') .. '/spell'
