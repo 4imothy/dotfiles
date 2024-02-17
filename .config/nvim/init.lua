@@ -100,8 +100,7 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = { "tex", "txt", "markdown", "norg" },
     callback = function()
         vim.opt.spell = true
-        vim.opt.spelllang='en_gb'
-        vim.opt.linebreak = true
+        vim.opt.spelllang:append("en_us", "en_gb")
         vim.opt.wrap = true
     end
 })
