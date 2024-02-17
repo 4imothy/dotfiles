@@ -16,7 +16,7 @@ return {
             capabilities = capabilities
         })
         lspconfig.ltex.setup({
-            capabwlities = capabilities,
+            capabilities = capabilities,
             filetypes= { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd", "context", "html", "xhtml" },
             settings = {
                 ltex = {

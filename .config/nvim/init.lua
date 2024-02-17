@@ -99,11 +99,10 @@ vim.api.nvim_create_autocmd({"VimEnter", "VimResized"}, {
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "tex", "txt", "markdown", "norg" },
     callback = function()
-        vim.opt.spellcapcheck = ''
         vim.opt.spell = true
+        vim.opt.spelllang='en_gb'
         vim.opt.linebreak = true
         vim.opt.wrap = true
-        vim.opt.spelllang='en_us'
     end
 })
 
