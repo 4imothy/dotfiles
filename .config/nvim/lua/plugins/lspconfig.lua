@@ -6,6 +6,9 @@ return {
         lspconfig.pyright.setup({
             capabilities = capabilities
         })
+        lspconfig.racket_langserver.setup {
+            capabilities = capabilities
+        }
         lspconfig.clangd.setup({
             capabilities = capabilities
         })
