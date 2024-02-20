@@ -17,7 +17,7 @@ brew_deps() {
     brew deps --tree --installed $1
 }
 
-def_latex() {
+deflatex() {
     if [ -z "$1" ]; then
         latexmk -pvc -pdf --interaction=nonstopmode *.tex
     else

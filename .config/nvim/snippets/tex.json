@@ -46,10 +46,19 @@
         ]
     },
 
+    "ssec": {
+        "prefix": "ssec",
+        "body": [
+            "\\subsection*{$1}",
+            "",
+            "$0"
+        ]
+    },
+
     "spread": {
         "prefix": "spread",
         "body": [
-            "{$1_{$2}, \\ldots, $3_{$4}"
+            "($1_{$2}, \\ldots, $1_{$4})"
         ]
     },
 
