@@ -1,5 +1,25 @@
 vim.cmd("source ~/Projects/dotfiles/.vim/treegrep.vim")
 
+function float_notes()
+    local buf = vim.api.nvim_create_buf(false, true)
+    local width = vim.api.nvim_get_option("columns")
+    local height = vim.api.nvim_get_option("lines")
+    local win_height = math.ceil(height * 0.8 - 4)
+    local win_width = math.ceil(width * 0.8)
+    local opts = {
+        style = "minimal",
+        relative = "editor",
+        width = win_width,
+        height = win_height,
+        row = math.ceil((height - win_height) / 2 - 1),
+        col = math.ceil((width - win_width) / 2),
+        border = "rounded",
+    }
+    local win = vim.api.nvim_open_win(buf, true, opts)
+    vim.api.nvim_buf_set_option(buf, "modifiable", true)
+    vim.cmd(":Neorg workspace notes")
+end
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.encoding= 'UTF-8'
@@ -61,7 +81,7 @@ vim.keymap.set('n', '<leader>p', vim.cmd.bprevious)
 vim.keymap.set('n', '<leader>x', vim.cmd.bdelete)
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 vim.keymap.set('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )
-vim.keymap.set('n', '<Leader>l', ':Neorg workspace notes<cr>')
+vim.keymap.set('n', '<Leader>l', function() float_notes() end)
 vim.keymap.set('n', '<leader>f', require('telescope.builtin').live_grep)
 vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers)
 vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
