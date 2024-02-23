@@ -1,6 +1,8 @@
-# TODO setup to show the relative path to the cwd
 virtualenv_info() {
-    [ $VIRTUAL_ENV ] && echo "%F{12}(`basename $VIRTUAL_ENV`)%f "
+    if [ "$VIRTUAL_ENV" ]; then
+        local venv_path="${VIRTUAL_ENV/#$PWD\//}"
+        echo "%F{12}($venv_path)%f "
+    fi
 }
 
 final_char() {
