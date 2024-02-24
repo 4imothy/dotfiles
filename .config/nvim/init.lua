@@ -18,10 +18,9 @@ function float_notes()
 
     local win = vim.api.nvim_open_win(buf, true, opts)
     vim.api.nvim_buf_set_option(buf, "modifiable", true)
-    vim.cmd(":Neorg workspace notes")
-
+    vim.cmd("Neorg workspace notes")
     vim.cmd([[
-        autocmd WinLeave,BufLeave <buffer> :lua vim.api.nvim_buf_delete(]] .. buf .. [[, {force = true})
+        autocmd BufLeave <buffer> :lua vim.api.nvim_buf_delete(]] .. buf .. [[, {force = true})
     ]])
 end
 
@@ -79,6 +78,16 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require('lazy').setup('plugins', {
     checker = { enabled = false },
     change_detection = { notify = false },
+})
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = vim.schedule_wrap(function(data)
+		vim.print(vim.fn.isdirectory(data.file))
+		if data.file == "" or vim.fn.isdirectory(data.file) ~= 0 then
+			vim.print(data.file)
+			require("oil").open_float()
+		end
+	end),
 })
 
 vim.keymap.set('n', '<leader>n', vim.cmd.bnext)
@@ -145,4 +154,3 @@ for _, spell_file in ipairs(vim.fn.glob(spell_path .. '/*.add', 1, 1)) do
     vim.cmd('silent exec "mkspell! " .. fnameescape("' .. spell_file .. '")')
   end
 end
-

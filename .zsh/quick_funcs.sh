@@ -1,11 +1,3 @@
-e() {
-   if [ -z "$1" ]; then
-        $EDITOR ./
-    else
-        $EDITOR "$1"
-    fi
-}
-
 fe() {
     selected=$(fzf)
     if [[ -n $selected ]]; then
