@@ -1,7 +1,7 @@
 vim.cmd("source ~/Projects/dotfiles/.vim/treegrep.vim")
 
 function float_notes()
-    local buf = vim.api.nvim_create_buf(false, true)
+    local buf = vim.api.nvim_create_buf(false, false)
     local width = vim.api.nvim_get_option("columns")
     local height = vim.api.nvim_get_option("lines")
     local win_height = math.ceil(height * 0.8 - 4)
@@ -15,9 +15,14 @@ function float_notes()
         col = math.ceil((width - win_width) / 2),
         border = "rounded",
     }
+
     local win = vim.api.nvim_open_win(buf, true, opts)
     vim.api.nvim_buf_set_option(buf, "modifiable", true)
     vim.cmd(":Neorg workspace notes")
+
+    vim.cmd([[
+        autocmd WinLeave,BufLeave <buffer> :lua vim.api.nvim_buf_delete(]] .. buf .. [[, {force = true})
+    ]])
 end
 
 vim.opt.number = true
