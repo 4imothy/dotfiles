@@ -16,4 +16,5 @@ alias gp='git push'
 alias py='python3'
 
 alias ll='ls -l'
+alias tl='tmux ls'
 alias la='ls -la'
