@@ -1,27 +1,39 @@
 vim.cmd("source ~/Projects/dotfiles/.vim/treegrep.vim")
 
-function float_notes()
-    local buf = vim.api.nvim_create_buf(false, false)
-    local width = vim.api.nvim_get_option("columns")
-    local height = vim.api.nvim_get_option("lines")
-    local win_height = math.ceil(height * 0.8 - 4)
-    local win_width = math.ceil(width * 0.8)
-    local opts = {
-        style = "minimal",
-        relative = "editor",
-        width = win_width,
-        height = win_height,
-        row = math.ceil((height - win_height) / 2 - 1),
-        col = math.ceil((width - win_width) / 2),
-        border = "rounded",
-    }
+local notes_win = nil
+function reset_notes_win()
+    notes_win = nil
+end
 
-    local win = vim.api.nvim_open_win(buf, true, opts)
-    vim.api.nvim_buf_set_option(buf, "modifiable", true)
-    vim.cmd("Neorg workspace notes")
-    vim.cmd([[
-        autocmd BufLeave <buffer> :lua vim.api.nvim_buf_delete(]] .. buf .. [[, {force = true})
-    ]])
+function float_notes()
+    if notes_win then
+        print("in if" .. notes_win)
+        vim.api.nvim_win_close(notes_win, true)
+        reset_notes_win()
+    else
+        local buf = vim.api.nvim_create_buf(false, false)
+        local width = vim.api.nvim_get_option("columns")
+        local height = vim.api.nvim_get_option("lines")
+        local win_height = math.ceil(height * 0.8 - 4)
+        local win_width = math.ceil(width * 0.8)
+        local opts = {
+            style = "minimal",
+            relative = "editor",
+            width = win_width,
+            height = win_height,
+            row = math.ceil((height - win_height) / 2 - 1),
+            col = math.ceil((width - win_width) / 2),
+            border = "rounded",
+        }
+
+        notes_win = vim.api.nvim_open_win(buf, true, opts)
+        vim.api.nvim_buf_set_option(buf, "modifiable", true)
+        vim.cmd("Neorg workspace notes")
+        vim.cmd([[
+        autocmd WinLeave <buffer> :lua reset_notes_win()
+        autocmd WinLeave <buffer> :lua vim.api.nvim_buf_delete(]] .. buf .. [[, {force = true})
+        ]])
+    end
 end
 
 vim.opt.number = true
@@ -80,16 +92,16 @@ require('lazy').setup('plugins', {
     change_detection = { notify = false },
 })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = vim.schedule_wrap(function(data)
-		if data.file == "" or vim.fn.isdirectory(data.file) ~= 0 then
-            require("oil").open()
-            local oil_buf = vim.api.nvim_get_current_buf()
-            vim.cmd('enew')
-            vim.cmd('b' .. oil_buf)
-		end
-	end),
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	callback = vim.schedule_wrap(function(data)
+-- 		if data.file == "" or vim.fn.isdirectory(data.file) ~= 0 then
+--             require("oil").open()
+--             local oil_buf = vim.api.nvim_get_current_buf()
+--             vim.cmd('enew')
+--             vim.cmd('b' .. oil_buf)
+-- 		end
+-- 	end),
+-- })
 
 vim.keymap.set('n', '<leader>n', vim.cmd.bnext)
 vim.keymap.set('n', '<leader>p', vim.cmd.bprevious)
