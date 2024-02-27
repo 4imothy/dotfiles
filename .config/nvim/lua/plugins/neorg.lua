@@ -49,7 +49,7 @@ return {
                     config = {
                         neorg_leader = "<Leader>c",
                         hook = function(keybinds)
-                            keybinds.remap_key("norg", "n", keybinds.leader .. "nn", keybinds.leader .. "n")
+                            -- keybinds.remap_key("norg", "n", keybinds.leader .. "nn", keybinds.leader .. "n")
                             keybinds.remap_event("norg", "n", keybinds.leader .. "j", "core.integrations.treesitter.next.heading")
                             keybinds.remap_event("norg", "n", keybinds.leader .. "k", "core.integrations.treesitter.previous.heading")
                         end,

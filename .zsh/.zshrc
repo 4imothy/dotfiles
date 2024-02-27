@@ -9,6 +9,7 @@ export LSCOLORS=fxfxcxdxbxegedabagacfx
 export VI_CHANGE_CURSOR_SHAPE=1
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
+export TODO_FILE="~/Documents/notes/index.norg"
 
 bindkey -v
 setopt SHARE_HISTORY

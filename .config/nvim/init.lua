@@ -7,7 +7,6 @@ end
 
 function float_notes()
     if notes_win then
-        print("in if" .. notes_win)
         vim.api.nvim_win_close(notes_win, true)
         reset_notes_win()
     else
