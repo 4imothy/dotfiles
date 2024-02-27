@@ -67,7 +67,7 @@ vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
 vim.opt.undolevels = 1000
 vim.opt.undoreload = 10000
-vim.opt.guicursor = 'a:block,i:hor30'
+vim.opt.guicursor = 'a:block,i:hor1'
 vim.opt.foldlevelstart = 99
 
 vim.g.mapleader = ','

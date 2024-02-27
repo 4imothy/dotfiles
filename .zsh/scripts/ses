@@ -1,12 +1,28 @@
 #!/usr/bin/env zsh
 # TODO maybe move this to just be a normal function
 
-if [[ $# -eq 1 ]]; then
-    selected=$1
+fzf_args=""
+given=""
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        --popup)
+            fzf_args="--height 100% --border none"
+            shift
+            ;;
+        *)
+            given=$1
+            shift
+            ;;
+    esac
+done
+
+if [[ -n "$given" ]]; then
+    selected="$given"
 else
     paths="~/Projects ~/Documents/notes ~/Documents/research ~/Documents/applications ~/Documents/school"
     poss="find $paths -mindepth 0 -maxdepth 1 -type d -not -name '.git'"
-    selected=$(eval ${poss} | fzf)
+    selected=$(eval "${poss}" | fzf $(echo "$fzf_args" | tr -d '"'))
 fi
 
 if [[ -z $selected ]]; then
