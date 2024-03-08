@@ -16,5 +16,13 @@
         "body": [
             "*** ( ) "
         ]
+    },
+    "stk": {
+        "prefix": "stk",
+        "body": [
+            "** ${1:name} | ${2:buy date} | ${3:guess sell date}",
+            "*** Notes",
+            "- $0"
+        ]
     }
 }
