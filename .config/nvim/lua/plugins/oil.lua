@@ -10,7 +10,7 @@ return {
             columns = {
                 'permissions',
             },
-            constrain_cursor = "editable",
+            constrain_cursor = 'editable',
             win_options = {
                 cursorline = true,
                 spell = false,
@@ -19,7 +19,7 @@ return {
                 padding = 10,
                 max_width = 0,
                 max_height = 0,
-                border = "rounded",
+                border = 'rounded',
                 win_options = {
                     winblend = 0,
                 }

@@ -45,6 +45,11 @@ return {
                         engine = "nvim-cmp",
                     },
                 },
+                ["core.esupports.indent"] = { -- for snippets
+                    config = {
+                        format_on_escape = false
+                    },
+                },
                 ["core.keybinds"] = {
                     config = {
                         neorg_leader = "<Leader>c",

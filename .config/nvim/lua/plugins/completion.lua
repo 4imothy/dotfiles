@@ -85,5 +85,13 @@ return {
                 { name = 'cmdline', keyword_length = 2 }
             })
         })
+        -- TODO this shouldn't be necessary I think check after some updates added 3/4/2024
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = { "TelescopePrompt" },
+            callback = function()
+                cmp.setup.buffer({ enabled = false })
+            end,
+            once = false,
+        })
     end
 }

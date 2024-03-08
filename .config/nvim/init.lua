@@ -1,4 +1,4 @@
-vim.cmd("source ~/Projects/dotfiles/.vim/treegrep.vim")
+-- vim.cmd("source ~/Projects/dotfiles/.vim/treegrep.vim")
 
 local notes_win = nil
 function reset_notes_win()
@@ -106,8 +106,8 @@ vim.keymap.set('n', '<leader>n', vim.cmd.bnext)
 vim.keymap.set('n', '<leader>p', vim.cmd.bprevious)
 vim.keymap.set('n', '<leader>x', vim.cmd.bdelete)
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+-- vim.keymap.set('n', '<leader>t', function() float_notes() end)
 vim.keymap.set('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )
-vim.keymap.set('n', '<Leader>t', function() float_notes() end)
 vim.keymap.set('n', '<leader>f', require('telescope.builtin').live_grep)
 vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers)
 vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
@@ -118,8 +118,8 @@ vim.keymap.set("n", "<leader>tw", function() require("trouble").toggle("workspac
 vim.keymap.set("n", "<leader>td", function() require("trouble").toggle("document_diagnostics") end)
 vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
 
-vim.api.nvim_set_keymap("i", "<Tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
+vim.api.nvim_set_keymap("i", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
+vim.api.nvim_set_keymap("s", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
 
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('trim_trailing_whitespace', {}),
