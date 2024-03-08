@@ -1,8 +1,7 @@
 #!/usr/bin/env zsh
-# TODO maybe move this to just be a normal function
 
-fzf_args=""
-given=""
+local fzf_args=""
+local given=""
 while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
@@ -17,6 +16,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+local selected
 if [[ -n "$given" ]]; then
     selected="$given"
 else
@@ -29,8 +29,8 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _)
-tmux_has_session=f
+local selected_name=$(basename "$selected" | tr . _)
+local tmux_has_session=f
 if tmux has-session -t $selected_name 2> /dev/null; then
     tmux_has_session=t
 fi
