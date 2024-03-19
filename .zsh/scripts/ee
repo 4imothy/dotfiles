@@ -17,7 +17,6 @@ done
 
 local selected
 if [ -z "$dir" ]; then
-    # TODO use the pipe here make sure it works
     selected=$(fzf $(echo "$fzf_args" | tr -d '"'))
 else
     selected=$(eval "$FZF_DEFAULT_COMMAND '$dir'" | fzf $(echo "$fzf_args" | tr -d '"'))
