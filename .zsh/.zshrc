@@ -24,11 +24,6 @@ for file in "$ZDOTDIR"/*.sh "$ZDOTDIR"/*.zsh; do
     source "$file"
 done
 
-local default_tmux_name=scratch
 if [ -z $TMUX ]; then
-    if tmux has-session -t $default_tmux_name 2> /dev/null; then
-        tmux attach-session -t $default_tmux_name
-    else
-        tmux new-session -s $default_tmux_name
-    fi
+    ses --popup
 fi
