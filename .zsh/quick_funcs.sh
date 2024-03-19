@@ -1,17 +1,3 @@
-# fe() {
-#     # TODO this doesn't work with multiple selections
-#     local dir=$1
-#     local selected
-#     if [ -z "$dir" ]; then
-#         selected=$(fzf)
-#     else
-#         selected=$(eval "$FZF_DEFAULT_COMMAND $dir" | fzf)
-#     fi
-#     if [ -n "$selected" ]; then
-#         $EDITOR "$selected"
-#     fi
-# }
-
 mcd() {
     test -d "$1" || mkdir "$1" && cd "$1"
 }
