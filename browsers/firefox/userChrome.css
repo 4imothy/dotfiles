@@ -15,7 +15,7 @@
 }
 
 #urlbar-container {
-    width: 12vw  !important;
+    width: 20vw  !important;
 }
 
 #urlbar[breakout-extend] {
@@ -27,9 +27,9 @@
 }
 
 #tabbrowser-tabs {
-  --tab-min-height: 2vh !important;
-  border: none !important;
-  box-shadow: none !important;
+    --tab-min-height: 2vh !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .browserContainer > findbar {
@@ -66,11 +66,11 @@
 }
 
 #page-action-buttons {
-  display: none !important;
+    display: none !important;
 }
 
 #PanelUI-button {
-  display: none !important;
+    display: none !important;
 }
 
 #tracking-protection-icon-container {
@@ -86,7 +86,23 @@
 }
 
 #tabs-newtab-button {
-     display:none !important;
+    display:none !important;
+}
+
+#forward-button {
+    display: none !important;
+}
+
+#back-button {
+    display: none !important;
+}
+
+#reload-button {
+    display: none !important;
+}
+
+toolbarseparator.sync-ui-item {
+    display:none !important;
 }
 
 #urlbar[breakout],
