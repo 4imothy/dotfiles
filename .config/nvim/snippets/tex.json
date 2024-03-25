@@ -55,6 +55,15 @@
         ]
     },
 
+    "sssec": {
+        "prefix": "sssec",
+        "body": [
+            "\\subsubsection*{$1}",
+            "",
+            "$0"
+        ]
+    },
+
     "spread": {
         "prefix": "spread",
         "body": [

@@ -15,7 +15,7 @@
 }
 
 #urlbar-container {
-    width: 20vw  !important;
+    width: 14vw  !important;
 }
 
 #urlbar[breakout-extend] {
@@ -99,10 +99,6 @@
 
 #reload-button {
     display: none !important;
-}
-
-toolbarseparator.sync-ui-item {
-    display:none !important;
 }
 
 #urlbar[breakout],
