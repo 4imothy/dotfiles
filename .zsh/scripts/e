@@ -2,13 +2,23 @@
 
 popup=false
 editor_args=()
+original_pane_name=""
 
 for arg; do
     [[ $arg == --popup ]] && popup=true || editor_args+=("$arg")
 done
 
+if [ -n "$TMUX" ]; then
+    original_pane_name=$(tmux display-message -p '#W')
+    tmux rename-window "$EDITOR"
+fi
+
 if $popup; then
     $EDITOR -c 'set laststatus=0 | set showtabline=0' "${editor_args[@]}"
 else
     $EDITOR "${editor_args[@]}"
+fi
+
+if [ -n "$original_pane_name" ]; then
+    tmux rename-window "$original_pane_name"
 fi
