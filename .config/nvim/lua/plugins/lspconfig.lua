@@ -18,6 +18,9 @@ return {
         lspconfig.texlab.setup({
             capabilities = capabilities
         })
+        lspconfig.hls.setup({
+            capabilities = capabilities
+        })
         lspconfig.ltex.setup({
             capabilities = capabilities,
             filetypes= { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd", "context", "html", "xhtml" },

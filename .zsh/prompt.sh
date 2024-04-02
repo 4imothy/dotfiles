@@ -1,8 +1,12 @@
 virtualenv_info() {
     if [ "$VIRTUAL_ENV" ]; then
-        local venv_path="${VIRTUAL_ENV/#$PWD\//}"
-        echo "%F{12}($venv_path)%f "
+        local venv_name=$(basename "$VIRTUAL_ENV")
+        echo "%F{12}$venv_name %f"
     fi
+    # if [ "$VIRTUAL_ENV" ]; then
+    #     local venv_path="${VIRTUAL_ENV/#$PWD\//}"
+    #     echo "%F{12}($venv_path)%f "
+    # fi
 }
 
 final_char() {

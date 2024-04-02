@@ -13,6 +13,7 @@ return {
                 "python",
                 "vimdoc",
                 "latex",
+                "haskell",
                 "racket",
                 "comment",
             },

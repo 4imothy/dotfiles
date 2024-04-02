@@ -6,6 +6,7 @@ alias tg="tgrep"
 alias todo="tgrep TODO"
 alias venv="source venv/bin/activate"
 alias todom="tgrep TODO -m"
+alias tree="tgrep --tree"
 
 alias gs='git status'
 alias ga='git add'

@@ -106,7 +106,6 @@ vim.keymap.set('n', '<leader>n', vim.cmd.bnext)
 vim.keymap.set('n', '<leader>p', vim.cmd.bprevious)
 vim.keymap.set('n', '<leader>x', vim.cmd.bdelete)
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
--- vim.keymap.set('n', '<leader>t', function() float_notes() end)
 vim.keymap.set('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )
 vim.keymap.set('n', '<leader>f', require('telescope.builtin').live_grep)
 vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers)
@@ -116,7 +115,7 @@ vim.keymap.set('n', '<leader>\\', vim.cmd.nohlsearch)
 vim.keymap.set("n", "<leader>tt", function() require("trouble").toggle() end)
 vim.keymap.set("n", "<leader>tw", function() require("trouble").toggle("workspace_diagnostics") end)
 vim.keymap.set("n", "<leader>td", function() require("trouble").toggle("document_diagnostics") end)
-vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
+vim.keymap.set("n", "<leader>tr", function() require("trouble").toggle("lsp_references") end)
 
 vim.api.nvim_set_keymap("i", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
 vim.api.nvim_set_keymap("s", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
@@ -147,6 +146,8 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt.spell = true
         vim.opt.spelllang:append("en_us", "en_gb")
         vim.opt.wrap = true
+        vim.keymap.set('n', 'j', 'gj', {noremap = true, buffer = true})
+        vim.keymap.set('n', 'k', 'gk', {noremap = true, buffer = true})
     end
 })
 
