@@ -14,7 +14,7 @@ if [ -n "$TMUX" ]; then
 fi
 
 if $popup; then
-    $EDITOR -c 'set laststatus=0 | set showtabline=0' "${editor_args[@]}"
+    $EDITOR -c 'set laststatus=0 showtabline=0 nonumber norelativenumber' "${editor_args[@]}"
 else
     $EDITOR "${editor_args[@]}"
 fi
