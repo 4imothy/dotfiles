@@ -5,6 +5,7 @@ return {
         require("neorg").setup {
             load = {
                 ["core.defaults"] = {},
+                -- TODO 0.10.0 will also fix list numbering
                 -- TODO uncomment on stable 0.10.0 ["core.ui.calendar"] = {},
                 ["core.concealer"] = {
                     config = {
@@ -44,21 +45,21 @@ return {
                         engine = "nvim-cmp",
                     },
                 },
-                ["core.esupports.indent"] = { -- for snippets
-                config = {
-                    format_on_escape = false
+                ["core.esupports.indent"] = {
+                    config = {
+                        format_on_escape = false
+                    },
                 },
-            },
-            ["core.keybinds"] = {
-                config = {
-                    neorg_leader = "<Leader>c",
-                    hook = function(keybinds)
-                        keybinds.remap_event("norg", "n", keybinds.leader .. "j", "core.integrations.treesitter.next.heading")
-                        keybinds.remap_event("norg", "n", keybinds.leader .. "k", "core.integrations.treesitter.previous.heading")
-                    end,
-                },
+                ["core.keybinds"] = {
+                    config = {
+                        neorg_leader = "<Leader>c",
+                        hook = function(keybinds)
+                            keybinds.remap_event("norg", "n", keybinds.leader .. "j", "core.integrations.treesitter.next.heading")
+                            keybinds.remap_event("norg", "n", keybinds.leader .. "k", "core.integrations.treesitter.previous.heading")
+                        end,
+                    },
+                }
             }
         }
-    }
-end
+    end
 }
