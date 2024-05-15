@@ -1,27 +1,20 @@
 {
-    "i1": {
-        "prefix": "i1",
+    "task": {
+        "prefix": "task",
         "body": [
-            "* ( ) "
+            "* ( ) ${1:item} `${2:label}`"
         ]
     },
-    "i2": {
-        "prefix": "i2",
+    "dask": {
+        "prefix": "dask",
         "body": [
-            "** ( ) "
+            "* ( ) ,${1:date}, ${2:item} `${3:label}`"
         ]
     },
-    "i3": {
-        "prefix": "i3",
+    "ttask": {
+        "prefix": "ttask",
         "body": [
-            "*** ( ) "
-        ]
-    },
-    "stk": {
-        "prefix": "stk",
-        "body": [
-            "** ${1:name} | ${2:buy date} | ${3:guess sell date}",
-            "- $0"
+            "* ( ) ,${1:date}, \\$${2:time}\\$ ${3:item} `${4:label}`"
         ]
     }
 }
