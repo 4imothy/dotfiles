@@ -16,6 +16,7 @@ return {
                 "haskell",
                 "racket",
                 "comment",
+                "kdl",
             },
             highlight = {
                 enable = true,

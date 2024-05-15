@@ -1,6 +1,18 @@
 return {
     'nvim-lualine/lualine.nvim',
     config = function()
+        local function diff_source()
+            local gitsigns = vim.b.gitsigns_status_dict
+            if gitsigns then
+                return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed
+                }
+            end
+            return 'diff'
+        end
+
         require('lualine').setup({
             options = {
                 icons_enabled = false,
@@ -12,7 +24,7 @@ return {
             },
             sections = {
                 lualine_a = {},
-                lualine_b = {'FugitiveHead', 'diff', 'diagnostics'},
+                lualine_b = {'b:gitsigns_head', {'diff', source = diff_source}},
                 lualine_c = {{'filename', path = 1}},
                 lualine_x = {'encoding', 'filetype'},
                 lualine_y = {'progress'},
