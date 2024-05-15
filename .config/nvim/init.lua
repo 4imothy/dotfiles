@@ -167,3 +167,4 @@ for _, spell_file in ipairs(vim.fn.glob(spell_path .. '/*.add', 1, 1)) do
     vim.cmd('silent exec "mkspell! " .. fnameescape("' .. spell_file .. '")')
   end
 end
+
