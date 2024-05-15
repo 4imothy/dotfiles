@@ -38,7 +38,7 @@ end
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.encoding= 'UTF-8'
-vim.opt.signcolumn = 'no'
+vim.opt.signcolumn = 'yes'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.shiftwidth = 4
@@ -102,23 +102,26 @@ require('lazy').setup('plugins', {
 -- 	end),
 -- })
 
-vim.keymap.set('n', '<leader>n', vim.cmd.bnext)
-vim.keymap.set('n', '<leader>p', vim.cmd.bprevious)
-vim.keymap.set('n', '<leader>x', vim.cmd.bdelete)
-vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
-vim.keymap.set('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )
-vim.keymap.set('n', '<leader>f', require('telescope.builtin').live_grep)
-vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers)
-vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
-vim.keymap.set("n", "<leader>-", require('oil').open_float)
-vim.keymap.set('n', '<leader>\\', vim.cmd.nohlsearch)
-vim.keymap.set("n", "<leader>tt", function() require("trouble").toggle() end)
-vim.keymap.set("n", "<leader>tw", function() require("trouble").toggle("workspace_diagnostics") end)
-vim.keymap.set("n", "<leader>td", function() require("trouble").toggle("document_diagnostics") end)
-vim.keymap.set("n", "<leader>tr", function() require("trouble").toggle("lsp_references") end)
+local function setkey(mode, l, r, opts)
+    vim.keymap.set(mode, l, r, opts)
+end
 
-vim.api.nvim_set_keymap("i", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
-vim.api.nvim_set_keymap("s", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
+setkey('n', '<leader>n', vim.cmd.bnext)
+setkey('n', '<leader>p', vim.cmd.bprevious)
+setkey('n', '<leader>x', vim.cmd.bdelete)
+setkey('n', '<leader>u', vim.cmd.UndotreeToggle)
+setkey('n', '<leader>\\', vim.cmd.nohlsearch)
+setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )
+setkey('n', '<leader>f', require('telescope.builtin').live_grep)
+setkey('n', '<leader>b', require('telescope.builtin').buffers)
+setkey('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
+setkey("n", "<leader>-", require('oil').open_float)
+setkey("n", "<leader>tt", function() require("trouble").toggle() end)
+setkey("n", "<leader>tw", function() require("trouble").toggle("workspace_diagnostics") end)
+setkey("n", "<leader>td", function() require("trouble").toggle("document_diagnostics") end)
+setkey("n", "<leader>tr", function() require("trouble").toggle("lsp_references") end)
+setkey("i", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
+setkey("s", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
 
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('trim_trailing_whitespace', {}),
@@ -167,4 +170,3 @@ for _, spell_file in ipairs(vim.fn.glob(spell_path .. '/*.add', 1, 1)) do
     vim.cmd('silent exec "mkspell! " .. fnameescape("' .. spell_file .. '")')
   end
 end
-
