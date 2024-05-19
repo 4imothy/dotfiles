@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+cd $(dirname $TODO_FILE)
+e --popup $TODO_FILE

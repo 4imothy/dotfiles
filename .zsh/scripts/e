@@ -8,17 +8,18 @@ for arg; do
     [[ $arg == --popup ]] && popup=true || editor_args+=("$arg")
 done
 
-if [ -n "$TMUX" ]; then
-    original_pane_name=$(tmux display-message -p '#W')
-    tmux rename-window "$EDITOR"
-fi
+# commented region from when trying to support TMUX window naming by process
+# if [ -n "$TMUX" ]; then
+#     original_pane_name=$(tmux display-message -p '#W')
+#     tmux rename-window "$EDITOR"
+# fi
 
 if $popup; then
-    $EDITOR -c 'set laststatus=0 showtabline=0 nonumber norelativenumber' "${editor_args[@]}"
+    $EDITOR -c 'set laststatus=0 showtabline=0 nonumber norelativenumber signcolumn=no' "${editor_args[@]}"
 else
     $EDITOR "${editor_args[@]}"
 fi
 
-if [ -n "$original_pane_name" ]; then
-    tmux rename-window "$original_pane_name"
-fi
+# if [ -n "$original_pane_name" ]; then
+#     tmux rename-window "$original_pane_name"
+# fi

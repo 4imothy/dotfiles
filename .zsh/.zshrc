@@ -9,7 +9,7 @@ export LSCOLORS=fxfxcxdxbxegedabagacfx
 export VI_CHANGE_CURSOR_SHAPE=1
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
-export TODO_FILE="~/Documents/notes/index.norg"
+export TODO_FILE="$HOME/Documents/notes/todos.norg"
 
 bindkey -v
 setopt SHARE_HISTORY
@@ -20,10 +20,16 @@ add_to_array() {
     fi
 }
 
+add_to_array XDG_CONFIG_HOME "$HOME/.config"
+
 for file in "$ZDOTDIR"/*.sh "$ZDOTDIR"/*.zsh; do
     source "$file"
 done
 
+# if [ -z $ZELLIJ ]; then
+#     zellij -l welcome
+# fi
 if [ -z $TMUX ]; then
     ses --popup
 fi
+
