@@ -1,0 +1,10 @@
+gui:
+  showBottomLine: false
+  windowSize: 'half'
+  theme:
+    selectedLineBgColor:
+      - 'black'
+
+keybinding:
+  universal:
+    filteringMenu: '<c-t>'
