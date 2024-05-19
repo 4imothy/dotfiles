@@ -24,6 +24,8 @@ link_same "$config_dir/iterm2"
 link_same "$config_dir/helix"
 link_same "$config_dir/zathura"
 link_same "$config_dir/nvim"
+link_same "$config_dir/zellij"
+link_same "$config_dir/lazygit"
 
 org_path="zsh"
 link_same ".zshenv"
