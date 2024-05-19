@@ -1,0 +1,70 @@
+// TODO sessionizer
+// TODO strider change default directory and recursive fuzzy finder to replace seperate ses script
+// https://github.com/zellij-org/zellij/discussions/401
+// TODO for some reason sometimes new panes open left other times they open right
+theme "everforest-dark"
+default_layout "compact"
+simplified_ui true
+pane_frames false
+session_serialization false
+
+keybinds {
+    unbind "Ctrl b"
+
+    normal {
+        unbind "Ctrl n"
+        unbind "Ctrl p"
+        unbind "Ctrl o"
+        bind "Ctrl r" { SwitchToMode "Resize"; }
+        bind "Ctrl u" { SwitchToMode "Pane"; }
+        bind "Ctrl s" { SwitchToMode "Session"; }
+        // Would also like this to be a leader key type thing where I have to type two keys after control, but "Ctrl l t" doesn't work
+        bind "Alt t" { // TODO a way to provide a default floating window size https://github.com/zellij-org/zellij/discussions/1332
+        // zellij run --floating --width=80% --height=80% -x=10% -y=10% --close-on-exit -- etodo
+            Run "etodo" {
+                close_on_exit true
+            }
+            TogglePaneEmbedOrFloating;
+            Resize "Increase";
+            Resize "Increase";
+            Resize "Increase";
+            Resize "Increase";
+            Resize "Increase";
+            // SwitchToMode "Normal" this could be done after putting this command in one of my unused modes to get some type of leader key functionality
+        }
+    }
+
+    tab {
+        bind "t" {
+            GoToNextTab;
+            SwitchToMode "Normal";
+        }
+    }
+
+    session {
+        bind "Ctrl s" { SwitchToMode "Normal"; }
+    }
+
+    resize {
+        bind "Ctrl r" { SwitchToMode "Normal"; }
+    }
+
+    pane {
+        bind "Ctrl u" { SwitchToMode "Normal"; }
+    }
+
+    shared_except "locked" {
+        bind "Alt f" {
+            LaunchOrFocusPlugin "zellij:strider" {
+                floating true
+            };
+        }
+    }
+
+}
+
+ui {
+    pane_frames {
+        rounded_corners true
+    }
+}
