@@ -43,12 +43,12 @@ return {
             group = vim.api.nvim_create_augroup('UserLspConfig', {}),
             callback = function(ev)
                 local opts = { buffer = ev.buf }
-                setkey('n', 'gd', vim.lsp.buf.definition, opts)
-                setkey('n', 'gh', vim.lsp.buf.hover, opts)
-                setkey('n', 'gn', vim.lsp.buf.rename, opts)
-                setkey('n', 'gD', vim.lsp.buf.declaration, opts)
-                setkey('n', 'gi', vim.lsp.buf.implementation, opts)
-                setkey({ 'n', 'v' }, 'gca', vim.lsp.buf.code_action, opts)
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+                vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
+                vim.keymap.set('n', 'gn', vim.lsp.buf.rename, opts)
+                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+                vim.keymap.set({ 'n', 'v' }, 'gca', vim.lsp.buf.code_action, opts)
             end,
         })
 

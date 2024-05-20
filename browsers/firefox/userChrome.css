@@ -15,7 +15,7 @@
 }
 
 #urlbar-container {
-    width: 14vw  !important;
+    width: 20vw  !important;
 }
 
 #urlbar[breakout-extend] {
@@ -99,16 +99,4 @@
 
 #reload-button {
     display: none !important;
-}
-
-#urlbar[breakout],
-#urlbar[breakout][breakout-extend] {
-    top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
-    left: 0 !important;
-}
-
-#urlbar[breakout][breakout-extend] > #urlbar-input-container,
-#urlbar-input-container {
-    height: var(--urlbar-height) !important;
-    padding-inline: unset !important;
 }

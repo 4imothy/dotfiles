@@ -29,6 +29,7 @@ return {
                 { name = 'nvim_lsp' },
                 { name = 'vsnip' },
                 { name = 'path' },
+                { name = 'neorg' },
             }),
             performance = {
                 max_view_entries = 10
