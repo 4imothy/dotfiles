@@ -5,8 +5,7 @@ return {
         require("neorg").setup {
             load = {
                 ["core.defaults"] = {},
-                -- TODO 0.10.0 will also fix list numbering
-                -- TODO uncomment on stable 0.10.0 ["core.ui.calendar"] = {},
+                ["core.ui.calendar"] = {},
                 ["core.concealer"] = {
                     config = {
                         icons = {
@@ -52,7 +51,7 @@ return {
                 },
                 ["core.keybinds"] = {
                     config = {
-                        neorg_leader = "<Leader>c",
+                        neorg_leader = "<leader>c",
                         hook = function(keybinds)
                             keybinds.remap_event("norg", "n", keybinds.leader .. "j", "core.integrations.treesitter.next.heading")
                             keybinds.remap_event("norg", "n", keybinds.leader .. "k", "core.integrations.treesitter.previous.heading")
