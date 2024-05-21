@@ -38,7 +38,6 @@ end
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.encoding= 'UTF-8'
-vim.opt.signcolumn = 'yes'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.shiftwidth = 4
@@ -61,7 +60,6 @@ vim.opt.scrolloff = 3
 vim.opt.conceallevel = 0
 vim.opt.shortmess:append 'I'
 vim.opt.shortmess:append 'c'
-vim.opt.termguicolors = true
 vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
@@ -69,6 +67,7 @@ vim.opt.undolevels = 1000
 vim.opt.undoreload = 10000
 vim.opt.guicursor = 'a:block,i:hor1'
 vim.opt.foldlevelstart = 99
+vim.opt.timeout = false
 
 vim.g.mapleader = ','
 vim.g.tex_flavor = 'tex'
