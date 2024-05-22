@@ -5,6 +5,7 @@ local org_dir = '~/Documents/org/'
 return {
     'nvim-orgmode/orgmode',
     event = 'VeryLazy',
+    enabled = false,
     ft = { 'org' },
     config = function()
         require('orgmode').setup({
