@@ -36,6 +36,7 @@ function float_notes()
 end
 
 vim.opt.number = true
+vim.opt.signcolumn = 'yes'
 vim.opt.relativenumber = true
 vim.opt.encoding= 'UTF-8'
 vim.opt.ignorecase = true
@@ -119,8 +120,6 @@ setkey("n", "<leader>tt", function() require("trouble").toggle() end)
 setkey("n", "<leader>tw", function() require("trouble").toggle("workspace_diagnostics") end)
 setkey("n", "<leader>td", function() require("trouble").toggle("document_diagnostics") end)
 setkey("n", "<leader>tr", function() require("trouble").toggle("lsp_references") end)
-setkey("i", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
-setkey("s", "<tab>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'", {expr = true})
 
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('trim_trailing_whitespace', {}),
