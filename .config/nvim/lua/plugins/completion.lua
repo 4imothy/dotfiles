@@ -4,6 +4,7 @@ return {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-cmdline',
+        'hrsh7th/cmp-buffer',
         'saadparwaiz1/cmp_luasnip',
     },
     config = function()
@@ -18,9 +19,7 @@ return {
             window = {
                 documentation = cmp.config.window.bordered(),
             },
-            mapping = {
-                ['<C-r>'] = cmp.mapping.scroll_docs(-4),
-                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            mapping = cmp.mapping.preset.insert({
                 ['<tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         if luasnip.expandable() then
@@ -41,10 +40,11 @@ return {
                         fallback()
                     end
                 end, { "i", "s" }),
-            },
+                ['<C-r>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
-                { name = 'vsnip' },
                 { name = 'path' },
                 { name = 'neorg' },
                 { name = 'luasnip' },
@@ -57,9 +57,9 @@ return {
                 format = function(entry, item)
                     local menu_icon = {
                         nvim_lsp = "L",
-                        vsnip = "S",
-                        buffer = "B",
+                        luasnip = "S",
                         path = "P",
+                        neorg = "O",
                     }
                     item.menu = menu_icon[entry.source.name]
                     fixed_width = 40
@@ -89,7 +89,7 @@ return {
             end
         })
 
-        cmp.setup.cmdline({ '/', '?' }, {
+        cmp.setup.cmdline({'/', '?'}, {
             mapping = cmp.mapping.preset.cmdline(),
             sources = {
                 { name = 'buffer' }
@@ -99,12 +99,12 @@ return {
         cmp.setup.cmdline(':', {
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources({
-                { name = 'path' }
-            }, {
-                { name = 'cmdline', keyword_length = 2 }
-            })
+                { name = 'path' },
+                { name = 'cmdline' }
+            }),
+            matching = { disallow_symbol_nonprefix_matching = false }
         })
-        -- TODO this shouldn't be necessary I think check after some updates, added 3/4/2024
+
         vim.api.nvim_create_autocmd("FileType", {
             pattern = { "TelescopePrompt" },
             callback = function()
