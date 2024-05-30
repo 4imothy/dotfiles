@@ -116,10 +116,6 @@ setkey('n', '<leader>f', require('telescope.builtin').live_grep)
 setkey('n', '<leader>b', require('telescope.builtin').buffers)
 setkey('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
 setkey("n", "<leader>-", require('oil').open_float)
-setkey("n", "<leader>tt", function() require("trouble").toggle() end)
-setkey("n", "<leader>tw", function() require("trouble").toggle("workspace_diagnostics") end)
-setkey("n", "<leader>td", function() require("trouble").toggle("document_diagnostics") end)
-setkey("n", "<leader>tr", function() require("trouble").toggle("lsp_references") end)
 
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('trim_trailing_whitespace', {}),

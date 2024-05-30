@@ -12,7 +12,6 @@ return {
             end
             return 'diff'
         end
-
         require('lualine').setup({
             options = {
                 icons_enabled = false,
@@ -23,7 +22,19 @@ return {
                 -- section_separators = { left = '', right = ''},
             },
             sections = {
-                lualine_a = {},
+                lualine_a = {{
+                    'diagnostics',
+                    sources = { 'nvim_lsp', 'nvim_diagnostic', 'nvim_workspace_diagnostic'},
+                    diagnostics_color = {
+                        error = 'DiagnosticVirtualTextError',
+                        warn  = 'DiagnosticVirtualTextWarn',
+                        info  = 'DiagnosticVirtualTextInfo',
+                        hint  = 'DiagnosticVirtualTextHint',
+                    },
+                    colored = true,
+                    sections = { 'error', 'warn', 'info', 'hint' },
+                    symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'},
+                }},
                 lualine_b = {'b:gitsigns_head', {'diff', source = diff_source}},
                 lualine_c = {{'filename', path = 1}},
                 lualine_x = {'encoding', 'filetype'},
@@ -48,5 +59,5 @@ return {
                 lualine_z = {'tabs'},
             },
         })
-    end
+    end,
 }
