@@ -1,11 +1,7 @@
 return {
     "folke/trouble.nvim",
-    opts = {
-        fold_open = "v",
-        fold_closed = ">",
-        indent_lines = false,
-        use_diagnostic_signs = true
-    },
+    opts = {},
+    cmd = "Trouble",
     keys = {
         {
             "<leader>td",
@@ -18,6 +14,10 @@ return {
         {
             "<leader>ts",
             "<cmd>Trouble symbols toggle focus=true<cr>",
+        },
+        {
+            "<leader>tl",
+            "<cmd>Trouble lsp toggle focus=true<cr>",
         },
     }
 }

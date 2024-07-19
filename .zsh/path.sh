@@ -1,5 +1,5 @@
 path_dirs=("$HOME/bin" "$HOME/.cargo/bin" "$HOME/.go/bin"
-           "/opt/homebrew/opt/qt5/bin" "$ZDOTDIR/scripts")
+           "/opt/homebrew/opt/qt5/bin" "$ZDOTDIR/scripts" "$HOME/Projects/AdaptiveCpp/build/out/bin")
 
 for dir in "${path_dirs[@]}"; do
     if [[ ":$PATH:" != *":$dir:"* ]]; then

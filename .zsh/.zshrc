@@ -6,11 +6,27 @@ export PAR_DIR_PRINT_LIMIT=2
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
 
+export ACPP_DEBUG_LEVEL=1
+export ACPP_OMP_CXX_FLAGS="\
+    -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 \
+    -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include \
+    -I/opt/homebrew/opt/libomp/include \
+    -I/opt/homebrew/opt/boost/include \
+    -I/Users/timothy/Projects/ai3/venv/include"
+
+export ACPP_OMP_LINK_LINE="\
+    -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib \
+    -L/Library/Developer/CommandLineTools/usr/lib \
+    -L/opt/homebrew/opt/libomp/lib \
+    -L/opt/homebrew/opt/boost/lib \
+    -lomp -lboost_system-mt -lboost_context-mt -lboost_fiber-mt"
+
+
 export VI_CHANGE_CURSOR_SHAPE=1
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
 export TODO_FILE="$HOME/Documents/notes/todos.norg"
-export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden"
+export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --box-chars=rounded"
 
 bindkey -v
 setopt SHARE_HISTORY
