@@ -7,18 +7,9 @@ TERM = "alacritty"
 thickness = 0.3
 
 [font]
-size = 20.0
+size = 22.0
 
 [font.normal]
-family = "Mononoki Nerd Font"
-
-[font.italic]
-family = "Mononoki Nerd Font"
-
-[font.bold]
-family = "Mononoki Nerd Font"
-
-[font.bold_italic]
 family = "Mononoki Nerd Font"
 
 [window]

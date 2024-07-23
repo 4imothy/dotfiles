@@ -56,10 +56,10 @@ return {
                 fields = { "abbr", "menu", "kind" },
                 format = function(entry, item)
                     local menu_icon = {
-                        nvim_lsp = "L",
-                        luasnip = "S",
-                        path = "P",
-                        neorg = "O",
+                        nvim_lsp = "LSP",
+                        luasnip = "SNIP",
+                        path = "PATH",
+                        neorg = "NORG",
                     }
                     item.menu = menu_icon[entry.source.name]
                     fixed_width = 40

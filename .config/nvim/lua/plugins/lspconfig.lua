@@ -1,3 +1,4 @@
+local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "" }
 return {
     'neovim/nvim-lspconfig',
     config = function()

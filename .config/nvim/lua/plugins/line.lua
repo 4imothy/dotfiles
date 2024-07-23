@@ -14,7 +14,7 @@ return {
         end
         require('lualine').setup({
             options = {
-                icons_enabled = false,
+                icons_enabled = true,
                 use_mode_colors = false,
                 component_separators = { left = '', right = ''},
                 section_separators = { left = '', right = ''},
@@ -46,8 +46,9 @@ return {
                 lualine_a = {
                     {
                         'buffers',
+                        icons_enabled = false,
+                        max_length = vim.o.columns * 2 / 3,
                         symbols = {
-                            modified = '[+]',
                             alternate_file = '',
                             directory = '',
                         },

@@ -15,7 +15,6 @@ alias gp='git push'
 
 alias py='python3'
 
-alias ls='eza --icons --color=always --group-directories-first'
-alias ll='eza -alF --icons --color=always --group-directories-first'
-alias la='eza -a --icons --color=always --group-directories-first'
-alias l='eza -F --icons --color=always --group-directories-first'
+alias l='eza -alF --icons --group-directories-first'
+alias lg='la --git-ignore'
+
