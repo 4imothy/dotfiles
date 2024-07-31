@@ -16,7 +16,7 @@ link_same() {
 emacs_dir=".emacs.d"
 cp "$current_path/$emacs_dir/early-init.el" "$HOME/$emacs_dir/early-init.el"
 link_same "$emacs_dir/init.el"
-link_same "$emacs_dir/snippets"
+# link_same "$emacs_dir/snippets"
 
 config_dir=".config"
 link_same "$config_dir/alacritty"

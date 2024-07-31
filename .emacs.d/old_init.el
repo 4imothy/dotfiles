@@ -6,7 +6,8 @@
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
-;; TODO put this in a use-package emacs
+(server-start)
+
 ;; things that will be changed often
 (defvar my/red "#FF6F61")
 (defvar my/light-red "#FFB6B0")
@@ -27,13 +28,58 @@
 (defvar my/gray "#A0A0A0")
 (defvar my/light-gray "#DDDDDD")
 
+;; everforest colors maybe use: https://github.com/sainnhe/everforest
+; #d3c6aa
+; #e67e80
+; #e69875
+; #dbbc7f
+; #a7c080
+; #83c092
+; #7fbbb3
+; #d699b6
+; #7a8478
+; #859289
+; #9da9a0
+; #a7c080
+; #d3c6aa
+; #e67e80
+
+(defvar my/docs-dir "~/Documents/")
+(defvar my/school-dir (concat my/docs-dir "school/"))
+(defvar my/307-dir (concat my/school-dir "math_307/"))
+(defvar my/421-dir (concat my/school-dir "math_421/"))
+(defvar my/307-textbook (concat my/307-dir "textbook_needs_errata.pdf"))
+(defvar my/apps-dir (concat my/docs-dir "applications/"))
+(defvar my/cover-letter-dir (concat my/apps-dir "cover_letter/"))
+(defvar my/resume-dir (concat my/apps-dir "resume/"))
+(defvar my/window-configs
+  (list
+    (list "307 Notes"
+          (concat my/307-dir "notes.org")
+          my/307-textbook)
+    (list "307 HW"
+          my/307-textbook
+          nil)
+    (list "421 Notes"
+          (concat my/421-dir "notes.org")
+          nil)
+    (list "cover letter"
+          (concat my/cover-letter-dir "cover_letter.tex")
+          (concat my/cover-letter-dir "cover_letter.pdf")
+          )
+    (list "resume"
+          (concat my/resume-dir "resume.tex")
+          (concat my/resume-dir "resume.pdf")
+          )
+    ))
+
 ;; Basic styling
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-;; (set-fringe-mode 0)
+(set-fringe-mode 0)
 (tooltip-mode -1)
-;; (scroll-bar-mode -1)
+(scroll-bar-mode -1)
 (blink-cursor-mode 0)
 (windmove-default-keybindings)
 (setq inhibit-startup-screen t)
@@ -41,20 +87,20 @@
 (setq ring-bell-function 'ignore)
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
-(set-face-attribute 'default nil :font "RecMonoCasual Nerd Font" :height 190)
-
+(set-face-attribute 'default nil :font "mononoki" :height 190)
 (column-number-mode)
 (dolist (mode '(text-mode-hook
                 prog-mode-hook
-                org-mode-hook
                 conf-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
 ;; Buffer things
 (setq-default tab-width 4
               indent-tabs-mode nil)
+(setq-default c-basic-offset 4)
+(setq-default python-indent-offset 4)
 (global-visual-line-mode)
-
+(add-hook 'before-save-hook 'whitespace-cleanup)
 (defun add-newline-at-end-if-missing ()
   "Add a newline at the end of the buffer if it's missing."
   (interactive)
@@ -63,7 +109,6 @@
     (unless (bolp)
       (insert "\n"))))
 (add-hook 'before-save-hook 'add-newline-at-end-if-missing)
-(add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;; mini buffer
 (setq echo-keystrokes 0.01)
@@ -88,18 +133,134 @@
   (defvar dired-use-ls-dired nil))
 
 ;; change backups location
-(setq create-lockfiles nil)
 (setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
-      backup-by-copying t
-      version-control t
-      delete-old-versions t
-      kept-new-versions 20
-      kept-old-versions 5
+      backup-by-copying t    ; Don't delink hardlinks
+      version-control t      ; Use version numbers on backups
+      delete-old-versions t  ; Automatically delete excess backups
+      kept-new-versions 20   ; how many of the newest versions to keep
+      kept-old-versions 5    ; and how many of the old
       )
 
+;; env
+(setenv "SHELL" (shell-command-to-string "which zsh"))
+(setenv "JAVA_HOME" (shell-command-to-string "/usr/libexec/java_home"))
+
+;; global-key-bindings
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-c e") 'eshell)
+(global-set-key (kbd "C-c p c") 'my/compile)
+(global-set-key (kbd "C-c o w") 'my/pick-window-config)
+(global-set-key (kbd "C-c o s") 'my/search-school-directory)
 (setq compile-command nil)
 (defvar tex-compile-commands '(("latexmk -pdf -pvc %f")))
+(defun my/compile ()
+  "Compile depending on the context: project or LaTeX mode."
+  (interactive)
+  (if (eq major-mode 'latex-mode)
+      (progn
+        (delete-other-windows)
+        (split-window-horizontally)
+        (call-interactively 'tex-compile)
+        )
+      (if (project-current)
+          (call-interactively 'project-compile)
+        (call-interactively 'compile))))
 
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (eshell/alias "batt" "pmset -g batt | awk '/InternalBattery/ {print $3, $4}'")
+            (eshell/alias "todo" "gret TODO")
+            (eshell/alias "clear" "clear-scrollback")
+            (my/eshell-setup)))
+
+(defun my/eshell-setup ()
+  (define-key eshell-mode-map "\C-a" 'my/eshell-maybe-bol)
+  (set-face-foreground 'eshell-prompt my/green))
+
+(defvar my/eshell-prompt-ending "╰──% ")
+
+(defun my/put-tilde-in-path (path)
+  "Shorten PATH by replacing HOME with ~."
+  (let ((home (expand-file-name (getenv "HOME"))))
+    ;; Remove any trailing slash from the home directory
+    (setq home (if (string-suffix-p "/" home)
+                   (substring home 0 -1)
+                 home))
+    (if (or (string-prefix-p home path)
+            (string-prefix-p (substring home 1) path))
+        (if (string-prefix-p home path)
+            (concat "~" (substring path (length home)))
+          (concat "~" (substring path (1- (length home)))))
+      path)))
+
+(setq eshell-prompt-function
+      (lambda ()
+        (let* ((pwd (eshell/pwd))
+               (home (expand-file-name (getenv "HOME")))
+               (colored-pwd (propertize (my/put-tilde-in-path pwd) 'face `(:foreground ,my/purple)))
+               (env-name (getenv "VIRTUAL_ENV"))
+               (rel-env-path (my/put-tilde-in-path (when env-name
+                               (file-relative-name env-name pwd)))))
+          (concat "╭─"
+                  "[" colored-pwd "]"
+                  (if rel-env-path
+                      (concat "(" (propertize rel-env-path 'face '(:foreground ,my/light-purple)) ")")
+                    "")
+                  (my/curr-dir-git-info pwd)
+                  "\n" my/eshell-prompt-ending
+                  )))
+      eshell-prompt-regexp (concat "^" (regexp-quote my/eshell-prompt-ending)))
+
+(defun my/curr-dir-git-info (pwd)
+  "Returns current git branch as a string, with different colors based on the status."
+  (interactive)
+  (when (and (eshell-search-path "git")
+             (locate-dominating-file pwd ".git"))
+    (let* ((git-output (shell-command-to-string (concat "cd " pwd " && git branch | grep '\\*' | sed -e 's/^\\* //'")))
+           (branch (if (> (length git-output) 0)
+                       (substring git-output 0 -1)
+                     "(no branch)"))
+           (status (shell-command-to-string (concat "cd " pwd " && git status --porcelain")))
+           (branch-color (if (string-match-p "[^\s]" status) my/red my/green))
+           (branch-with-color (propertize branch 'face `(:foreground ,branch-color))))
+      (concat "[" branch-with-color "]"))))
+
+(defun my/eshell-maybe-bol ()
+  (interactive)
+  (let ((p (point)))
+    (eshell-bol)
+    (if (= p (point))
+        (beginning-of-line))))
+
+(defun my/fit-file (file)
+  (when (string-suffix-p ".pdf" file)
+    (pdf-view-fit-page-to-window))
+  )
+
+(defun my/open-two-files-vertically (a b)
+  (delete-other-windows)
+  (find-file a)
+  (when (not b)
+    (my/fit-file a))
+  (when b
+    (split-window-right)
+    (my/fit-file a)
+    (other-window 1)
+    (find-file b)
+    (my/fit-file b)
+    (other-window 1)
+    ))
+
+(defun my/pick-window-config ()
+  (interactive)
+  (let* ((chosen-config (completing-read "Pick a configuration: " my/window-configs nil t))
+         (selected-config (assoc chosen-config my/window-configs))
+         (file-a (if selected-config (car (cdr selected-config))))
+         (file-b (if selected-config (car (cdr (cdr selected-config))))))
+    (when selected-config
+      (my/open-two-files-vertically file-a file-b))))
+
+;; ibuffer
 (defun my/clear-buffers ()
   (interactive)
   (mapc (lambda (buffer)
@@ -133,8 +294,19 @@
     (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
     (ad-activate 'isearch-search)))
 
+(defun my/search-school-directory ()
+  "Search for files in school directory using Vertico."
+  (interactive)
+  (let ((default-directory my/school-dir))
+    (call-interactively 'find-file)))
+
+(defun eglot-format-buffer-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+
 ;; packages
 (require 'package)
+
+(package-initialize)
 ;; initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -143,31 +315,18 @@
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
+
 ;; (package-refresh-contents)
 
-(use-package server
-  :ensure t
-  :config
-  (unless (server-running-p)
-    (server-start)))
-
-(use-package ibuffer
-             :ensure t
-             :bind
-             ("C-x C-b" . ibuffer))
-
-(use-package catppuccin-theme
-  :ensure t
+(use-package modus-themes
   :init
-  (setq catppuccin-flavor 'frappe)
-  :config
-  (load-theme 'catppuccin t))
+  (load-theme 'modus-vivendi-tinted t))
 
 (use-package rainbow-mode
   :hook (emacs-lisp-mode text-mode lisp-mode)
   :custom
-  (rainbow-x-colors nil))
+  (rainbow-x-colors nil)
+  )
 
 ;; (use-package evil
 ;;   :config
@@ -179,6 +338,18 @@
 ;;   (setq evil-operator-state-cursor `(,my/orange hollow))
 ;;   (evil-mode 1))
 
+;; better editing
+(use-package multiple-cursors
+  :bind
+  ("C->" . 'mc/mark-next-like-this)
+  ("C-<" . 'mc/mark-previous-like-this))
+
+(use-package pdf-tools
+  :config
+  (pdf-tools-install)
+  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+  )
+
 ;; suggestions
 (use-package vertico
   :init
@@ -187,6 +358,7 @@
   (vertico-scroll-margin 0)
   (vertico-count 7)
   (vertico-resize nil)
+  (vertico-directory-delete-char)
   (vertico-directory-delete-word)
   )
 
@@ -213,6 +385,7 @@
   :config
   (which-key-mode 1))
 
+;; run M-x nerd-icons-install-fonts
 (use-package doom-modeline
   :custom
   (doom-modeline-height 20)
@@ -222,6 +395,18 @@
   (display-time-mode)
   (display-battery-mode)
   )
+
+;; latex and pdf previews
+;; PDF preview
+;; to install latex:
+;; - Install basictex
+;; - sudo tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/
+;; - sudo tlmgr update –self
+;; - If needed: sudo tlmgr install <your_package_name>
+;; - sudo tlmgr install dvisvgm/dvipng # for math preview
+;; - sudo tlmgr install latexmk # for better compilation
+;; other dependencies
+;; - ghostscript
 
 ;; org-mode
 (use-package org
@@ -289,16 +474,9 @@
        )
       ((org-agenda-window-setup 'only-window)
        ))))
-  (org-emphasis-alist
-        `(("*" (:weight bold :foreground ,my/blue))
-          ("/" italic)
-          ("_" underline)
-          ("=" org-verbatim verbatim)
-          ("~" org-code verbatim)
-          ("+" (:strike-through t))))
-
   :config
   (with-eval-after-load "org-faces"
+
     (setq org-todo-keyword-faces
           '(("TODO" . my/org-todo)
             ("DOING" . my/org-doing)
@@ -336,6 +514,14 @@
     (set-face-attribute 'org-level-8 nil :inherit 'outline-8 :height 1.0)
     (set-face-attribute 'org-tag nil :height 0.6)
     )
+  (setq org-emphasis-alist
+        `(("*" (:weight bold :foreground ,my/blue))
+          ("/" italic)
+          ("_" underline)
+          ("=" org-verbatim verbatim)
+          ("~" org-code verbatim)
+          ("+" (:strike-through t))))
+
   (defun diary-last-day-of-month (date)
     "Return `t` if DATE is the last day of the month."
     (let* ((day (calendar-extract-day date))
@@ -472,16 +658,18 @@
 
   (defvar my/tag-colors
     `(("jobs" . ,my/blue)
-      ("grad_school" . ,my/light-blue)
       ("projects" . ,my/purple)
       ("money" . ,my/light-green)
-      ("research" . ,my/orange)
       ("math_307" . ,my/green)
       ("math_421" . ,my/orange)
       ("csds_341" . ,my/purple)
-      ("general" . ,my/light-purple)
+      ("phed_130" . ,my/light-purple)
       ("phed_24b" . ,my/light-purple)
-      ("econ_216" . ,my/brown)))
+      ("csds_393" . ,my/light-blue)
+      ("econ_216" . ,my/brown)
+      ("aim4" . ,my/yellow)
+      ("rwc" . ,my/light-green)
+      ("medical" . ,my/light-red)))
 
   (defun my/org-agenda-custom-color ()
     "Customize the appearance of Org Agenda lines with keywords."
@@ -520,7 +708,10 @@
   (plist-put org-format-latex-options :background nil)
   )
 
-(use-package nerd-icons)
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
 
 (use-package nerd-icons-completion
   :config
@@ -533,13 +724,160 @@
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
+
+;; coding
+;; magit
+(use-package magit
+  :bind ("C-x g"   . magit-status)
+  )
+
+;; lsp
+(use-package eglot
+  :hook
+  ;; (rust-mode . eglot-ensure)
+  ;; (elisp-mode . eglot-ensure)
+  ;; (c-mode . eglot-ensure)
+  ;; (js-mode . eglot-ensure)
+  ;; (python-mode . eglot-ensure)
+  (eglot . eglot-ensure)
+  :custom
+  (eglot-ignored-server-capabilities '(:hoverProvider))
+  :bind ("C-c p r "   . eglot-rename)
+  )
+
+;; syntax reports
+(use-package flymake
+  :hook
+  (emacs-lisp-mode . flymake-mode)
+  :bind (("C-c f d"   . flymake-show-buffer-diagnostics)
+         ("C-c f D" . flymake-show-project-diagnostics)
+         ("C-c f ." . flymake-goto-next-error)
+         ("C-c f ," . flymake-goto-prev-error)
+         )
+  :hook
+  (after-save-hook . my/flymake-refresh-errors)
+  :custom
+  (defun my/flymake-refresh-errors ()
+    "Restart \"flymake\" to refresh reporting."
+    (when flymake-mode
+      (flymake-mode 0)
+      (flymake-mode 1))
+    )
+)
+
+;; completions
+(use-package corfu
+  :hook
+  (rust-mode .
+          (lambda () (setq indent-tabs-mode nil)))
+  (eshell-mode . (lambda ()
+                   (setq-local corfu-auto nil))
+               )
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0)
+  (corfu-popupinfo-delay '(0.5 . 0.2))
+  (corfu-count 4)
+  :bind
+  (:map corfu-map
+        ("RET" . nil))
+  :init
+  (global-corfu-mode)
+  (corfu-history-mode)
+  (corfu-popupinfo-mode))
+
+(use-package yasnippet
+  :custom
+  (yas-snippet-dir "~/.emacs.d/snippets")
+  :config
+  (yas-global-mode 1)
+  )
+
+(use-package avy
+  :bind
+  ("C-." . 'avy-goto-char)
+  )
+
+(use-package git-modes)
+
+(use-package markdown-mode)
+
+(use-package yaml-mode)
+
+;; python
+;; 1. *Command:* /pip3 install python-lsp-server[all]/
+;; 2. put the pylsp in path
+(use-package python-mode)
+(use-package pyvenv
+  :bind
+  ("C-c p p a" . 'pyvenv-activate)
+  ("C-c p p d" . 'pyvenv-deactivate)
+  :after python-mode
+  :config
+  (pyvenv-mode 1))
+
+;; rust
+;; - /curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh/ this placed file in ~/.cargo/
+;; - To uninstall run: /rustup self uninstall/ from https://rust-lang.github.io/rustup/installation/index.html
+;; - for lsp: /rustup component add rust-analyzer/
+;; - locate its location with: rustup which rust-analyzer
+;; - add that path to /$PATH/
+
+(use-package rust-mode
+  :hook
+  (rust-mode .
+             (lambda () (setq indent-tabs-mode nil)))
+  :config
+  :init
+  (defvar rust-format-on-save t))
+
+;; Java
+;; After brew install openjdk do the command shown by brew info openJDK
+;; sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+
+;; JavaScript
+;; - npm install -g typescript typescript-language-server
+;; - put the typescript-language-server in /usr/local/bin
+;; - to use create jsconfig.json or tsconfig.json
+(use-package prettier-js
+  :hook
+  (js-mode . prettier-js-mode)
+  )
+
+;; go lang
+;; go install golang.org/x/tools/gopls@latest
+(use-package go-mode
+  :hook
+  (go-mode . eglot-format-buffer-on-save)
+  )
+
+(use-package glsl-mode)
+
+;; Other languages not setup yet
+;; Markdown
+;; - brew install marksman
+;; - installed to /opt/homebrew/Cellar/marksman
+;; Go
+;; - brew install go
+;; - go install golang.org/x/tools/gopls@latest
+;; - add $HOME/bin/go to $PATH
+;; wgsl
+;; - cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer
+;; zig
+;; - brew install zig
+;; - LSP:
+;; -brew install zls
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("b40f11c174e7e475508f1e2c1cfca354d37212494c143a494f27239c7d71a294" "e5ce8ca9850b68052affa5b3cc69bb97abf7a8a76e1088ea3907fdabeaeb5036" default))
  '(package-selected-packages
-   '(which-key vertico rainbow-mode org-fragtog orderless nerd-icons-ibuffer nerd-icons-dired nerd-icons-completion doom-modeline corfu catppuccin-theme)))
+   '(avy yasnippet which-key vertico rust-mode rainbow-mode pyvenv python-mode prettier-js pdf-tools org-fragtog orderless nerd-icons-ibuffer nerd-icons-dired nerd-icons-completion multiple-cursors markdown-mode magit go-mode glsl-mode evil doom-modeline corfu)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

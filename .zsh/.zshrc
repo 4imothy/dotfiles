@@ -1,5 +1,6 @@
 export HISTFILE="$HOME/.zsh_history"
 export EDITOR=nvim
+export NOTES_EDITOR=emacs
 export SHOW_BRANCH_IN_PROMPT=0
 export SHOW_BRANCH_IN_RPROMPT=1
 export PAR_DIR_PRINT_LIMIT=2
@@ -25,7 +26,7 @@ export ACPP_OMP_LINK_LINE="\
 export VI_CHANGE_CURSOR_SHAPE=1
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
-export TODO_FILE="$HOME/Documents/notes/todos.norg"
+export TODO_FILE="$HOME/Documents/org/tasks.org"
 export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --box-chars=rounded"
 
 bindkey -v

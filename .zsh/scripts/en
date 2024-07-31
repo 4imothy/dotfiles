@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+dashboard=false
+editor_args=()
+original_pane_name=""
+
+for arg; do
+    [[ $arg == --dashboard ]] && dashboard=true || editor_args+=("$arg")
+done
+
+# commented region from when trying to support TMUX window naming by process
+# if [ -n "$TMUX" ]; then
+#     original_pane_name=$(tmux display-message -p '#W')
+#     tmux rename-window "$EDITOR"
+# fi
+
+echo -ne $SET_INSERT_CURSOR
+if $dashboard; then
+    echo here
+    $NOTES_EDITOR --eval "(execute-kbd-macro (kbd \"C-c d\"))" "${editor_args[@]}"
+else
+    $NOTES_EDITOR "${editor_args[@]}"
+fi
+
+# if [ -n "$original_pane_name" ]; then
+#     tmux rename-window "$original_pane_name"
+# fi

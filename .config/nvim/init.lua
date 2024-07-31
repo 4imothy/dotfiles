@@ -149,8 +149,9 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt.spell = true
         vim.opt.spelllang:append("en_us", "en_gb")
         vim.opt.wrap = true
-        vim.keymap.set('n', 'j', 'gj', {noremap = true, buffer = true})
-        vim.keymap.set('n', 'k', 'gk', {noremap = true, buffer = true})
+        local opts = { noremap = true, buffer = true }
+        vim.keymap.set({ 'n', 'v' }, 'j', 'gj', opts)
+        vim.keymap.set({ 'n', 'v' }, 'k', 'gk', opts)
     end
 })
 
