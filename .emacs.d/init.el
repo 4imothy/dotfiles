@@ -45,9 +45,9 @@
 
 (column-number-mode)
 (dolist (mode '(text-mode-hook
-                prog-mode-hook
-                org-mode-hook
-                conf-mode-hook))
+                 prog-mode-hook
+                 org-mode-hook
+                 conf-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
 ;; Buffer things
@@ -80,9 +80,9 @@
     (set-buffer-modified-p nil)))
 
 (defadvice dired-readin
-  (after dired-after-updating-hook first () activate)
-  "Sort Dired listings with directories first before adding mark."
-  (my/dired-sort))
+           (after dired-after-updating-hook first () activate)
+           "Sort Dired listings with directories first before adding mark."
+           (my/dired-sort))
 
 (when (string= system-type "darwin")
   (defvar dired-use-ls-dired nil))
@@ -116,7 +116,7 @@
 (setq ibuffer-saved-filter-groups
       (quote (("default"
                ("main"  (not (name . "^\\*")))
-              ))))
+               ))))
 
 (add-hook 'ibuffer-mode-hook
           (lambda ()
@@ -125,13 +125,13 @@
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
 (defadvice isearch-search (after isearch-no-fail activate)
-  "Ensure isearch continues in the same direction if no match is found."
-  (unless isearch-success
-    (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
-    (ad-activate 'isearch-search)
-    (isearch-repeat (if isearch-forward 'forward))
-    (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
-    (ad-activate 'isearch-search)))
+           "Ensure isearch continues in the same direction if no match is found."
+           (unless isearch-success
+             (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
+             (ad-activate 'isearch-search)
+             (isearch-repeat (if isearch-forward 'forward))
+             (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
+             (ad-activate 'isearch-search)))
 
 ;; packages
 (require 'package)
@@ -147,10 +147,10 @@
 ;; (package-refresh-contents)
 
 (use-package server
-  :ensure t
-  :config
-  (unless (server-running-p)
-    (server-start)))
+             :ensure t
+             :config
+             (unless (server-running-p)
+               (server-start)))
 
 (use-package ibuffer
              :ensure t
@@ -158,16 +158,16 @@
              ("C-x C-b" . ibuffer))
 
 (use-package catppuccin-theme
-  :ensure t
-  :init
-  (setq catppuccin-flavor 'frappe)
-  :config
-  (load-theme 'catppuccin t))
+             :ensure t
+             :init
+             (setq catppuccin-flavor 'frappe)
+             :config
+             (load-theme 'catppuccin t))
 
 (use-package rainbow-mode
-  :hook (emacs-lisp-mode text-mode lisp-mode)
-  :custom
-  (rainbow-x-colors nil))
+             :hook (emacs-lisp-mode text-mode lisp-mode)
+             :custom
+             (rainbow-x-colors nil))
 
 ;; (use-package evil
 ;;   :config
@@ -181,368 +181,342 @@
 
 ;; suggestions
 (use-package vertico
-  :init
-  (vertico-mode)
-  :custom
-  (vertico-scroll-margin 0)
-  (vertico-count 7)
-  (vertico-resize nil)
-  (vertico-directory-delete-word)
-  )
+             :init
+             (vertico-mode)
+             :custom
+             (vertico-scroll-margin 0)
+             (vertico-count 7)
+             (vertico-resize nil)
+             (vertico-directory-delete-word)
+             )
 
 ;; Configure directory extension.
 (use-package vertico-directory
-  :after vertico
-  :ensure nil
-  ;; More convenient directory navigation commands
-  :bind (:map vertico-map
-              ("RET" . vertico-directory-enter)
-              ("DEL" . vertico-directory-delete-char)
-              ("M-DEL" . vertico-directory-delete-word))
-  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+             :after vertico
+             :ensure nil
+             ;; More convenient directory navigation commands
+             :bind (:map vertico-map
+                         ("RET" . vertico-directory-enter)
+                         ("DEL" . vertico-directory-delete-char)
+                         ("M-DEL" . vertico-directory-delete-word))
+             :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package orderless
-  :custom
-  (completion-styles '(orderless basic)
-                     completion-category-defaults nil
-                     completion-category-overrides '((file (styles partial-completion)))))
+             :custom
+             (completion-styles '(orderless basic)
+                                completion-category-defaults nil
+                                completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package which-key
-  :custom
-  (which-key-idle-delay 1.0)
-  :config
-  (which-key-mode 1))
+             :custom
+             (which-key-idle-delay 1.0)
+             :config
+             (which-key-mode 1))
 
 (use-package doom-modeline
-  :custom
-  (doom-modeline-height 20)
-  (display-time-format "%H:%M")
-  :config
-  (doom-modeline-mode)
-  (display-time-mode)
-  (display-battery-mode)
-  )
+             :custom
+             (doom-modeline-height 20)
+             (display-time-format "%H:%M")
+             :config
+             (doom-modeline-mode)
+             (display-time-mode)
+             (display-battery-mode)
+             )
 
 ;; org-mode
 (use-package org
-  :hook
-  (org-mode . org-indent-mode)
-  (org-agenda-mode . (lambda () (hl-line-mode 1)))
-  ;; fix for the org-startup-with-latex-preview being slow
-  ;; (org-mode . (lambda () (mark-whole-buffer) (org-latex-preview) (deactivate-mark)))
-  :bind
-  ("C-c c" . org-capture)
-  ("C-c d" . my/dashboard)
-  ("C-c o o" . my/org-file-search)
-  :custom
-  (org-directory "~/Documents/org")
-  (org-default-notes-file (concat org-directory "/tasks.org"))
-  (org-outline-path-complete-in-steps nil)
-  (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))
-                        (org-default-notes-file . (:maxlevel . 2))))
-  (org-image-actual-width 400)
-  (org-hide-emphasis-markers t)
-  (org-tags-column 1)
-  (org-agenda-tags-column 0)
-  (org-fold-show-context-detail t)
-  (org-ellipsis "⤵")
-  (org-agenda-files (list org-default-notes-file))
-  (org-agenda-prefix-format
-      '((agenda . " %?-10T %?-12t %s")
-        (todo . "%-10T%-14(my/timestamp-format) ")
-        (tags  . " %i %-12:c")
-        (search . " %i %-12:c")))
-  (org-agenda-remove-tags t)
-  (org-agenda-span 14)
-  (org-todo-keywords
-      '("TODO(t)" "DOING(g)" "EVENT(e)" "LONG(l)" "DONE(d)" "REMINDER(r)"))
-  ;; (org-startup-with-latex-preview t) ;; this is very slow for some reason and renders with white background and foreground
-  (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
-  (org-agenda-custom-commands
-   '(("d" "Dashboard"
-      (
-       (agenda ""
-               ((org-agenda-start-day (org-today))
-                (org-agenda-span 1)
-                (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-                (org-agenda-format-date "%A %-e %B %Y")
-                (org-agenda-overriding-header "")
-                ))
-       (todo "TODO|DOING"
-             ((org-agenda-sorting-strategy '(priority-down timestamp-up))
-              (org-agenda-overriding-header "")))
-       (agenda ""
-               ((org-agenda-start-day "+1d")
-                (org-agenda-span 10)
-                (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
-                (org-agenda-overriding-header "")
-                ))
-       (todo "EVENT"
-             ((org-agenda-sorting-strategy '(timestamp-up))
-              (org-agenda-overriding-header "")))
-       (todo "DONE"
-             ((org-agenda-overriding-header "")))
-       (todo "LONG"
-             ((org-agenda-overriding-header "")))
-       (todo "REMINDER"
-             ((org-agenda-overriding-header "")))
-       )
-      ((org-agenda-window-setup 'only-window)
-       ))))
-  (org-emphasis-alist
-        `(("*" (:weight bold :foreground ,my/blue))
-          ("/" italic)
-          ("_" underline)
-          ("=" org-verbatim verbatim)
-          ("~" org-code verbatim)
-          ("+" (:strike-through t))))
+             :hook
+             (org-mode . org-indent-mode)
+             (org-agenda-mode . (lambda () (hl-line-mode 1)))
+             ;; fix for the org-startup-with-latex-preview being slow
+             ;; (org-mode . (lambda () (mark-whole-buffer) (org-latex-preview) (deactivate-mark)))
+             :bind
+             ("C-c c" . org-capture)
+             ("C-c d" . my/dashboard)
+             ("C-c o o" . my/org-file-search)
+             :custom
+             (org-directory "~/Documents/org")
+             (org-default-notes-file (concat org-directory "/tasks.org"))
+             (org-outline-path-complete-in-steps nil)
+             (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))
+                                   (org-default-notes-file . (:maxlevel . 2))))
+             (org-image-actual-width 400)
+             (org-hide-emphasis-markers t)
+             (org-tags-column 1)
+             (org-agenda-tags-column 0)
+             (org-fold-show-context-detail t)
+             (org-ellipsis "⤵")
+             (org-agenda-files (list org-default-notes-file))
+             (org-agenda-prefix-format
+               '((agenda . " %?-10T %?-12t %s")
+                 (todo . "%-10T%-14(my/timestamp-format) ")
+                 (tags  . " %i %-12:c")
+                 (search . " %i %-12:c")))
+             (org-agenda-remove-tags t)
+             (org-agenda-span 14)
+             (org-todo-keywords
+               '("TODO(t)" "DOING(g)" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
+             (org-agenda-block-separator ?─)
+             ;; (org-startup-with-latex-preview t) ;; this is very slow for some reason and renders with white background and foreground
+             (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
+             (org-agenda-custom-commands
+               '(("d" "Dashboard"
+                  (
+                   (agenda ""
+                           ((org-agenda-start-day (org-today))
+                            (org-agenda-span 1)
+                            (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+                            (org-agenda-format-date "%A %-e %B %Y")
+                            (org-agenda-overriding-header "")))
+                   (todo "TODO|DOING|EVENT"
+                         ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+                          (org-agenda-overriding-header "")))
+                   (agenda ""
+                           ((org-agenda-start-day "+1d")
+                            (org-agenda-span 10)
+                            (org-agenda-day-face-function (lambda (date) '(:underline t :inherit org-agenda-date)))
+                            (org-agenda-overriding-header "")
+                            ))
+                   (todo "REMINDER"
+                         ((org-agenda-sorting-strategy '(timestamp-up))
+                          (org-agenda-overriding-header "")))
+                   (todo "DONE"
+                         ((org-agenda-overriding-header "")))
+                   )
+                  ((org-agenda-window-setup 'only-window)
+                   ))))
+             (org-emphasis-alist
+               `(("*" (:weight bold :foreground ,my/blue))
+                 ("/" italic)
+                 ("$" (:foreground ,my/purple))
+                 ("_" underline)
+                 ("=" org-verbatim verbatim)
+                 ("~" org-code verbatim)
+                 ("+" (:strike-through t))))
 
-  :config
-  (with-eval-after-load "org-faces"
-    (setq org-todo-keyword-faces
-          '(("TODO" . my/org-todo)
-            ("DOING" . my/org-doing)
-            ("DONE" . my/org-done)
-            ("EVENT" . my/org-event)
-            ("LONG" . my/org-long)
-            ("REMINDER" . my/org-reminder)
-            ))
+             :config
+             (with-eval-after-load "org-faces"
+                                   (setq org-todo-keyword-faces
+                                         '(("TODO" . my/org-todo)
+                                           ("DOING" . my/org-doing)
+                                           ("DONE" . my/org-done)
+                                           ("EVENT" . my/org-event)
+                                           ("LONG" . my/org-long)
+                                           ("REMINDER" . my/org-reminder)
+                                           ))
 
-    (defun my/create-keyword-face (main-color background-color)
-      `((t :weight bold
-           :box (:line-width 2 :color ,main-color)
-           :foreground ,main-color
-           :background ,background-color)))
+                                   (defun my/create-keyword-face (main-color background-color)
+                                     `((t :weight bold
+                                          :box (:line-width 2 :color ,main-color)
+                                          :foreground ,main-color
+                                          :background ,background-color)))
 
-    (defface my/org-todo (my/create-keyword-face my/red my/light-red)
-      "Face used to display state TODO.")
-    (defface my/org-done (my/create-keyword-face my/green my/light-green)
-      "Face used to display state DONE.")
-    (defface my/org-doing (my/create-keyword-face my/orange my/light-orange)
-      "Face used to display state DOING.")
-    (defface my/org-event (my/create-keyword-face my/purple my/light-purple)
-      "Face used to display state EVENT.")
-    (defface my/org-long (my/create-keyword-face my/blue my/light-blue)
-      "Face used to display state LONG.")
-    (defface my/org-reminder (my/create-keyword-face my/turquoise my/light-turquoise)
-      "Face used to display state LONG.")
-    (set-face-attribute 'org-level-1 nil :inherit 'outline-1 :height 1.3)
-    (set-face-attribute 'org-level-2 nil :inherit 'outline-2 :height 1.25)
-    (set-face-attribute 'org-level-3 nil :inherit 'outline-3 :height 1.2)
-    (set-face-attribute 'org-level-4 nil :inherit 'outline-4 :height 1.15)
-    (set-face-attribute 'org-level-5 nil :inherit 'outline-5 :height 1.1)
-    (set-face-attribute 'org-level-6 nil :inherit 'outline-6 :height 1.05)
-    (set-face-attribute 'org-level-7 nil :inherit 'outline-7 :height 1.0)
-    (set-face-attribute 'org-level-8 nil :inherit 'outline-8 :height 1.0)
-    (set-face-attribute 'org-tag nil :height 0.6)
-    )
-  (defun diary-last-day-of-month (date)
-    "Return `t` if DATE is the last day of the month."
-    (let* ((day (calendar-extract-day date))
-           (month (calendar-extract-month date))
-           (year (calendar-extract-year date))
-           (last-day-of-month
-            (calendar-last-day-of-month month year)))
-      (= day last-day-of-month)))
-  (defun my/timestamp-format ()
-    "Custom function to format timestamps for TODO items."
-    (let ((timestamp
-           (or (org-entry-get (point) "TIMESTAMP")
-               (org-entry-get (point) "SCHEDULED")
-               (org-entry-get (point) "DEADLINE"))))
-      (if timestamp
-          (if (string-match "<%%(diary-last-day-of-month date)>" timestamp)
-              (let ((date-str (match-string 1 timestamp))
-                    (cal-date (org-eval-in-calendar `(diary-last-day-of-month ,date-str))))
-                (format-time-string "%Y-%m-%d" cal-date))
-            (replace-regexp-in-string "[<>]" "" timestamp))
-        "")))
-  (set-face-underline 'org-ellipsis nil)
-  (defun save-after-capture-refile ()
-    (with-current-buffer (marker-buffer org-capture-last-stored-marker)
-      (save-buffer)))
-  (advice-add 'org-capture-refile :after 'save-after-capture-refile)
+                                   (defface my/org-todo (my/create-keyword-face my/red my/light-red)
+                                            "Face used to display state TODO.")
+                                   (defface my/org-done (my/create-keyword-face my/green my/light-green)
+                                            "Face used to display state DONE.")
+                                   (defface my/org-doing (my/create-keyword-face my/orange my/light-orange)
+                                            "Face used to display state DOING.")
+                                   (defface my/org-event (my/create-keyword-face my/purple my/light-purple)
+                                            "Face used to display state EVENT.")
+                                   (defface my/org-long (my/create-keyword-face my/blue my/light-blue)
+                                            "Face used to display state LONG.")
+                                   (defface my/org-reminder (my/create-keyword-face my/turquoise my/light-turquoise)
+                                            "Face used to display state LONG.")
+                                   (set-face-attribute 'org-level-1 nil :inherit 'outline-1 :height 1.3)
+                                   (set-face-attribute 'org-level-2 nil :inherit 'outline-2 :height 1.25)
+                                   (set-face-attribute 'org-level-3 nil :inherit 'outline-3 :height 1.2)
+                                   (set-face-attribute 'org-level-4 nil :inherit 'outline-4 :height 1.15)
+                                   (set-face-attribute 'org-level-5 nil :inherit 'outline-5 :height 1.1)
+                                   (set-face-attribute 'org-level-6 nil :inherit 'outline-6 :height 1.05)
+                                   (set-face-attribute 'org-level-7 nil :inherit 'outline-7 :height 1.0)
+                                   (set-face-attribute 'org-level-8 nil :inherit 'outline-8 :height 1.0)
+                                   (set-face-attribute 'org-tag nil :height 0.6)
+                                   )
+             (defun diary-last-day-of-month (date)
+               "Return `t` if DATE is the last day of the month."
+               (let* ((day (calendar-extract-day date))
+                      (month (calendar-extract-month date))
+                      (year (calendar-extract-year date))
+                      (last-day-of-month
+                        (calendar-last-day-of-month month year)))
+                 (= day last-day-of-month)))
+             (defun my/timestamp-format ()
+               "Custom function to format timestamps for TODO items."
+               (let ((timestamp
+                       (or (org-entry-get (point) "TIMESTAMP")
+                           (org-entry-get (point) "SCHEDULED")
+                           (org-entry-get (point) "DEADLINE"))))
+                 (if timestamp
+                   (if (string-match "<%%(diary-last-day-of-month date)>" timestamp)
+                     (let ((date-str (match-string 1 timestamp))
+                           (cal-date (org-eval-in-calendar `(diary-last-day-of-month ,date-str))))
+                       (format-time-string "%Y-%m-%d" cal-date))
+                     (replace-regexp-in-string "[<>]" "" timestamp))
+                   "")))
+             (set-face-underline 'org-ellipsis nil)
+             (defun save-after-capture-refile ()
+               (with-current-buffer (marker-buffer org-capture-last-stored-marker)
+                                    (save-buffer)))
+             (advice-add 'org-capture-refile :after 'save-after-capture-refile)
 
-  (defun my/org-file-search ()
-    "Search for Org files using Vertico."
-    (interactive)
-    (let* ((org-files (seq-filter (lambda (file) (string-suffix-p ".org" file))
-                                  (directory-files org-directory)))
-           (selected-file (completing-read "Search Orgs: " org-files)))
-      (find-file (expand-file-name selected-file org-directory))))
+             (defun my/org-file-search ()
+               "Search for Org files using Vertico."
+               (interactive)
+               (let* ((org-files (seq-filter (lambda (file) (string-suffix-p ".org" file))
+                                             (directory-files org-directory)))
+                      (selected-file (completing-read "Search Orgs: " org-files)))
+                 (find-file (expand-file-name selected-file org-directory))))
 
-  (defun my/dashboard ()
-    "Launch the Org Agenda Dashboard custom command."
-    (interactive)
-    (org-agenda nil "d"))
-  ;; (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
-  ;; (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
+             (defun my/dashboard ()
+               "Launch the Org Agenda Dashboard custom command."
+               (interactive)
+               (org-agenda nil "d"))
+             ;; (add-hook 'org-after-todo-statistics-hook #'my/org-summary-todo-cookie)
+             ;; (add-hook 'org-checkbox-statistics-hook #'my/org-summary-checkbox-cookie)
 
-  ;; from this question: https://emacs.stackexchange.com/questions/7375/can-i-format-cells-in-an-org-mode-table-differently-depending-on-a-formula
-  ;; and this person: https://emacs.stackexchange.com/users/15307/erki-der-loony
-  (defface positive-face
-    `((t :foreground ,my/green))
-    "Indicates something positive.")
+             ;; from this question: https://emacs.stackexchange.com/questions/7375/can-i-format-cells-in-an-org-mode-table-differently-depending-on-a-formula
+             ;; and this person: https://emacs.stackexchange.com/users/15307/erki-der-loony
+             (defface positive-face
+                      `((t :foreground ,my/green))
+                      "Indicates something positive.")
 
-  (defface negative-face
-    `((t :foreground ,my/red))
-    "Indicates something negative.")
+             (defface negative-face
+                      `((t :foreground ,my/red))
+                      "Indicates something negative.")
 
-  (defun my/match-positive-numbers (limit)
-    "Match positive numbers: LIMIT: buffer position to stop at."
-    (let (result)
-      (while
-          (progn
-            (when (looking-back "|" 1)
-              (backward-char))
-            (setq result (re-search-forward "| *\\([0-9\\., ]+\\) *|" limit t))
-            (save-match-data
-              (and result (not (looking-back "^ *|.*" 1))))))
-      result))
+             (defun my/match-positive-numbers (limit)
+               "Match positive numbers: LIMIT: buffer position to stop at."
+               (let (result)
+                 (while
+                   (progn
+                     (when (looking-back "|" 1)
+                       (backward-char))
+                     (setq result (re-search-forward "| *\\([0-9\\., ]+\\) *|" limit t))
+                     (save-match-data
+                       (and result (not (looking-back "^ *|.*" 1))))))
+                 result))
 
-  (defun my/match-negative-numbers (limit)
-    "Match positive numbers: LIMIT: buffer position to stop at."
-    (let (result)
-      (while
-          (progn
-            (when (looking-back "|" 1)
-              (backward-char))
-            (setq result (re-search-forward "| *\\(- *[0-9\\., ]+\\) *|" limit t))
-            (save-match-data
-              (and result (not (looking-back "^ *|.*" 1))))))
-      result))
+             (defun my/match-negative-numbers (limit)
+               "Match positive numbers: LIMIT: buffer position to stop at."
+               (let (result)
+                 (while
+                   (progn
+                     (when (looking-back "|" 1)
+                       (backward-char))
+                     (setq result (re-search-forward "| *\\(- *[0-9\\., ]+\\) *|" limit t))
+                     (save-match-data
+                       (and result (not (looking-back "^ *|.*" 1))))))
+                 result))
 
-  (font-lock-add-keywords 'org-mode
-                          '((my/match-positive-numbers 1 'positive-face t))
-                          'append)
+             (font-lock-add-keywords 'org-mode
+                                     '((my/match-positive-numbers 1 'positive-face t))
+                                     'append)
 
-  (font-lock-add-keywords 'org-mode
-                          '((my/match-negative-numbers 1 'negative-face t))
-                          'append)
+             (font-lock-add-keywords 'org-mode
+                                     '((my/match-negative-numbers 1 'negative-face t))
+                                     'append)
 
-  ;; list config
-  ;; Replace list hyphen with dot
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+             ;; list config
+             ;; Replace list hyphen with dot
+             (font-lock-add-keywords 'org-mode
+                                     '(("^ *\\([-]\\) "
+                                        (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-  ;; Credit: Christian Tietze
-  ;; https://christiantietze.de/posts/2021/02/emacs-org-todo-doing-done-checkbox-cycling/
-  (defun org-todo-if-needed (state)
-    "Change the TODO state of the current entry to STATE."
-    (unless (string-equal (org-get-todo-state) state)
-      (org-todo state)))
+             ;; Credit: Christian Tietze
+             ;; https://christiantietze.de/posts/2021/02/emacs-org-todo-doing-done-checkbox-cycling/
+             (defun org-todo-if-needed (state)
+               "Change the TODO state of the current entry to STATE."
+               (unless (string-equal (org-get-todo-state) state)
+                 (org-todo state)))
 
-  (defun my/org-summary-todo-cookie (n-done n-not-done)
-    "Update the TODO state of the entry based on the number of tasks done.
+             (defun my/org-summary-todo-cookie (n-done n-not-done)
+               "Update the TODO state of the entry based on the number of tasks done.
 
-   N-DONE: Number of tasks marked as done.
-   N-NOT-DONE: Number of tasks not marked as done."
-    (let ((org-log-done nil)
-          (org-log-states nil)) ; turn off logging
-      (org-todo-if-needed
-       (cond ((= n-done 0) "TODO")
-             ((= n-not-done 0) "DONE")
-             (t "DOING")))))
+               N-DONE: Number of tasks marked as done.
+               N-NOT-DONE: Number of tasks not marked as done."
+               (let ((org-log-done nil)
+                     (org-log-states nil)) ; turn off logging
+                 (org-todo-if-needed
+                   (cond ((= n-done 0) "TODO")
+                         ((= n-not-done 0) "DONE")
+                         (t "DOING")))))
 
-  (defun my/org-summary-checkbox-cookie ()
-    "Update the TODO state of the current entry based on checkbox statistics."
-    (let ((beg (point))
-          (end (save-excursion (end-of-line) (point))))
-      (unless (not (org-get-todo-state))
-        (save-excursion
-          (org-back-to-heading t)
-          (if (re-search-forward "\\[\\([0-9]*\\)/\\([0-9]*\\)\\]" end t)
-              (let ((num-done (match-string 1))
-                    (num-total (match-string 2)))
-                (org-todo-if-needed
-                 (cond ((equal num-done num-total) "DONE")
-                       ((or (equal (string-trim num-done) "")
-                            (equal num-done "0")) "TODO")
-                       (t "DOING"))))
-            (org-todo-if-needed "DOING"))))))
+             (defun my/org-summary-checkbox-cookie ()
+               "Update the TODO state of the current entry based on checkbox statistics."
+               (let ((beg (point))
+                     (end (save-excursion (end-of-line) (point))))
+                 (unless (not (org-get-todo-state))
+                   (save-excursion
+                     (org-back-to-heading t)
+                     (if (re-search-forward "\\[\\([0-9]*\\)/\\([0-9]*\\)\\]" end t)
+                       (let ((num-done (match-string 1))
+                             (num-total (match-string 2)))
+                         (org-todo-if-needed
+                           (cond ((equal num-done num-total) "DONE")
+                                 ((or (equal (string-trim num-done) "")
+                                      (equal num-done "0")) "TODO")
+                                 (t "DOING"))))
+                       (org-todo-if-needed "DOING"))))))
 
-  ;; captures
-  (defvar org-capture-templates
-    '(("t"
-       "Todo Item"
-       entry
-       (file org-default-notes-file)
-       "* TODO %?\n %i")))
+             ;; captures
+             (defvar org-capture-templates
+               '(("t"
+                  "Todo Item"
+                  entry
+                  (file org-default-notes-file)
+                  "* TODO %?\n %i")))
 
-  (defvar my/tag-colors
-    `(("jobs" . ,my/blue)
-      ("grad_school" . ,my/light-blue)
-      ("projects" . ,my/purple)
-      ("money" . ,my/light-green)
-      ("research" . ,my/orange)
-      ("math_307" . ,my/green)
-      ("math_421" . ,my/orange)
-      ("csds_341" . ,my/purple)
-      ("general" . ,my/light-purple)
-      ("phed_24b" . ,my/light-purple)
-      ("econ_216" . ,my/brown)))
+             (defvar my/tag-colors
+               `(("jobs" . ,my/blue)
+                 ("grad_school" . ,my/light-blue)
+                 ("projects" . ,my/purple)
+                 ("money" . ,my/light-green)
+                 ("research" . ,my/orange)
+                 ("math_307" . ,my/green)
+                 ("math_421" . ,my/orange)
+                 ("csds_341" . ,my/purple)
+                 ("general" . ,my/light-purple)
+                 ("phed_24b" . ,my/light-purple)
+                 ("econ_216" . ,my/brown)))
 
-  (defun my/org-agenda-custom-color ()
-    "Customize the appearance of Org Agenda lines with keywords."
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward (regexp-opt (mapcar #'car my/tag-colors)) nil t)
-        (let ((keyword (match-string 0)))
-          (add-text-properties
-           (match-beginning 0) (match-end 0)
-           `(face (:foreground ,(cdr (assoc keyword my/tag-colors)))))))))
+             (defun my/org-agenda-custom-color ()
+               "Customize the appearance of Org Agenda lines with keywords."
+               (save-excursion
+                 (goto-char (point-min))
+                 (while (re-search-forward (regexp-opt (mapcar #'car my/tag-colors)) nil t)
+                        (let ((keyword (match-string 0)))
+                          (add-text-properties
+                            (match-beginning 0) (match-end 0)
+                            `(face (:foreground ,(cdr (assoc keyword my/tag-colors)))))))))
 
-  (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
-  (setq org-default-priority ?C)
-  )
-
-;; math preview
-(use-package org-fragtog
-  :hook
-  (org-mode . org-fragtog-mode)
-  :custom
-  (org-preview-latex-default-process 'dvisvgm)
-  (org-preview-latex-image-directory (concat user-emacs-directory "ltximg/"))
-  ;; https://dvisvgm.de/FAQ/
-  (org-preview-latex-process-alist '((dvisvgm :programs
-                                              ("latex" "dvisvgm")
-                                              :image-input-type "dvi"
-                                              :image-output-type "svg"
-                                              :image-size-adjust (1.7 . 1.5)
-                                              :latex-compiler
-                                              ("latex -interaction nonstopmode -output-directory %o %f")
-                                              :image-converter
-                                              ("dvisvgm %f --libgs=/opt/homebrew/lib/libgs.dylib --no-fonts --exact-bbox --scale=%S --output=%O"))))
-  :config
-  (plist-put org-format-latex-options :scale 2.0)
-  (plist-put org-format-latex-options :foreground nil)
-  (plist-put org-format-latex-options :background nil)
-  )
+             (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
+             (setq org-default-priority ?C)
+             )
 
 (use-package nerd-icons)
 
 (use-package nerd-icons-completion
-  :config
-  (nerd-icons-completion-mode))
+             :config
+             (nerd-icons-completion-mode))
 
 (use-package nerd-icons-ibuffer
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+             :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
 (use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
+             :hook
+             (dired-mode . nerd-icons-dired-mode))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(which-key vertico rainbow-mode org-fragtog orderless nerd-icons-ibuffer nerd-icons-dired nerd-icons-completion doom-modeline corfu catppuccin-theme)))
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(package-selected-packages
+     '(which-key vertico rainbow-mode orderless nerd-icons-ibuffer nerd-icons-dired nerd-icons-completion doom-modeline corfu catppuccin-theme)))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  )
