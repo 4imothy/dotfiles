@@ -43,7 +43,26 @@
 (setq initial-scratch-message "")
 (set-face-attribute 'default nil :font "RecMonoCasual Nerd Font" :height 190)
 
-(column-number-mode)
+(setq-default mode-line-format
+  (list
+   '(:eval (buffer-name))
+   " | "
+   "%l:%c"
+   " | "
+   "%m"
+   " | "
+   '(:eval
+     (if (buffer-modified-p)
+         "*"
+       "-"))
+   " | "
+   '(:eval (when (buffer-file-name)
+             (abbreviate-file-name (buffer-file-name)))))
+)
+
+;; Enable line and column numbers in the mode line
+(setq line-number-mode t)
+(setq column-number-mode t)
 (dolist (mode '(text-mode-hook
                  prog-mode-hook
                  org-mode-hook
@@ -87,6 +106,12 @@
 (when (string= system-type "darwin")
   (defvar dired-use-ls-dired nil))
 
+(defun pbcopy ()
+  (interactive)
+  (call-process-region (point) (mark) "pbcopy")
+  (setq deactivate-mark t))
+
+(global-set-key (kbd "C-c pc") 'pbcopy)
 ;; change backups location
 (setq create-lockfiles nil)
 (setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
@@ -169,16 +194,6 @@
              :custom
              (rainbow-x-colors nil))
 
-;; (use-package evil
-;;   :config
-;;   (setq evil-emacs-state-cursor `(,my/purple box))
-;;   (setq evil-normal-state-cursor `(,my/green box))
-;;   (setq evil-visual-state-cursor `(,my/light-blue box))
-;;   (setq evil-insert-state-cursor `(,my/light-yellow box))
-;;   (setq evil-replace-state-cursor `(,my/orange bar))
-;;   (setq evil-operator-state-cursor `(,my/orange hollow))
-;;   (evil-mode 1))
-
 ;; suggestions
 (use-package vertico
              :init
@@ -213,17 +228,6 @@
              :config
              (which-key-mode 1))
 
-(use-package doom-modeline
-             :custom
-             (doom-modeline-height 20)
-             (display-time-format "%H:%M")
-             :config
-             (doom-modeline-mode)
-             (display-time-mode)
-             (display-battery-mode)
-             )
-
-;; org-mode
 (use-package org
              :hook
              (org-mode . org-indent-mode)
@@ -249,16 +253,13 @@
              (org-agenda-files (list org-default-notes-file))
              (org-agenda-prefix-format
                '((agenda . " %?-10T %?-12t %s")
-                 (todo . "%-10T%-14(my/timestamp-format) ")
+                 (todo . " %-10T%(my/timestamp-format)")
                  (tags  . " %i %-12:c")
                  (search . " %i %-12:c")))
              (org-agenda-remove-tags t)
-             (org-agenda-span 14)
              (org-todo-keywords
                '("TODO(t)" "DOING(g)" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
              (org-agenda-block-separator ?─)
-             ;; (org-startup-with-latex-preview t) ;; this is very slow for some reason and renders with white background and foreground
-             (org-columns-default-format "%10ALLTAGS %TODO %30ITEM %22SCHEDULED %22DEADLINE %TIMESTAMP")
              (org-agenda-custom-commands
                '(("d" "Dashboard"
                   (
@@ -269,7 +270,13 @@
                             (org-agenda-format-date "%A %-e %B %Y")
                             (org-agenda-overriding-header "")))
                    (todo "TODO|DOING|EVENT"
-                         ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+                         ((org-agenda-sorting-strategy '(priority-down))
+                          (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))
+                          (org-agenda-overriding-header "")))
+                   (todo "TODO|DOING|EVENT"
+                         ((org-agenda-sorting-strategy '(timestamp-up))
+                          (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottimestamp))
+                          (org-agenda-block-separator nil)
                           (org-agenda-overriding-header "")))
                    (agenda ""
                            ((org-agenda-start-day "+1d")
@@ -293,8 +300,16 @@
                  ("=" org-verbatim verbatim)
                  ("~" org-code verbatim)
                  ("+" (:strike-through t))))
-
              :config
+             (setq org-default-priority ?C)
+             (defun my-org-agenda-skip-timestamp ()
+               (let ((timestamp (org-get-scheduled-time (point))))
+                 (if timestamp
+                   (progn
+                     (org-agenda-skip-entry-if 'timestamp)
+                     (point-max))
+                   (outline-next-heading))))
+
              (with-eval-after-load "org-faces"
                                    (setq org-todo-keyword-faces
                                          '(("TODO" . my/org-todo)
@@ -323,15 +338,6 @@
                                             "Face used to display state LONG.")
                                    (defface my/org-reminder (my/create-keyword-face my/turquoise my/light-turquoise)
                                             "Face used to display state LONG.")
-                                   (set-face-attribute 'org-level-1 nil :inherit 'outline-1 :height 1.3)
-                                   (set-face-attribute 'org-level-2 nil :inherit 'outline-2 :height 1.25)
-                                   (set-face-attribute 'org-level-3 nil :inherit 'outline-3 :height 1.2)
-                                   (set-face-attribute 'org-level-4 nil :inherit 'outline-4 :height 1.15)
-                                   (set-face-attribute 'org-level-5 nil :inherit 'outline-5 :height 1.1)
-                                   (set-face-attribute 'org-level-6 nil :inherit 'outline-6 :height 1.05)
-                                   (set-face-attribute 'org-level-7 nil :inherit 'outline-7 :height 1.0)
-                                   (set-face-attribute 'org-level-8 nil :inherit 'outline-8 :height 1.0)
-                                   (set-face-attribute 'org-tag nil :height 0.6)
                                    )
              (defun diary-last-day-of-month (date)
                "Return `t` if DATE is the last day of the month."
@@ -352,7 +358,7 @@
                      (let ((date-str (match-string 1 timestamp))
                            (cal-date (org-eval-in-calendar `(diary-last-day-of-month ,date-str))))
                        (format-time-string "%Y-%m-%d" cal-date))
-                     (replace-regexp-in-string "[<>]" "" timestamp))
+                             (concat (replace-regexp-in-string "[<>]" "" timestamp) " "))
                    "")))
              (set-face-underline 'org-ellipsis nil)
              (defun save-after-capture-refile ()
@@ -469,11 +475,11 @@
 
              (defvar my/tag-colors
                `(("jobs" . ,my/blue)
-                 ("grad_school" . ,my/light-blue)
+                 ("gradedu" . ,my/light-blue)
                  ("projects" . ,my/purple)
                  ("money" . ,my/light-green)
                  ("research" . ,my/orange)
-                 ("math_307" . ,my/green)
+                 ("school" . ,my/green)
                  ("math_421" . ,my/orange)
                  ("csds_341" . ,my/purple)
                  ("general" . ,my/light-purple)
@@ -491,7 +497,6 @@
                             `(face (:foreground ,(cdr (assoc keyword my/tag-colors)))))))))
 
              (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
-             (setq org-default-priority ?C)
              )
 
 (use-package nerd-icons)
@@ -506,17 +511,3 @@
 (use-package nerd-icons-dired
              :hook
              (dired-mode . nerd-icons-dired-mode))
-
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '(package-selected-packages
-     '(which-key vertico rainbow-mode orderless nerd-icons-ibuffer nerd-icons-dired nerd-icons-completion doom-modeline corfu catppuccin-theme)))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  )

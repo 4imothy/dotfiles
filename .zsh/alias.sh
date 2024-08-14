@@ -8,6 +8,7 @@ alias venv="source venv/bin/activate"
 alias todom="todo -m"
 alias tree="tgrep --tree"
 alias ltree="tgrep --tree --long-branch"
+alias run="python run.py"
 
 alias gs='git status'
 alias ga='git add'

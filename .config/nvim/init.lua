@@ -112,9 +112,23 @@ local function setkey(mode, l, r, opts)
     vim.keymap.set(mode, l, r, opts)
 end
 
+_G.diagnostics_enabled = true
+
+function _G.toggle_diagnostics()
+  if _G.diagnostics_enabled then
+    vim.diagnostic.disable()
+    print("Diagnostics disabled")
+  else
+    vim.diagnostic.enable()
+    print("Diagnostics enabled")
+  end
+  _G.diagnostics_enabled = not _G.diagnostics_enabled
+end
+
 setkey('n', '<leader>n', vim.cmd.bnext)
 setkey('n', '<leader>p', vim.cmd.bprevious)
 setkey('n', '<leader>x', vim.cmd.bdelete)
+setkey('n', '<leader>l', toggle_diagnostics)
 setkey('n', '<leader>u', vim.cmd.UndotreeToggle)
 setkey('n', '<leader>\\', vim.cmd.nohlsearch)
 setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )

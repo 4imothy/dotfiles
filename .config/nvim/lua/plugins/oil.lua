@@ -2,6 +2,7 @@ return {
     'stevearc/oil.nvim',
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
+        local max_width = math.floor(vim.api.nvim_get_option("columns") * 0.6)
         require("oil").setup({
             default_file_explorer = true,
             delete_to_trash = true,
@@ -19,8 +20,8 @@ return {
                 spell = false,
             },
             float = {
-                padding = 10,
-                max_width = 0,
+                padding = 5,
+                max_width = max_width,
                 max_height = 0,
                 border = 'rounded',
                 win_options = {
