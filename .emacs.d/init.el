@@ -69,6 +69,11 @@
                  conf-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
+(setq redisplay-dont-pause t
+  scroll-margin 5
+  scroll-step 1
+  scroll-preserve-screen-position 1)
+
 ;; Buffer things
 (setq-default tab-width 4
               indent-tabs-mode nil)
