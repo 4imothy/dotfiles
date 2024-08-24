@@ -27,7 +27,7 @@ export VI_CHANGE_CURSOR_SHAPE=1
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
 export TODO_FILE="$HOME/Documents/org/tasks.org"
-export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --box-chars=rounded"
+export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --char-style=rounded"
 
 bindkey -v
 setopt SHARE_HISTORY

@@ -31,17 +31,17 @@
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-;; (set-fringe-mode 0)
 (tooltip-mode -1)
-;; (scroll-bar-mode -1)
 (blink-cursor-mode 0)
 (windmove-default-keybindings)
+(setq visible-cursor nil)
 (setq inhibit-startup-screen t)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
 (set-face-attribute 'default nil :font "RecMonoCasual Nerd Font" :height 190)
+(setq-default fill-column 60)
 
 (setq-default mode-line-format
   (list
@@ -231,6 +231,7 @@
 (use-package org
              :hook
              (org-mode . org-indent-mode)
+             (org-mode . auto-fill-mode)
              (org-agenda-mode . (lambda () (hl-line-mode 1)))
              ;; fix for the org-startup-with-latex-preview being slow
              ;; (org-mode . (lambda () (mark-whole-buffer) (org-latex-preview) (deactivate-mark)))
@@ -347,6 +348,7 @@
                       (last-day-of-month
                         (calendar-last-day-of-month month year)))
                  (= day last-day-of-month)))
+
              (defun my/timestamp-format ()
                "Custom function to format timestamps for TODO items."
                (let ((timestamp
@@ -354,12 +356,11 @@
                            (org-entry-get (point) "SCHEDULED")
                            (org-entry-get (point) "DEADLINE"))))
                  (if timestamp
-                   (if (string-match "<%%(diary-last-day-of-month date)>" timestamp)
-                     (let ((date-str (match-string 1 timestamp))
-                           (cal-date (org-eval-in-calendar `(diary-last-day-of-month ,date-str))))
-                       (format-time-string "%Y-%m-%d" cal-date))
-                             (concat (replace-regexp-in-string "[<>]" "" timestamp) " "))
+                   (let* ((parsed-time (org-time-string-to-time timestamp))
+                          (formatted-date (format-time-string "%d %a %m-%Y" parsed-time)))
+                     (concat formatted-date " "))
                    "")))
+
              (set-face-underline 'org-ellipsis nil)
              (defun save-after-capture-refile ()
                (with-current-buffer (marker-buffer org-capture-last-stored-marker)
@@ -471,7 +472,12 @@
                   "Todo Item"
                   entry
                   (file org-default-notes-file)
-                  "* TODO %?\n %i")))
+                  "* TODO %?\n %i")
+                 ("e"
+                  "Event"
+                  entry
+                  (file org-default-notes-file)
+                  "* EVENT %?\n %i")))
 
              (defvar my/tag-colors
                `(("jobs" . ,my/blue)

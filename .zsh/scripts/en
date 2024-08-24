@@ -16,7 +16,6 @@ done
 
 echo -ne $SET_INSERT_CURSOR
 if $dashboard; then
-    echo here
     $NOTES_EDITOR --eval "(execute-kbd-macro (kbd \"C-c d\"))" "${editor_args[@]}"
 else
     $NOTES_EDITOR "${editor_args[@]}"
