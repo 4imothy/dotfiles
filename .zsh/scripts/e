@@ -3,9 +3,18 @@
 popup=false
 editor_args=()
 original_pane_name=""
+org=false
 
-for arg; do
-    [[ $arg == --popup ]] && popup=true || editor_args+=("$arg")
+for arg in "$@"; do
+    if [[ $arg == --popup ]]; then
+        popup=true
+    else
+        editor_args+=("$arg")
+    fi
+
+    if [[ $arg == *.org ]]; then
+        org=true
+    fi
 done
 
 # commented region from when trying to support TMUX window naming by process
@@ -14,10 +23,14 @@ done
 #     tmux rename-window "$EDITOR"
 # fi
 
-if $popup; then
-    $EDITOR -c 'set laststatus=0 showtabline=0 nonumber norelativenumber signcolumn=no' "${editor_args[@]}"
+if $org; then
+    $NOTES_EDITOR "${editor_args[@]}"
 else
-    $EDITOR "${editor_args[@]}"
+    if $popup; then
+        $EDITOR -c 'set laststatus=0 showtabline=0 nonumber norelativenumber signcolumn=no' "${editor_args[@]}"
+    else
+        $EDITOR "${editor_args[@]}"
+    fi
 fi
 
 # if [ -n "$original_pane_name" ]; then

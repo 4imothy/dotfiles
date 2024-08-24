@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
 cd $(dirname $TODO_FILE)
-en --dashboard
+$NOTES_EDITOR --eval "(execute-kbd-macro (kbd \"C-c d\"))" "${editor_args[@]}"

@@ -2,4 +2,4 @@
 
 local dir=$(dirname $TODO_FILE)
 cd $dir
-een --popup $dir
+ee --popup $dir

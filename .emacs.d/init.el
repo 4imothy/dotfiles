@@ -41,7 +41,7 @@
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
 (set-face-attribute 'default nil :font "RecMonoCasual Nerd Font" :height 190)
-(setq-default fill-column 60)
+(setq fill-column 70)
 
 (setq-default mode-line-format
   (list
