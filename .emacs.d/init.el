@@ -6,14 +6,12 @@
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
-;; TODO put this in a use-package emacs
-;; things that will be changed often
 (defvar my/red "#FF6F61")
 (defvar my/light-red "#FFB6B0")
 (defvar my/green "#77DD77")
 (defvar my/light-green "#B5EAD7")
-(defvar my/orange "#FFB347")
-(defvar my/light-orange "#FFD180")
+(defvar my/orange "#FF8C00")
+(defvar my/light-orange "#FFDAB9")
 (defvar my/purple "#C882C8")
 (defvar my/light-purple "#E8C9E8")
 (defvar my/blue "#8AB6D6")
@@ -490,12 +488,13 @@
                  ("projects" . ,my/purple)
                  ("money" . ,my/light-green)
                  ("research" . ,my/orange)
-                 ("school" . ,my/green)
-                 ("math_421" . ,my/orange)
-                 ("csds_341" . ,my/purple)
                  ("general" . ,my/light-purple)
-                 ("phed_24b" . ,my/light-purple)
-                 ("econ_216" . ,my/brown)))
+                 ("school" . ,my/green)
+                 ("compvis" . ,my/orange)
+                 ("infotheory" . ,my/purple)
+                 ("scicomp" . ,my/light-purple)
+                 ("senproj" . ,my/light-green)
+                 ("analysis" . ,my/brown)))
 
              (defun my/org-agenda-custom-color ()
                "Customize the appearance of Org Agenda lines with keywords."
