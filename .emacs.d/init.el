@@ -264,6 +264,15 @@
              (org-todo-keywords
                '("TODO(t)" "DOING(g)" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
              (org-agenda-block-separator ?─)
+             (defun my/org-agenda-sort-non-timed-before-timed (a b)
+               "Sort agenda items: non-timed before timed."
+               (let ((time-a (get-text-property 1 'time-of-day a))
+                     (time-b (get-text-property 1 'time-of-day b)))
+                 (cond
+                   ((and time-a time-b) (< time-a time-b))
+                   (time-a nil)
+                   (time-b t)
+                   (t nil))))
              (org-agenda-custom-commands
                '(("d" "Dashboard"
                   (
@@ -490,11 +499,12 @@
                  ("research" . ,my/orange)
                  ("general" . ,my/light-purple)
                  ("school" . ,my/green)
-                 ("compvis" . ,my/orange)
-                 ("infotheory" . ,my/purple)
-                 ("scicomp" . ,my/light-purple)
-                 ("senproj" . ,my/light-green)
-                 ("analysis" . ,my/brown)))
+                 ("PHED_12B" . ,my/blue)
+                 ("CSDS_465" . ,my/orange)
+                 ("MATH_394" . ,my/purple)
+                 ("MATH_330" . ,my/light-purple)
+                 ("CSDS_395" . ,my/light-green)
+                 ("MATH_431" . ,my/brown)))
 
              (defun my/org-agenda-custom-color ()
                "Customize the appearance of Org Agenda lines with keywords."

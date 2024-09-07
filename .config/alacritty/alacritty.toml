@@ -7,19 +7,17 @@ TERM = "alacritty"
 thickness = 0.3
 
 [font]
-size = 22
+size = 18
 
 [font.normal]
 family = "RecMonoCasual Nerd Font"
-# family = "Mononoki Nerd Font"
-# [font.bold]
-# family = "Mononoki Nerd Font"
 
 [window]
 decorations = "buttonless"
 startup_mode = "Maximized"
 option_as_alt = "Both"
 dynamic_padding = true
+opacity = 1.0
 
 [window.padding]
 x = 5
