@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+echo $SET_INSERT_CURSOR
+$NOTES_EDITOR --eval "(org-capture-full)"

@@ -2,4 +2,4 @@
 
 cd $(dirname $TODO_FILE)
 echo $SET_INSERT_CURSOR
-$NOTES_EDITOR --eval "(execute-kbd-macro (kbd \"C-c d\"))" "${editor_args[@]}"
+$NOTES_EDITOR --eval "(execute-kbd-macro (kbd \"C-c d\"))"

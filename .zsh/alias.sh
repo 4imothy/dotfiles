@@ -19,7 +19,7 @@ alias l='eza -alF --icons --group-directories-first'
 alias li='l --git-ignore'
 
 generate_todo_alias() {
-    local cmd="tgrep TODO"
+    local cmd="tgrep '\\bTODO\\b'"
     local to_add=("CHECK" "FIX" "NOTE" "CLEANUP")
     for keyword in "${to_add[@]}"; do
         cmd+=" --regexp '\\b${keyword}\\b'"
