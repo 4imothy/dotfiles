@@ -28,7 +28,7 @@
 ;; Basic styling
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
-(tool-bar-mode -1)
+;; (tool-bar-mode -1)
 (tooltip-mode -1)
 (blink-cursor-mode 0)
 (windmove-default-keybindings)
@@ -262,7 +262,7 @@
                  (search . " %i %-12:c")))
              (org-agenda-remove-tags t)
              (org-todo-keywords
-               '("TODO(t)" "DOING(g)" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
+               '("TODO(t)" "DOING(g)" "CURRENT" "DAY" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
              (org-agenda-block-separator ?─)
              (defun my/org-agenda-sort-non-timed-before-timed (a b)
                "Sort agenda items: non-timed before timed."
@@ -276,20 +276,32 @@
              (org-agenda-custom-commands
                '(("d" "Dashboard"
                   (
+                   (todo "DAY|CURRENT"
+                         ((org-agenda-overriding-header "")))
                    (agenda ""
                            ((org-agenda-start-day (org-today))
                             (org-agenda-span 1)
                             (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                             (org-agenda-format-date "%A %-e %B %Y")
                             (org-agenda-overriding-header "")))
-                   (todo "TODO|DOING|EVENT"
+                   (todo "TODO|DOING"
                          ((org-agenda-sorting-strategy '(priority-down))
-                          (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))
+                          (org-agenda-skip-function
+                            '(org-agenda-skip-entry-if 'regexp "\\[#C\\]" 'timestamp))
                           (org-agenda-overriding-header "")))
-                   (todo "TODO|DOING|EVENT"
+                   (todo "TODO|DOING"
                          ((org-agenda-sorting-strategy '(timestamp-up))
                           (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottimestamp))
                           (org-agenda-block-separator nil)
+                          (org-agenda-overriding-header "")))
+                   (todo "TODO|DOING"
+                         ((org-agenda-sorting-strategy '(priority-down))
+                          (org-agenda-skip-function
+                            '(org-agenda-skip-entry-if 'notregexp "\\[#C\\]"))
+                          (org-agenda-overriding-header "")
+                          (org-agenda-block-separator nil)))
+                   (todo "EVENT"
+                         ((org-agenda-sorting-strategy '(timestamp-up))
                           (org-agenda-overriding-header "")))
                    (agenda ""
                            ((org-agenda-start-day "+1d")
@@ -303,8 +315,8 @@
                    (todo "DONE"
                          ((org-agenda-overriding-header "")))
                    )
-                  ((org-agenda-window-setup 'only-window)
-                   ))))
+                 ((org-agenda-window-setup 'only-window)
+                  ))))
              (org-emphasis-alist
                `(("*" (:weight bold :foreground ,my/blue))
                  ("/" italic)
@@ -330,6 +342,8 @@
                                            ("DONE" . my/org-done)
                                            ("EVENT" . my/org-event)
                                            ("LONG" . my/org-long)
+                                           ("CURRENT" . my/org-day)
+                                           ("DAY" . my/org-event)
                                            ("REMINDER" . my/org-reminder)
                                            ))
 
@@ -347,6 +361,8 @@
                                             "Face used to display state DOING.")
                                    (defface my/org-event (my/create-keyword-face my/purple my/light-purple)
                                             "Face used to display state EVENT.")
+                                   (defface my/org-day (my/create-keyword-face my/blue my/light-blue)
+                                            "Face used to display state DAY.")
                                    (defface my/org-long (my/create-keyword-face my/blue my/light-blue)
                                             "Face used to display state LONG.")
                                    (defface my/org-reminder (my/create-keyword-face my/turquoise my/light-turquoise)
@@ -369,8 +385,13 @@
                            (org-entry-get (point) "DEADLINE"))))
                  (if timestamp
                    (let* ((parsed-time (org-time-string-to-time timestamp))
-                          (formatted-date (format-time-string "%d %a %m-%Y" parsed-time)))
-                     (concat formatted-date " "))
+                          (formatted-date (format-time-string "%d %a %m-%Y" parsed-time))
+                          (time-component (format-time-string "%H:%M" parsed-time))
+                          (has-time (and (string-match-p "\\([0-9]\\{2\\}:[0-9]\\{2\\}\\)" timestamp)
+                                         (not (string-match-p "T00:00" timestamp)))))
+                     (concat (format-time-string "%d %a" parsed-time)
+                             (when has-time (concat " " time-component))
+                             (concat " " (format-time-string "%m-%Y " parsed-time))))
                    "")))
 
              (set-face-underline 'org-ellipsis nil)
@@ -489,7 +510,13 @@
                   "Event"
                   entry
                   (file org-default-notes-file)
-                  "* EVENT %?\n %i")))
+                  "* EVENT %?\n %i")
+                 ("a"
+                  "Day Task"
+                  entry
+                  (file org-default-notes-file)
+                  "* DAY %?\n %i")
+                 ))
 
              (defvar my/tag-colors
                `(("jobs" . ,my/blue)
@@ -500,6 +527,7 @@
                  ("general" . ,my/light-purple)
                  ("school" . ,my/green)
                  ("PHED_12B" . ,my/blue)
+                 ("CSDS_451" . ,my/blue)
                  ("CSDS_465" . ,my/orange)
                  ("MATH_394" . ,my/purple)
                  ("MATH_330" . ,my/light-purple)
@@ -511,13 +539,20 @@
                (save-excursion
                  (goto-char (point-min))
                  (while (re-search-forward (regexp-opt (mapcar #'car my/tag-colors)) nil t)
-                        (let ((keyword (match-string 0)))
-                          (add-text-properties
-                            (match-beginning 0) (match-end 0)
-                            `(face (:foreground ,(cdr (assoc keyword my/tag-colors)))))))))
+                        (let* ((keyword (match-string 0))
+                               (color (cdr (assoc keyword my/tag-colors))))
+                          (when color  ;; Only apply if color is not nil
+                            (add-text-properties
+                              (match-beginning 0) (match-end 0)
+                              `(face (:foreground ,color))))))))
 
              (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
              )
+
+(defun org-capture-full ()
+  (interactive)
+  (org-capture)
+  (delete-other-windows))
 
 (use-package nerd-icons)
 
@@ -531,3 +566,16 @@
 (use-package nerd-icons-dired
              :hook
              (dired-mode . nerd-icons-dired-mode))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(nerd-icons-dired nerd-icons-ibuffer nerd-icons-completion nerd-icons which-key orderless vertico rainbow-mode catppuccin-theme)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
