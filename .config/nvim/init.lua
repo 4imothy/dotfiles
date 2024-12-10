@@ -35,6 +35,11 @@ function float_notes()
     end
 end
 
+local function selectionCount()
+    local count = vim.fn.wordcount()
+	print("W: " .. tostring(count.visual_words) .. " C: " .. tostring(count.visual_chars))
+end
+
 vim.opt.number = true
 vim.opt.signcolumn = 'yes'
 vim.opt.relativenumber = true
@@ -46,6 +51,7 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.wrap = false
 vim.opt.hlsearch = true
+vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.hidden = true
@@ -131,11 +137,13 @@ setkey('n', '<leader>x', vim.cmd.bdelete)
 setkey('n', '<leader>l', toggle_diagnostics)
 setkey('n', '<leader>u', vim.cmd.UndotreeToggle)
 setkey('n', '<leader>\\', vim.cmd.nohlsearch)
-setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('rg').files_command } ) end )
+setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('globals').rg_files_command } ) end )
 setkey('n', '<leader>f', require('telescope.builtin').live_grep)
 setkey('n', '<leader>b', require('telescope.builtin').buffers)
 setkey('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
 setkey("n", "<leader>-", require('oil').open_float)
+setkey("v", "<leader>c", selectionCount, { noremap = true, silent = true })
+
 
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('trim_trailing_whitespace', {}),
@@ -147,7 +155,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 vim.api.nvim_create_autocmd({"VimEnter", "VimResized"}, {
-    pattern = { "tex", "txt", "markdown", "norg" },
+    pattern = require('globals').text_file_types,
     callback = function()
         if vim.o.columns - vim.o.numberwidth >= 78 then
             vim.o.textwidth = 78
@@ -158,7 +166,7 @@ vim.api.nvim_create_autocmd({"VimEnter", "VimResized"}, {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "tex", "txt", "markdown", "norg" },
+    pattern = require('globals').text_file_types,
     callback = function()
         vim.opt.spell = true
         vim.opt.spelllang:append("en_us", "en_gb")
@@ -185,3 +193,13 @@ for _, spell_file in ipairs(vim.fn.glob(spell_path .. '/*.add', 1, 1)) do
     vim.cmd('silent exec "mkspell! " .. fnameescape("' .. spell_file .. '")')
   end
 end
+
+-- vim.cmd('colorscheme quiet')
+--
+-- vim.api.nvim_set_hl(0, "Normal", { fg = "#D3D3D3", bg = "#2C2C2C" })
+-- vim.api.nvim_set_hl(0, "Comment", { fg = "#A9A9A9", italic = true })
+-- vim.api.nvim_set_hl(0, "Keyword", { fg = "#BEBEBE", bold = true })
+-- vim.api.nvim_set_hl(0, "String", { fg = "#C0C0C0" })
+--
+-- vim.api.nvim_set_hl(0, "StatusLine", { fg = "#D3D3D3", bg = "#4B4B4B" })
+-- vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#A9A9A9", bg = "#3C3C3C" })

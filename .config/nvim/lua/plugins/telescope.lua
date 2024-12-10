@@ -35,7 +35,7 @@ return {
                         },
                     },
                 },
-                vimgrep_arguments = require('rg').base_command,
+                vimgrep_arguments = require('globals').rg_base_command,
             },
         })
     end,

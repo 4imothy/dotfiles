@@ -1,3 +1,5 @@
+local text_file_types = require('globals').text_file_types
+
 return {
     'nvim-lualine/lualine.nvim',
     config = function()
