@@ -262,7 +262,7 @@
                  (search . " %i %-12:c")))
              (org-agenda-remove-tags t)
              (org-todo-keywords
-               '("TODO(t)" "DOING(g)" "CURRENT" "DAY" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
+               '("TODO(t)" "DOING(g)" "DAY" "WAITING" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
              (org-agenda-block-separator ?─)
              (defun my/org-agenda-sort-non-timed-before-timed (a b)
                "Sort agenda items: non-timed before timed."
@@ -276,7 +276,7 @@
              (org-agenda-custom-commands
                '(("d" "Dashboard"
                   (
-                   (todo "DAY|CURRENT"
+                   (todo "DAY"
                          ((org-agenda-overriding-header "")))
                    (agenda ""
                            ((org-agenda-start-day (org-today))
@@ -300,6 +300,9 @@
                             '(org-agenda-skip-entry-if 'notregexp "\\[#C\\]"))
                           (org-agenda-overriding-header "")
                           (org-agenda-block-separator nil)))
+                   (todo "WAITING"
+                         ((org-agenda-sorting-strategy '(priority-down))
+                          (org-agenda-overriding-header "")))
                    (todo "EVENT"
                          ((org-agenda-sorting-strategy '(timestamp-up))
                           (org-agenda-overriding-header "")))
@@ -342,8 +345,8 @@
                                            ("DONE" . my/org-done)
                                            ("EVENT" . my/org-event)
                                            ("LONG" . my/org-long)
-                                           ("CURRENT" . my/org-day)
-                                           ("DAY" . my/org-event)
+                                           ("DAY" . my/org-day)
+                                           ("WAITING" . my/org-event)
                                            ("REMINDER" . my/org-reminder)
                                            ))
 
