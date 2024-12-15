@@ -169,6 +169,7 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = require('globals').text_file_types,
     callback = function()
         vim.opt.spell = true
+        vim.opt.smoothscroll = true
         vim.opt.spelllang:append("en_us", "en_gb")
         vim.opt.wrap = true
         local opts = { noremap = true, buffer = true }
