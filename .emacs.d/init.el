@@ -147,6 +147,17 @@
              :config
              (load-theme 'catppuccin t))
 
+;; suggestions
+(use-package vertico
+             :init
+             (vertico-mode)
+             :custom
+             (vertico-scroll-margin 0)
+             (vertico-count 7)
+             (vertico-resize nil)
+             (vertico-directory-delete-word)
+             )
+
 (use-package org
              :hook
              (org-mode . org-indent-mode)
@@ -157,7 +168,6 @@
              :bind
              ("C-c c" . org-capture)
              ("C-c d" . my/dashboard)
-             ("C-c o o" . my/org-file-search)
              :custom
              (org-directory "~/Documents/org")
              (org-default-notes-file (concat org-directory "/tasks.org"))
@@ -318,14 +328,6 @@
                (with-current-buffer (marker-buffer org-capture-last-stored-marker)
                                     (save-buffer)))
              (advice-add 'org-capture-refile :after 'save-after-capture-refile)
-
-             (defun my/org-file-search ()
-               "Search for Org files using Vertico."
-               (interactive)
-               (let* ((org-files (seq-filter (lambda (file) (string-suffix-p ".org" file))
-                                             (directory-files org-directory)))
-                      (selected-file (completing-read "Search Orgs: " org-files)))
-                 (find-file (expand-file-name selected-file org-directory))))
 
              (defun my/dashboard ()
                "Launch the Org Agenda Dashboard custom command."
