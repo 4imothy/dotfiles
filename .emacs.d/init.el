@@ -91,21 +91,6 @@
 (setq echo-keystrokes 0.01)
 (setopt use-short-answers t)
 
-;; Dired
-;; from: https://www.emacswiki.org/emacs/DiredSortDirectoriesFirst
-(defun my/dired-sort ()
-  "Sort Dired listings with directories first."
-  (save-excursion
-    (let (buffer-read-only)
-      (forward-line 2) ;; beyond dir. header
-      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-    (set-buffer-modified-p nil)))
-
-(defadvice dired-readin
-           (after dired-after-updating-hook first () activate)
-           "Sort Dired listings with directories first before adding mark."
-           (my/dired-sort))
-
 (when (string= system-type "darwin")
   (defvar dired-use-ls-dired nil))
 
@@ -124,31 +109,6 @@
       kept-new-versions 20
       kept-old-versions 5
       )
-
-(setq compile-command nil)
-(defvar tex-compile-commands '(("latexmk -pdf -pvc %f")))
-
-(defun my/clear-buffers ()
-  (interactive)
-  (mapc (lambda (buffer)
-          (unless (or (string= (buffer-name buffer) "*scratch*")
-                      (string= (buffer-name buffer) "*Ibuffer*"))
-            (kill-buffer buffer)))
-        (buffer-list))
-  (ibuffer-update nil t))
-
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c k") 'my/clear-buffers)))
-
-(setq ibuffer-saved-filter-groups
-      (quote (("default"
-               ("main"  (not (name . "^\\*")))
-               ))))
-
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;; isearch, from: https://stackoverflow.com/a/36707038/588759
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
@@ -180,56 +140,12 @@
              (unless (server-running-p)
                (server-start)))
 
-(use-package ibuffer
-             :ensure t
-             :bind
-             ("C-x C-b" . ibuffer))
-
 (use-package catppuccin-theme
              :ensure t
              :init
              (setq catppuccin-flavor 'frappe)
              :config
              (load-theme 'catppuccin t))
-
-(use-package rainbow-mode
-             :hook (emacs-lisp-mode text-mode lisp-mode)
-             :custom
-             (rainbow-x-colors nil))
-
-;; suggestions
-(use-package vertico
-             :init
-             (vertico-mode)
-             :custom
-             (vertico-scroll-margin 0)
-             (vertico-count 7)
-             (vertico-resize nil)
-             (vertico-directory-delete-word)
-             )
-
-;; Configure directory extension.
-(use-package vertico-directory
-             :after vertico
-             :ensure nil
-             ;; More convenient directory navigation commands
-             :bind (:map vertico-map
-                         ("RET" . vertico-directory-enter)
-                         ("DEL" . vertico-directory-delete-char)
-                         ("M-DEL" . vertico-directory-delete-word))
-             :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
-
-(use-package orderless
-             :custom
-             (completion-styles '(orderless basic)
-                                completion-category-defaults nil
-                                completion-category-overrides '((file (styles partial-completion)))))
-
-(use-package which-key
-             :custom
-             (which-key-idle-delay 1.0)
-             :config
-             (which-key-mode 1))
 
 (use-package org
              :hook
