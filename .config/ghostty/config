@@ -1,0 +1,9 @@
+font-family = RecMonoCasual Nerd Font
+font-thicken = true
+font-size = 18
+adjust-underline-thickness = 2
+theme = catppuccin-mocha
+window-padding-x = 5
+window-padding-y = 5
+window-decoration = false
+confirm-close-surface = false
