@@ -143,7 +143,7 @@
 (use-package catppuccin-theme
              :ensure t
              :init
-             (setq catppuccin-flavor 'frappe)
+             (setq catppuccin-flavor 'mocha)
              :config
              (load-theme 'catppuccin t))
 
