@@ -47,7 +47,7 @@ return {
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
                 vim.keymap.set('n', 'gn', vim.lsp.buf.rename, opts)
                 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-                vim.keymap.set({ 'n', 'v' }, 'gca', vim.lsp.buf.code_action, opts)
+                vim.keymap.set({ 'n', 'v' }, 'ga', vim.lsp.buf.code_action, opts)
             end,
         })
 
