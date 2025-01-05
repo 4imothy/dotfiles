@@ -226,7 +226,7 @@
                           (org-agenda-overriding-header "")
                           (org-agenda-block-separator nil)))
                    (todo "WAITING"
-                         ((org-agenda-sorting-strategy '(priority-down))
+                         ((org-agenda-sorting-strategy '(timestamp-up))
                           (org-agenda-overriding-header "")))
                    (todo "EVENT"
                          ((org-agenda-sorting-strategy '(timestamp-up))
