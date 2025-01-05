@@ -1,0 +1,19 @@
+{
+	"name": "snips",
+	"contributes": {
+		"snippets": [
+			{
+				"language": "tex",
+				"path": "./tex.json"
+			},
+			{
+				"language": "norg",
+				"path": "./norg.json"
+			},
+			{
+				"language": ["c", "cpp"],
+				"path": "./c.json"
+			}
+		]
+	}
+}

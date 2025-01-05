@@ -39,11 +39,11 @@ return {
                         },
                     },
                 },
-                ["core.completion"] = {
-                    config = {
-                        engine = "nvim-cmp",
-                    },
-                },
+                -- ["core.completion"] = {
+                --     config = {
+                --         engine = "blink",
+                --     },
+                -- },
                 ["core.esupports.indent"] = {
                     config = {
                         format_on_escape = false
