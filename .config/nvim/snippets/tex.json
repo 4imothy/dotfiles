@@ -1,15 +1,15 @@
 {
   "bold text": {
     "prefix": "bf",
-    "body": "\\textbf{${1}}",
+    "body": "\\textbf{${1}}"
   },
   "emphasized text": {
     "prefix": "em",
-    "body": "\\emph{${1}}",
+    "body": "\\emph{${1}}"
   },
   "item": {
     "prefix": "it",
-    "body": "\\item ${1}",
+    "body": "\\item ${1}"
   },
   "begin environment": {
     "prefix": "begin",
@@ -17,11 +17,11 @@
       "\\begin{${1:environment}}",
       "\\item ${0}",
       "\\end{${1}}"
-    ],
+    ]
   },
   "summation": {
     "prefix": "suml",
-    "body": "\\sum\\limits_{${1}}^{${2}}${3}",
+    "body": "\\sum\\limits_{${1}}^{${2}}${3}"
   },
   "section": {
     "prefix": "sec",
@@ -29,7 +29,7 @@
       "\\section*{${1}}",
       "",
       "${0}"
-    ],
+    ]
   },
   "subsection": {
     "prefix": "ssec",
@@ -37,7 +37,7 @@
       "\\subsection*{${1}}",
       "",
       "${0}"
-    ],
+    ]
   },
   "subsubsection": {
     "prefix": "sssec",
@@ -45,27 +45,27 @@
       "\\subsubsection*{${1}}",
       "",
       "${0}"
-    ],
+    ]
   },
   "spread": {
     "prefix": "spread",
-    "body": "(${1}_${2}, \\ldots, ${1}_${4})",
+    "body": "(${1}_${2}, \\ldots, ${1}_${4})"
   },
   "square brackets": {
     "prefix": "bracks",
-    "body": "\\lbrack{${1}}\\rbrack",
+    "body": "\\lbrack{${1}}\\rbrack"
   },
   "angle brackets": {
     "prefix": "angles",
-    "body": "\\langle{${1}}\\rangle",
+    "body": "\\langle{${1}}\\rangle"
   },
   "begin bmatrix": {
     "prefix": "bmat",
-    "body": "\\begin{bmatrix}",
+    "body": "\\begin{bmatrix}"
   },
   "end bmatrix": {
     "prefix": "emat",
-    "body": "\\end{bmatrix}",
+    "body": "\\end{bmatrix}"
   },
   "assignment template": {
     "prefix": "assignment",
@@ -88,30 +88,30 @@
       "${0}",
       "",
       "\\end{document}"
-    ],
+    ]
   },
   "mathbb r": {
     "prefix": "mR",
-    "body": "\\mathbb{R}",
+    "body": "\\mathbb{R}"
   },
   "mathbb c": {
     "prefix": "mC",
-    "body": "\\mathbb{C}",
+    "body": "\\mathbb{C}"
   },
   "mathbb q": {
     "prefix": "mQ",
-    "body": "\\mathbb{Q}",
+    "body": "\\mathbb{Q}"
   },
   "mathbb n": {
     "prefix": "mN",
-    "body": "\\mathbb{N}",
+    "body": "\\mathbb{N}"
   },
   "mathbb z": {
     "prefix": "mZ",
-    "body": "\\mathbb{Z}",
+    "body": "\\mathbb{Z}"
   },
   "mathbb f": {
     "prefix": "mF",
-    "body": "\\mathbb{F}",
+    "body": "\\mathbb{F}"
   }
 }
