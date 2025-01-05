@@ -23,16 +23,8 @@ return {
             defaults = {
                 scroll_strategy = 'limit',
                 mappings = {
-                    i = {
-                        ["<Esc>"] = require('telescope.actions').close,
-                        ["<C-p>"] = {
-                            require('telescope.actions').move_selection_previous, type = "action",
-                            opts = { nowait = true, silent = true }
-                        },
-                        ["<C-n>"] = {
-                            require('telescope.actions').move_selection_next, type = "action",
-                            opts = { nowait = true, silent = true }
-                        },
+                    n = {
+                        ["<C-c>"] = require('telescope.actions').close
                     },
                 },
                 vimgrep_arguments = require('globals').rg_base_command,
