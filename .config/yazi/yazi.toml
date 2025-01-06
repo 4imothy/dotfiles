@@ -1,3 +1,8 @@
 [manager]
 show_hidden = true
 ratio = [2, 2, 4]
+
+[plugin]
+prepend_previewers = [
+    { mime = "image/*", run = "noop" }, # TODO check but right now isn't working well with ghostty and tmux popups
+]
