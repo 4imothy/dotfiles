@@ -41,7 +41,8 @@ return {
                 buffer = {
                     name = 'buffer',
                     module = 'blink.cmp.sources.buffer',
-                    score_offset = 1
+                    score_offset = 1,
+                    min_keyword_length = 5
                 }
             }
         },
