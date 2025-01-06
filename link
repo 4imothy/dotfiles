@@ -27,6 +27,7 @@ link_same "$config_dir/nvim"
 link_same "$config_dir/zellij"
 link_same "$config_dir/lazygit"
 link_same "$config_dir/ghostty"
+link_same "$config_dir/yazi"
 
 org_path="zsh"
 link_same ".zshenv"

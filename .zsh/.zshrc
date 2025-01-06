@@ -47,7 +47,7 @@ done
 # if [ -z $ZELLIJ ]; then
 #     zellij -l welcome
 # fi
+
 if [ -z $TMUX ]; then
     ses --popup
 fi
-

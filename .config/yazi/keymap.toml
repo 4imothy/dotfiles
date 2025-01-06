@@ -1,0 +1,5 @@
+[manager]
+prepend_keymap = [
+	{ on = "K", run = "arrow -10%"},
+	{ on = "J", run = "arrow 10%"}
+]

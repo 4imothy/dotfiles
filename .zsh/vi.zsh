@@ -47,3 +47,5 @@ reset_cursor() {
 
 add_to_array preexec_functions "reset_cursor"
 add_to_array precmd_functions "reset_cursor"
+
+reset_cursor
