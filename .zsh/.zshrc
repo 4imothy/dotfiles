@@ -51,3 +51,7 @@ done
 if [ -z $TMUX ]; then
     ses --popup
 fi
+
+tfile() {
+    tgrep --tree --glob="*$1*"
+}
