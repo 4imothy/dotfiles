@@ -53,5 +53,7 @@ if [ -z $TMUX ]; then
 fi
 
 tfile() {
-    tgrep --tree --glob="*$1*"
+    local first_arg="$1"
+    shift
+    tgrep --tree --glob="*$first_arg*" "$@"
 }
