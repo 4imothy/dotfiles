@@ -457,6 +457,7 @@
                               (match-beginning 0) (match-end 0)
                               `(face (:foreground ,color))))))))
 
+             (add-hook 'org-agenda-mode-hook (lambda () (setq-local mode-line-format nil)))
              (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
              )
 
