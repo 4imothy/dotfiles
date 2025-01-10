@@ -223,8 +223,7 @@
                          ((org-agenda-sorting-strategy '(priority-down))
                           (org-agenda-skip-function
                             '(org-agenda-skip-entry-if 'notregexp "\\[#C\\]"))
-                          (org-agenda-overriding-header "")
-                          (org-agenda-block-separator nil)))
+                          (org-agenda-overriding-header "")))
                    (todo "WAITING"
                          ((org-agenda-sorting-strategy '(timestamp-up))
                           (org-agenda-overriding-header "")))
@@ -445,21 +444,24 @@
                  ("school" . ,my/green)
                  ("contract" . ,my/blue)))
 
-             (defun my/org-agenda-custom-color ()
-               "Customize the appearance of Org Agenda lines with keywords."
-               (save-excursion
-                 (goto-char (point-min))
-                 (while (re-search-forward (regexp-opt (mapcar #'car my/tag-colors)) nil t)
-                        (let* ((keyword (match-string 0))
-                               (color (cdr (assoc keyword my/tag-colors))))
-                          (when color  ;; Only apply if color is not nil
-                            (add-text-properties
-                              (match-beginning 0) (match-end 0)
-                              `(face (:foreground ,color))))))))
+            (defun my/org-agenda-custom-color ()
+              "Customize the appearance of Org Agenda lines with keywords."
+              (save-excursion
+                (goto-char (point-min))
+                (while (not (eobp))
+                       (let ((line-start (point)))
+                         (when (re-search-forward "^\\s-*\\(\\S-+\\)" (line-end-position) t)
+                           (let* ((keyword (match-string 1))
+                                  (color (cdr (assoc keyword my/tag-colors))))
+                             (when color
+                               (add-text-properties
+                                 (match-beginning 1) (match-end 1)
+                                 `(face (:foreground ,color))))))
+                         (forward-line 1)))))
 
-             (add-hook 'org-agenda-mode-hook (lambda () (setq-local mode-line-format nil)))
-             (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
-             )
+            (add-hook 'org-agenda-mode-hook (lambda () (setq-local mode-line-format nil)))
+            (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
+            )
 
 (defun org-capture-full ()
   (interactive)
