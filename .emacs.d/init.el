@@ -223,6 +223,7 @@
                          ((org-agenda-sorting-strategy '(priority-down))
                           (org-agenda-skip-function
                             '(org-agenda-skip-entry-if 'notregexp "\\[#C\\]"))
+                          (org-agenda-block-separator nil)
                           (org-agenda-overriding-header "")))
                    (todo "WAITING"
                          ((org-agenda-sorting-strategy '(timestamp-up))
