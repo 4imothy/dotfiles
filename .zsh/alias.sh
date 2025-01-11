@@ -7,6 +7,7 @@ alias todom="todo -m"
 alias tree="tgrep --tree"
 alias ltree="tgrep --tree --long-branch"
 alias run="python3 run.py"
+alias reload="source $ZDOTDIR/.zshrc"
 
 alias gs='git status'
 alias ga='git add'
