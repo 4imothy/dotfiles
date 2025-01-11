@@ -1,4 +1,4 @@
--- vim.cmd("source ~/Projects/dotfiles/.vim/treegrep.vim")
+-- vim.cmd('source ~/Projects/dotfiles/.vim/treegrep.vim')
 
 local notes_win = nil
 function reset_notes_win()
@@ -11,23 +11,23 @@ function float_notes()
         reset_notes_win()
     else
         local buf = vim.api.nvim_create_buf(false, false)
-        local width = vim.api.nvim_get_option("columns")
-        local height = vim.api.nvim_get_option("lines")
+        local width = vim.api.nvim_get_option('columns')
+        local height = vim.api.nvim_get_option('lines')
         local win_height = math.ceil(height * 0.8 - 4)
         local win_width = math.ceil(width * 0.8)
         local opts = {
-            style = "minimal",
-            relative = "editor",
+            style = 'minimal',
+            relative = 'editor',
             width = win_width,
             height = win_height,
             row = math.ceil((height - win_height) / 2 - 1),
             col = math.ceil((width - win_width) / 2),
-            border = "rounded",
+            border = 'rounded',
         }
 
         notes_win = vim.api.nvim_open_win(buf, true, opts)
-        vim.api.nvim_buf_set_option(buf, "modifiable", true)
-        vim.cmd("Neorg workspace notes")
+        vim.api.nvim_buf_set_option(buf, 'modifiable', true)
+        vim.cmd('Neorg workspace notes')
         vim.cmd([[
         autocmd WinLeave <buffer> :lua reset_notes_win()
         autocmd WinLeave <buffer> :lua vim.api.nvim_buf_delete(]] .. buf .. [[, {force = true})
@@ -37,7 +37,7 @@ end
 
 local function selectionCount()
     local count = vim.fn.wordcount()
-	print("W: " .. tostring(count.visual_words) .. " C: " .. tostring(count.visual_chars))
+	print('W: ' .. tostring(count.visual_words) .. ' C: ' .. tostring(count.visual_chars))
 end
 
 vim.opt.number = true
@@ -84,19 +84,19 @@ vim.lsp.set_log_level('off')
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable',
     lazypath,
   })
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
-local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "" }
+local signs = { Error = '󰅚', Warn = '󰀪', Hint = '󰌶', Info = '' }
 for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
+  local hl = 'DiagnosticSign' .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
@@ -105,10 +105,10 @@ require('lazy').setup('plugins', {
     change_detection = { notify = false },
 })
 
--- vim.api.nvim_create_autocmd("VimEnter", {
+-- vim.api.nvim_create_autocmd('VimEnter', {
 -- 	callback = vim.schedule_wrap(function(data)
--- 		if data.file == "" or vim.fn.isdirectory(data.file) ~= 0 then
---             require("oil").open()
+-- 		if data.file == '' or vim.fn.isdirectory(data.file) ~= 0 then
+--             require('oil').open()
 --             local oil_buf = vim.api.nvim_get_current_buf()
 --             vim.cmd('enew')
 --             vim.cmd('b' .. oil_buf)
@@ -125,10 +125,10 @@ _G.diagnostics_enabled = true
 function _G.toggle_diagnostics()
   if _G.diagnostics_enabled then
     vim.diagnostic.disable()
-    print("Diagnostics disabled")
+    print('Diagnostics disabled')
   else
     vim.diagnostic.enable()
-    print("Diagnostics enabled")
+    print('Diagnostics enabled')
   end
   _G.diagnostics_enabled = not _G.diagnostics_enabled
 end
@@ -143,8 +143,8 @@ setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { f
 setkey('n', '<leader>f', require('telescope.builtin').live_grep)
 setkey('n', '<leader>b', require('telescope.builtin').buffers)
 setkey('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
-setkey("n", "<leader>-", require('oil').open_float)
-setkey("v", "<leader>c", selectionCount, { noremap = true, silent = true })
+setkey('n', '<leader>-', require('oil').open_float)
+setkey('v', '<leader>w', selectionCount, { noremap = true, silent = true })
 
 
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -156,7 +156,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     end
 })
 
-vim.api.nvim_create_autocmd({"VimEnter", "VimResized"}, {
+vim.api.nvim_create_autocmd({'VimEnter', 'VimResized'}, {
     pattern = require('globals').text_file_types,
     callback = function()
         if vim.o.columns - vim.o.numberwidth >= 78 then
@@ -167,12 +167,12 @@ vim.api.nvim_create_autocmd({"VimEnter", "VimResized"}, {
     end
 })
 
-vim.api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd('FileType', {
     pattern = require('globals').text_file_types,
     callback = function()
         vim.opt.spell = true
         vim.opt.smoothscroll = true
-        vim.opt.spelllang:append("en_us", "en_gb")
+        vim.opt.spelllang:append('en_us', 'en_gb')
         vim.opt.wrap = true
         local opts = { noremap = true, buffer = true }
         vim.keymap.set({ 'n', 'v' }, 'j', 'gj', opts)
@@ -193,16 +193,16 @@ for _, spell_file in ipairs(vim.fn.glob(spell_path .. '/*.add', 1, 1)) do
       not vim.fn.filereadable(spell_file .. '.spl') or
       vim.fn.getftime(spell_file) > vim.fn.getftime(spell_file .. '.spl')
   ) then
-    vim.cmd('silent exec "mkspell! " .. fnameescape("' .. spell_file .. '")')
+    vim.cmd('silent exec \'mkspell! \' .. fnameescape(\'' .. spell_file .. '\')')
   end
 end
 
 -- vim.cmd('colorscheme quiet')
 --
--- vim.api.nvim_set_hl(0, "Normal", { fg = "#D3D3D3", bg = "#2C2C2C" })
--- vim.api.nvim_set_hl(0, "Comment", { fg = "#A9A9A9", italic = true })
--- vim.api.nvim_set_hl(0, "Keyword", { fg = "#BEBEBE", bold = true })
--- vim.api.nvim_set_hl(0, "String", { fg = "#C0C0C0" })
+-- vim.api.nvim_set_hl(0, 'Normal', { fg = '#D3D3D3', bg = '#2C2C2C' })
+-- vim.api.nvim_set_hl(0, 'Comment', { fg = '#A9A9A9', italic = true })
+-- vim.api.nvim_set_hl(0, 'Keyword', { fg = '#BEBEBE', bold = true })
+-- vim.api.nvim_set_hl(0, 'String', { fg = '#C0C0C0' })
 --
--- vim.api.nvim_set_hl(0, "StatusLine", { fg = "#D3D3D3", bg = "#4B4B4B" })
--- vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#A9A9A9", bg = "#3C3C3C" })
+-- vim.api.nvim_set_hl(0, 'StatusLine', { fg = '#D3D3D3', bg = '#4B4B4B' })
+-- vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#A9A9A9', bg = '#3C3C3C' })
