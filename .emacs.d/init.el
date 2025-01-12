@@ -19,7 +19,7 @@
 (defvar my/yellow "#FFF081")
 (defvar my/light-yellow "#FFFAE6")
 (defvar my/blue "#5A92B5")
-(defvar my/light-blue "#D6E3F2")
+(defvar my/light-blue "#9acded")
 (defvar my/turquoise "#4AA7BD")
 (defvar my/light-turquoise "#C4F0FF")
 (defvar my/gray "#A0A0A0")
@@ -442,8 +442,14 @@
                  ("money" . ,my/light-green)
                  ("research" . ,my/orange)
                  ("general" . ,my/light-purple)
-                 ("school" . ,my/green)
-                 ("contract" . ,my/blue)))
+                 ("school" . ,my/blue)
+                 ("csds_343" . ,my/light-blue)
+                 ("csds_456" . ,my/turquoise)
+                 ("csds_486" . ,my/light-yellow)
+                 ("csds_570" . ,my/purple)
+                 ("econ_341" . ,my/green)
+                 ("math_324" . ,my/brown)
+                 ("contract" . ,my/orange)))
 
             (defun my/org-agenda-custom-color ()
               "Customize the appearance of Org Agenda lines with keywords."
@@ -460,7 +466,10 @@
                                  `(face (:foreground ,color))))))
                          (forward-line 1)))))
 
-            (add-hook 'org-agenda-mode-hook (lambda () (setq-local mode-line-format nil)))
+            (add-hook 'org-agenda-mode-hook (lambda ()
+                                              (keymap-set org-agenda-mode-map "<remap> <forward-paragraph>" nil)
+                                              (keymap-set org-agenda-mode-map "<remap> <backward-paragraph>" nil)
+                                              (setq-local mode-line-format nil)))
             (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
             )
 
