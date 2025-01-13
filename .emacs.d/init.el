@@ -158,6 +158,10 @@
              (vertico-directory-delete-word)
              )
 
+(use-package orderless
+             :custom
+             (completion-styles '(orderless)))
+
 (use-package org
              :hook
              (org-mode . org-indent-mode)
