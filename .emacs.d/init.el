@@ -6,29 +6,6 @@
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
-(defvar my/red "#f38ba8")
-(defvar my/green "#a6e3a1")
-(defvar my/yellow "#f9e2af")
-(defvar my/blue "#89b4fa")
-(defvar my/purple "#cba6f7")
-(defvar my/pink "#f5c2e7")
-(defvar my/teal "#94e2d5")
-(defvar my/background "#2a2a3f")
-
-(defvar my/tag-colors
-  `(("jobs" . ,my/blue)
-    ("money" . ,my/green)
-    ("research" . ,my/pink)
-    ("general" . ,my/purple)
-    ("school" . ,my/blue)
-    ("csds_343" . ,my/blue)
-    ("csds_456" . ,my/purple)
-    ("csds_486" . ,my/yellow)
-    ("csds_570" . ,my/purple)
-    ("econ_341" . ,my/green)
-    ("math_324" . ,my/teal)
-    ("contract" . ,my/pink)))
-
 ;; Basic styling
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (menu-bar-mode -1)
@@ -149,9 +126,31 @@
              :init
              (setq catppuccin-flavor 'mocha)
              :config
-             (load-theme 'catppuccin t))
+             (load-theme 'catppuccin t)
+             (defvar my/red (catppuccin-get-color 'red))
+             (defvar my/green (catppuccin-get-color 'green))
+             (defvar my/yellow (catppuccin-get-color 'yellow))
+             (defvar my/blue (catppuccin-get-color 'blue))
+             (defvar my/purple (catppuccin-get-color 'mauve))
+             (defvar my/pink (catppuccin-get-color 'pink))
+             (defvar my/teal (catppuccin-get-color 'teal))
+             (defvar my/background (catppuccin-get-color 'surface1))
 
-;; suggestions
+             (defvar my/tag-colors
+               `(("jobs" . ,my/blue)
+                 ("money" . ,my/green)
+                 ("research" . ,my/pink)
+                 ("general" . ,my/purple)
+                 ("school" . ,my/blue)
+                 ("csds_343" . ,my/blue)
+                 ("csds_456" . ,my/purple)
+                 ("csds_486" . ,my/yellow)
+                 ("csds_570" . ,my/purple)
+                 ("econ_341" . ,my/green)
+                 ("math_324" . ,my/teal)
+                 ("contract" . ,my/pink)))
+             )
+
 (use-package vertico
              :init
              (vertico-mode)
@@ -272,16 +271,6 @@
                    (outline-next-heading))))
 
              (with-eval-after-load "org-faces"
-                                   (setq org-todo-keyword-faces
-                                         '(("TODO" . my/org-red)
-                                           ("DOING" . my/org-yellow)
-                                           ("DONE" . my/org-green)
-                                           ("EVENT" . my/org-purple)
-                                           ("DAY" . my/org-blue)
-                                           ("WAITING" . my/org-yellow)
-                                           ("REMINDER" . my/org-blue)
-                                           ))
-
                                    (defun my/create-keyword-face (main-color)
                                      `((t :weight bold
                                           :box (:line-width 2 :color ,main-color)
@@ -292,12 +281,23 @@
                                             "Face used to display state TODO.")
                                    (defface my/org-green (my/create-keyword-face my/green)
                                             "Face used to display state DONE.")
-                                   (defface my/org-yellow (my/create-keyword-face my/pink)
+                                   (defface my/org-yellow (my/create-keyword-face my/yellow)
                                             "Face used to display state DOING.")
                                    (defface my/org-purple (my/create-keyword-face my/purple)
+                                            "Face used to display state DOING.")
+                                   (defface my/org-pink (my/create-keyword-face my/pink)
                                             "Face used to display state EVENT.")
                                    (defface my/org-blue (my/create-keyword-face my/blue)
                                             "Face used to display state DAY.")
+                                   (setq org-todo-keyword-faces
+                                         '(("TODO" . my/org-red)
+                                           ("DOING" . my/org-yellow)
+                                           ("DONE" . my/org-green)
+                                           ("EVENT" . my/org-purple)
+                                           ("DAY" . my/org-blue)
+                                           ("WAITING" . my/org-pink)
+                                           ("REMINDER" . my/org-blue)
+                                           ))
                                    )
 
              (defun my/timestamp-format ()
@@ -455,6 +455,10 @@
             (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
             )
 
+(defun org-capture-full ()
+  (interactive)
+  (org-capture)
+  (delete-other-windows))
 
 (use-package nerd-icons)
 
@@ -474,7 +478,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(nerd-icons-dired nerd-icons-ibuffer nerd-icons-completion nerd-icons which-key orderless vertico catppuccin-theme)))
+   '(nerd-icons-dired nerd-icons-ibuffer nerd-icons-completion nerd-icons orderless vertico catppuccin-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
