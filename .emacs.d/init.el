@@ -6,24 +6,28 @@
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
 
-(defvar my/red "#FF6F61")
-(defvar my/light-red "#FFB6B0")
-(defvar my/green "#77DD77")
-(defvar my/light-green "#B5EAD7")
-(defvar my/orange "#FF8C00")
-(defvar my/light-orange "#FFDAB9")
-(defvar my/purple "#C882C8")
-(defvar my/light-purple "#E8C9E8")
-(defvar my/brown "#D2B48C")
-(defvar my/light-brown "#F4E4D3")
-(defvar my/yellow "#FFF081")
-(defvar my/light-yellow "#FFFAE6")
-(defvar my/blue "#5A92B5")
-(defvar my/light-blue "#9acded")
-(defvar my/turquoise "#4AA7BD")
-(defvar my/light-turquoise "#C4F0FF")
-(defvar my/gray "#A0A0A0")
-(defvar my/light-gray "#DDDDDD")
+(defvar my/red "#f38ba8")
+(defvar my/green "#a6e3a1")
+(defvar my/yellow "#f9e2af")
+(defvar my/blue "#89b4fa")
+(defvar my/purple "#cba6f7")
+(defvar my/pink "#f5c2e7")
+(defvar my/teal "#94e2d5")
+(defvar my/background "#2a2a3f")
+
+(defvar my/tag-colors
+  `(("jobs" . ,my/blue)
+    ("money" . ,my/green)
+    ("research" . ,my/pink)
+    ("general" . ,my/purple)
+    ("school" . ,my/blue)
+    ("csds_343" . ,my/blue)
+    ("csds_456" . ,my/purple)
+    ("csds_486" . ,my/yellow)
+    ("csds_570" . ,my/purple)
+    ("econ_341" . ,my/green)
+    ("math_324" . ,my/teal)
+    ("contract" . ,my/pink)))
 
 ;; Basic styling
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
@@ -269,42 +273,32 @@
 
              (with-eval-after-load "org-faces"
                                    (setq org-todo-keyword-faces
-                                         '(("TODO" . my/org-todo)
-                                           ("DOING" . my/org-doing)
-                                           ("DONE" . my/org-done)
-                                           ("EVENT" . my/org-event)
-                                           ("DAY" . my/org-day)
-                                           ("WAITING" . my/org-doing)
-                                           ("REMINDER" . my/org-reminder)
+                                         '(("TODO" . my/org-red)
+                                           ("DOING" . my/org-yellow)
+                                           ("DONE" . my/org-green)
+                                           ("EVENT" . my/org-purple)
+                                           ("DAY" . my/org-blue)
+                                           ("WAITING" . my/org-yellow)
+                                           ("REMINDER" . my/org-blue)
                                            ))
 
-                                   (defun my/create-keyword-face (main-color background-color)
+                                   (defun my/create-keyword-face (main-color)
                                      `((t :weight bold
                                           :box (:line-width 2 :color ,main-color)
-                                          :foreground ,main-color
-                                          :background ,background-color)))
+                                          :background ,my/background
+                                          :foreground ,main-color)))
 
-                                   (defface my/org-todo (my/create-keyword-face my/red my/light-red)
+                                   (defface my/org-red (my/create-keyword-face my/red)
                                             "Face used to display state TODO.")
-                                   (defface my/org-done (my/create-keyword-face my/green my/light-green)
+                                   (defface my/org-green (my/create-keyword-face my/green)
                                             "Face used to display state DONE.")
-                                   (defface my/org-doing (my/create-keyword-face my/orange my/light-orange)
+                                   (defface my/org-yellow (my/create-keyword-face my/pink)
                                             "Face used to display state DOING.")
-                                   (defface my/org-event (my/create-keyword-face my/purple my/light-purple)
+                                   (defface my/org-purple (my/create-keyword-face my/purple)
                                             "Face used to display state EVENT.")
-                                   (defface my/org-day (my/create-keyword-face my/blue my/light-blue)
+                                   (defface my/org-blue (my/create-keyword-face my/blue)
                                             "Face used to display state DAY.")
-                                   (defface my/org-reminder (my/create-keyword-face my/turquoise my/light-turquoise)
-                                            "Face used to display state LONG.")
                                    )
-             (defun diary-last-day-of-month (date)
-               "Return `t` if DATE is the last day of the month."
-               (let* ((day (calendar-extract-day date))
-                      (month (calendar-extract-month date))
-                      (year (calendar-extract-year date))
-                      (last-day-of-month
-                        (calendar-last-day-of-month month year)))
-                 (= day last-day-of-month)))
 
              (defun my/timestamp-format ()
                "Custom function to format timestamps for TODO items."
@@ -439,22 +433,6 @@
                   "* DAY %?\n %i")
                  ))
 
-             (defvar my/tag-colors
-               `(("jobs" . ,my/blue)
-                 ("gradedu" . ,my/light-blue)
-                 ("projects" . ,my/purple)
-                 ("money" . ,my/light-green)
-                 ("research" . ,my/orange)
-                 ("general" . ,my/light-purple)
-                 ("school" . ,my/blue)
-                 ("csds_343" . ,my/light-blue)
-                 ("csds_456" . ,my/turquoise)
-                 ("csds_486" . ,my/light-yellow)
-                 ("csds_570" . ,my/purple)
-                 ("econ_341" . ,my/green)
-                 ("math_324" . ,my/brown)
-                 ("contract" . ,my/orange)))
-
             (defun my/org-agenda-custom-color ()
               "Customize the appearance of Org Agenda lines with keywords."
               (save-excursion
@@ -477,10 +455,6 @@
             (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
             )
 
-(defun org-capture-full ()
-  (interactive)
-  (org-capture)
-  (delete-other-windows))
 
 (use-package nerd-icons)
 
@@ -500,7 +474,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(nerd-icons-dired nerd-icons-ibuffer nerd-icons-completion nerd-icons which-key orderless vertico rainbow-mode catppuccin-theme)))
+   '(nerd-icons-dired nerd-icons-ibuffer nerd-icons-completion nerd-icons which-key orderless vertico catppuccin-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
