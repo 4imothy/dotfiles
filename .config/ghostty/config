@@ -1,6 +1,9 @@
-font-family = RecMonoCasual Nerd Font
+font-family = Rec Mono Casual
 font-thicken = true
 font-size = 18
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
 adjust-underline-thickness = 5
 theme = catppuccin-mocha
 window-padding-x = 5
