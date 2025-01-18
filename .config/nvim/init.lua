@@ -75,6 +75,8 @@ vim.opt.undoreload = 10000
 vim.opt.guicursor = 'a:block,i:hor1'
 vim.opt.foldlevelstart = 99
 vim.opt.timeout = false
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 vim.g.mapleader = ','
 vim.g.tex_flavor = 'tex'

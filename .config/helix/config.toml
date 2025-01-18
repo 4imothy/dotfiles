@@ -9,7 +9,7 @@ line-number = "relative"
 mouse = false
 cursorline = true
 auto-pairs = false # turn off auto closing paren and brack
-bufferline = "multiple"
+bufferline = "multiple" 
 
 [editor.cursor-shape]
 insert = "bar"

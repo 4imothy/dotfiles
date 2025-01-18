@@ -3,7 +3,6 @@ return {
     version = '*',
     opts = {
         keymap = { preset = 'default' },
-        -- signature = { enabled = true },
         completion = {
             menu = {
                 max_height = 5,

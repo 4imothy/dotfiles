@@ -1,9 +1,9 @@
 return {
     'stevearc/oil.nvim',
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-        local max_width = math.floor(vim.api.nvim_get_option("columns") * 0.6)
-        require("oil").setup({
+        local max_width = math.floor(vim.api.nvim_get_option('columns') * 0.6)
+        require('oil').setup({
             default_file_explorer = true,
             delete_to_trash = true,
             view_options = {
