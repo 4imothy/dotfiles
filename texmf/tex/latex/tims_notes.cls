@@ -6,7 +6,7 @@
 \RequirePackage{tims_shorts}
 \usepackage[dvipsnames]{xcolor}
 \RequirePackage{listings}
-\RequirePackage{tcolorbox}
+\usepackage[theorems]{tcolorbox}
 \RequirePackage{titlesec}
 \RequirePackage[left=0.4in, right=0.4in, top=0.4in, bottom=0.4in]{geometry}
 
@@ -23,8 +23,6 @@
 \titleformat{\subsubsection}
   {\normalfont\normalsize\bfseries\color{Turquoise}}
   {\thesubsubsection}{1em}{}
-
-\tcbuselibrary{theorems}
 
 \newtcbtheorem[no counter]{tims_defn}{Definition}
 {
@@ -54,6 +52,10 @@
     \begin{tims_thrm}{#1}{}
         #2
     \end{tims_thrm}
+}
+
+\newcommand{\bitem}[1]{
+  \item\textbf{#1}
 }
 
 \endinput
