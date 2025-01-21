@@ -19,7 +19,11 @@ deflatex() {
         else
             filename="$1"
         fi
-        latexmk -pvc -pdf --interaction=nonstopmode "$filename"
+        if [ -z "$2" ]; then
+            latexmk -pvc -pdf --interaction=nonstopmode "$filename"
+        else
+            latexmk -pvc -pdf --interaction=nonstopmode -outdir="$2" "$filename"
+        fi
     fi
 }
 
