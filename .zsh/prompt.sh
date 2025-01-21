@@ -10,16 +10,16 @@ virtualenv_info() {
 }
 
 final_char() {
-    local prompt_string="»❱"
+    local prompt_string=""
     echo "%(?:%F{10}$prompt_string%f:%F{9}$prompt_string%f) "
 }
 
 path() {
-    echo "%F{6}$(truncate_dir)%f "
+    echo "%F{6}$(truncate_dir)%f"
 }
 
 line_indicator() {
-    echo "%F{5}✼%f "
+    echo " %F{5}%f "
 }
 
 colored_branch() {
