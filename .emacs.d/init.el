@@ -140,14 +140,16 @@
                `(("jobs" . ,my/blue)
                  ("money" . ,my/green)
                  ("research" . ,my/pink)
+                 ("plans" . ,my/pink)
                  ("general" . ,my/purple)
                  ("school" . ,my/blue)
                  ("csds_343" . ,my/blue)
                  ("csds_456" . ,my/purple)
-                 ("csds_486" . ,my/yellow)
+                 ("csds_435" . ,my/yellow)
                  ("csds_570" . ,my/purple)
                  ("econ_341" . ,my/green)
                  ("math_324" . ,my/teal)
+                 ("csds_391" . ,my/pink)
                  ("contract" . ,my/pink)))
              )
 
@@ -426,11 +428,6 @@
                   entry
                   (file org-default-notes-file)
                   "* EVENT %?\n %i")
-                 ("a"
-                  "Day Task"
-                  entry
-                  (file org-default-notes-file)
-                  "* DAY %?\n %i")
                  ))
 
             (defun my/org-agenda-custom-color ()
@@ -472,6 +469,13 @@
 (use-package nerd-icons-dired
              :hook
              (dired-mode . nerd-icons-dired-mode))
+
+(unless (display-graphic-p)
+  (xterm-mouse-mode 1)
+  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
+  (global-set-key (kbd "<mouse-5>") 'scroll-up-line)
+  )
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
