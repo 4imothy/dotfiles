@@ -19,7 +19,7 @@
 (setq ring-bell-function 'ignore)
 (setq initial-major-mode 'text-mode)
 (setq initial-scratch-message "")
-(set-face-attribute 'default nil :font "RecMonoCasual Nerd Font" :height 190)
+(set-face-attribute 'default nil :font "Rec Mono Casual" :height 190)
 (setq fill-column 70)
 
 (setq-default mode-line-format
