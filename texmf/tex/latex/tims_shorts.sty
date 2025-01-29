@@ -1,12 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{tims_shorts}
 
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
-\RequirePackage{enumitem}
-\RequirePackage{graphicx}
-
 \setkeys{Gin}{width=0.6\linewidth}
+
+\newcommand{\undersmash}[1]{\underline{\smash{#1}}}
 
 \newenvironment{alphlist}{\begin{enumerate}[label={(\alph*)}]}{\end{enumerate}}
 \newenvironment{romanlist}{\begin{enumerate}[label={(\roman*)}]}{\end{enumerate}}
