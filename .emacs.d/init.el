@@ -178,8 +178,7 @@
              ("C-c c" . org-capture)
              ("C-c d" . my/dashboard)
              :custom
-             (org-directory "~/Documents/org")
-             (org-default-notes-file (concat org-directory "/tasks.org"))
+             (org-default-notes-file (getenv "TODO_FILE"))
              (org-outline-path-complete-in-steps nil)
              (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))))
              (org-image-actual-width 400)
@@ -198,15 +197,6 @@
              (org-todo-keywords
                '("TODO(t)" "DOING(g)" "DAY" "WAITING" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
              (org-agenda-block-separator ?─)
-             (defun my/org-agenda-sort-non-timed-before-timed (a b)
-               "Sort agenda items: non-timed before timed."
-               (let ((time-a (get-text-property 1 'time-of-day a))
-                     (time-b (get-text-property 1 'time-of-day b)))
-                 (cond
-                   ((and time-a time-b) (< time-a time-b))
-                   (time-a nil)
-                   (time-b t)
-                   (t nil))))
              (org-agenda-custom-commands
                '(("d" "Dashboard"
                   (
@@ -264,14 +254,6 @@
                  ("+" (:strike-through t))))
              :config
              (setq org-default-priority ?C)
-             (defun my-org-agenda-skip-timestamp ()
-               (let ((timestamp (org-get-scheduled-time (point))))
-                 (if timestamp
-                   (progn
-                     (org-agenda-skip-entry-if 'timestamp)
-                     (point-max))
-                   (outline-next-heading))))
-
              (with-eval-after-load "org-faces"
                                    (defun my/create-keyword-face (main-color)
                                      `((t :weight bold
@@ -455,7 +437,11 @@
 (defun org-capture-full ()
   (interactive)
   (org-capture)
-  (delete-other-windows))
+  (delete-other-windows)
+  (advice-add 'org-refile :after
+              (lambda (&rest _)
+                (save-some-buffers t)
+                (kill-emacs))))
 
 (use-package nerd-icons)
 
