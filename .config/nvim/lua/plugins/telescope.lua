@@ -13,6 +13,9 @@ return {
                 live_grep = {
                     theme = "dropdown",
                 },
+                diagnostics = {
+                    theme = "dropdown",
+                },
                 current_buffer_fuzzy_find = {
                     theme = "dropdown",
                 },
