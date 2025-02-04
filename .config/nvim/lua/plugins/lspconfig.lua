@@ -13,6 +13,9 @@ return {
         lspconfig.racket_langserver.setup {
             capabilities = capabilities
         }
+        lspconfig.tinymist.setup {
+            capabilities = capabilities
+        }
         lspconfig.clangd.setup({
             capabilities = capabilities
         })
@@ -27,17 +30,17 @@ return {
         })
         lspconfig.ltex.setup({
             capabilities = capabilities,
-            filetypes= { "bib", "gitcommit", "markdown", "org", "plaintex", "tex", "html", "txt" },
+            filetypes= { 'bib', 'gitcommit', 'markdown', 'org', 'plaintex', 'tex', 'html', 'txt'},
             settings = {
                 ltex = {
-                    language = "auto",
-                    diagnosticSeverity = "information",
+                    language = 'auto',
+                    diagnosticSeverity = 'information',
                     additionalRules = {
                         languageModel = '~/Projects/dotfiles/ngrams/',
                     },
                     disabledRules = {
-                        ["en-US"] = {
-                            "MORFOLOGIK_RULE_EN_US",
+                        ['en-US'] = {
+                            'MORFOLOGIK_RULE_EN_US',
                         },
                     },
                 },

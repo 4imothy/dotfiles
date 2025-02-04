@@ -27,6 +27,19 @@ deflatex() {
     fi
 }
 
+deftypst() {
+    if [ -z "$1" ]; then
+        typst watch *.typ --open
+    else
+        if [[ ! "$1" =~ \.typ$ ]]; then
+            filename="$1.typ"
+        else
+            filename="$1"
+        fi
+        typst watch $filename --open
+    fi
+}
+
 sddg() {
     query="$*"
     open "https://www.duckduckgo.com/?q=${query}"

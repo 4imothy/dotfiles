@@ -48,12 +48,12 @@ done
 #     zellij -l welcome
 # fi
 
-if [ -z $TMUX ]; then
-    ses --popup
-fi
-
 tfile() {
     local first_arg="$1"
     shift
     tgrep --tree --glob="*$first_arg*" "$@"
 }
+
+if [ -z $TMUX ]; then
+    ses --popup
+fi
