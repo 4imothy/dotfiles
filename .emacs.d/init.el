@@ -171,7 +171,10 @@
              :hook
              (org-mode . org-indent-mode)
              (org-mode . auto-fill-mode)
-             (org-agenda-mode . (lambda () (hl-line-mode 1)))
+             (org-agenda-mode . (lambda () (hl-line-mode 1)
+                                  (keymap-set org-agenda-mode-map "<remap> <forward-paragraph>" nil)
+                                  (keymap-set org-agenda-mode-map "<remap> <backward-paragraph>" nil)
+                                  (setq-local mode-line-format nil)))
              ;; fix for the org-startup-with-latex-preview being slow
              ;; (org-mode . (lambda () (mark-whole-buffer) (org-latex-preview) (deactivate-mark)))
              :bind
@@ -426,11 +429,6 @@
                                  (match-beginning 1) (match-end 1)
                                  `(face (:foreground ,color))))))
                          (forward-line 1)))))
-
-            (add-hook 'org-agenda-mode-hook (lambda ()
-                                              (keymap-set org-agenda-mode-map "<remap> <forward-paragraph>" nil)
-                                              (keymap-set org-agenda-mode-map "<remap> <backward-paragraph>" nil)
-                                              (setq-local mode-line-format nil)))
             (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
             )
 
