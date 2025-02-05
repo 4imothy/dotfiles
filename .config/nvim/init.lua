@@ -145,6 +145,7 @@ setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { f
 setkey('n', '<leader>f', require('telescope.builtin').live_grep)
 setkey('n', '<leader>b', require('telescope.builtin').buffers)
 setkey('n', '<leader>d', require('telescope.builtin').diagnostics)
+setkey('n', '<leader>s', require('telescope.builtin').lsp_document_symbols)
 setkey('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
 setkey('n', '<leader>-', require('oil').open_float)
 setkey('v', '<leader>w', selectionCount, { noremap = true, silent = true })

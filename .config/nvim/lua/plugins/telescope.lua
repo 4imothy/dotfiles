@@ -16,6 +16,9 @@ return {
                 diagnostics = {
                     theme = "dropdown",
                 },
+                lsp_document_symbols = {
+                    theme = "dropdown",
+                },
                 current_buffer_fuzzy_find = {
                     theme = "dropdown",
                 },
