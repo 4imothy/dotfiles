@@ -1,10 +1,9 @@
 gui:
   showBottomLine: false
-  windowSize: 'half'
+  screenMode: 'half'
   theme:
     selectedLineBgColor:
       - 'black'
-
 keybinding:
   universal:
     filteringMenu: '<c-t>'

@@ -40,8 +40,8 @@ local function selectionCount()
 	print('W: ' .. tostring(count.visual_words) .. ' C: ' .. tostring(count.visual_chars))
 end
 
-vim.opt.number = true
 vim.opt.signcolumn = 'yes'
+vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.encoding= 'UTF-8'
 vim.opt.ignorecase = true
@@ -135,10 +135,26 @@ function _G.toggle_diagnostics()
   _G.diagnostics_enabled = not _G.diagnostics_enabled
 end
 
+_G.column_visible = true
+function _G.toggle_column()
+  if _G.column_visible then
+    vim.opt.signcolumn = 'no'
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+    print('Disabling Column')
+  else
+    vim.opt.signcolumn = 'yes'
+    vim.opt.number = true
+    vim.opt.relativenumber = true
+    print('Enabling Column')
+  end
+  _G.column_visible = not _G.column_visible
+end
+
+
 setkey('n', '<leader>n', vim.cmd.bnext)
 setkey('n', '<leader>p', vim.cmd.bprevious)
 setkey('n', '<leader>x', vim.cmd.bdelete)
-setkey('n', '<leader>l', toggle_diagnostics)
 setkey('n', '<leader>u', vim.cmd.UndotreeToggle)
 setkey('n', '<leader>\\', vim.cmd.nohlsearch)
 setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('globals').rg_files_command } ) end )
@@ -149,6 +165,8 @@ setkey('n', '<leader>s', require('telescope.builtin').lsp_document_symbols)
 setkey('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
 setkey('n', '<leader>-', require('oil').open_float)
 setkey('v', '<leader>w', selectionCount, { noremap = true, silent = true })
+setkey('n', '<leader><leader>d', toggle_diagnostics)
+setkey('n', '<leader><leader>n', toggle_column)
 
 
 vim.api.nvim_create_autocmd('BufWritePre', {
