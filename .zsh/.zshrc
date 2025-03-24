@@ -23,7 +23,7 @@ export ACPP_OMP_LINK_LINE="\
     -lomp -lboost_system-mt -lboost_context-mt -lboost_fiber-mt"
 
 
-export VI_CHANGE_CURSOR_SHAPE=1
+export VI_CHANGE_CURSOR_SHAPE=0
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
 export TODO_FILE="$HOME/Documents/org/tasks.org"
@@ -53,6 +53,8 @@ tfile() {
     shift
     tgrep --tree --glob="*$first_arg*" "$@"
 }
+
+# TODO instead of ee maybe do a bind to launch it
 
 if [ -z $TMUX ]; then
     ses --popup

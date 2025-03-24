@@ -24,7 +24,6 @@ done
 # fi
 
 if $org; then
-    echo $SET_INSERT_CURSOR
     $NOTES_EDITOR "${editor_args[@]}"
 else
     if $popup; then
