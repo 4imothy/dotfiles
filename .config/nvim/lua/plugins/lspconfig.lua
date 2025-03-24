@@ -57,6 +57,8 @@ return {
             end,
         })
 
-        vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+        vim.cmd [[
+            autocmd BufWritePre * lua if vim.api.nvim_win_get_width(0) >= 80 then vim.lsp.buf.format() end
+        ]]
     end,
 }
