@@ -4,13 +4,18 @@ font-size = 18
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
-shell-integration-features = no-cursor
 adjust-underline-thickness = 5
-theme = catppuccin-mocha
 window-padding-x = 5
 window-padding-y = 5
 confirm-close-surface = false
+theme = catppuccin-frappe
+command = /opt/homebrew/bin/nu
+
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
 
 macos-titlebar-style = hidden
 macos-option-as-alt = true
-custom-shader = ~/.config/ghostty/background.glsl
+# custom-shader = ~/.config/ghostty/background.glsl

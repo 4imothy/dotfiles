@@ -124,7 +124,7 @@
 (use-package catppuccin-theme
              :ensure t
              :init
-             (setq catppuccin-flavor 'mocha)
+             (setq catppuccin-flavor 'frappe)
              :config
              (load-theme 'catppuccin t)
              (defvar my/red (catppuccin-get-color 'red))
@@ -144,9 +144,9 @@
                  ("general" . ,my/purple)
                  ("school" . ,my/blue)
                  ("csds_343" . ,my/blue)
-                 ("csds_456" . ,my/purple)
-                 ("csds_435" . ,my/yellow)
-                 ("csds_570" . ,my/purple)
+                 ("csds_456" . ,my/yellow)
+                 ("csds_435" . ,my/purple)
+                 ("csds_570" . ,my/pink)
                  ("econ_341" . ,my/green)
                  ("math_324" . ,my/teal)
                  ("csds_391" . ,my/pink)
@@ -465,6 +465,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("0a2168af143fb09b67e4ea2a7cef857e8a7dad0ba3726b500c6a579775129635" default))
  '(package-selected-packages
    '(nerd-icons-dired nerd-icons-ibuffer nerd-icons-completion nerd-icons orderless vertico catppuccin-theme)))
 (custom-set-faces
