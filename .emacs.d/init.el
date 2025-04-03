@@ -104,9 +104,6 @@
 
 ;; packages
 (require 'package)
-;; initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -115,16 +112,27 @@
 (package-initialize)
 ;; (package-refresh-contents)
 
-(use-package server
+(use-package ibuffer
              :ensure t
+             :bind ("C-x C-b" . ibuffer)
              :config
-             (unless (server-running-p)
-               (server-start)))
+             (defun my/clear-buffers ()
+               (interactive)
+               (mapc (lambda (buffer)
+                       (unless (or (string= (buffer-name buffer) "*scratch*")
+                                   (string= (buffer-name buffer) "*Ibuffer*"))
+                         (kill-buffer buffer)))
+                     (buffer-list))
+               (ibuffer-update nil t))
+             (define-key ibuffer-mode-map (kbd "C-c k") 'my/clear-buffers))
 
 (use-package catppuccin-theme
              :ensure t
              :init
-             (setq catppuccin-flavor 'frappe)
+             (setq catppuccin-flavor
+                   (if (string= (string-trim (shell-command-to-string "dark-mode status")) "on")
+                     'frappe
+                     'latte))
              :config
              (load-theme 'catppuccin t)
              (defvar my/red (catppuccin-get-color 'red))
@@ -134,7 +142,7 @@
              (defvar my/purple (catppuccin-get-color 'mauve))
              (defvar my/pink (catppuccin-get-color 'pink))
              (defvar my/teal (catppuccin-get-color 'teal))
-             (defvar my/background (catppuccin-get-color 'surface1))
+             (defvar my/background (catppuccin-get-color 'surface0))
 
              (defvar my/tag-colors
                `(("jobs" . ,my/blue)
@@ -170,7 +178,7 @@
 (use-package org
              :hook
              (org-mode . org-indent-mode)
-             (org-mode . auto-fill-mode)
+             ;; (org-mode . auto-fill-mode)
              (org-agenda-mode . (lambda () (hl-line-mode 1)
                                   (keymap-set org-agenda-mode-map "<remap> <forward-paragraph>" nil)
                                   (keymap-set org-agenda-mode-map "<remap> <backward-paragraph>" nil)
@@ -196,6 +204,7 @@
                  (todo . " %-10T%(my/timestamp-format)")
                  (tags  . " %i %-12:c")
                  (search . " %i %-12:c")))
+             (org-agenda-deadline-leaders (quote ("!D!: " "D %d: " "L %d: ")))
              (org-agenda-remove-tags t)
              (org-todo-keywords
                '("TODO(t)" "DOING(g)" "DAY" "WAITING" "EVENT(e)" "REMINDER(r)" "DONE(d)"))
@@ -225,7 +234,6 @@
                          ((org-agenda-sorting-strategy '(timestamp-up))
                           (org-agenda-skip-function
                             '(org-agenda-skip-entry-if 'notregexp "\\[#C\\]"))
-                          (org-agenda-block-separator nil)
                           (org-agenda-overriding-header "")))
                    (todo "WAITING"
                          ((org-agenda-sorting-strategy '(timestamp-up))
@@ -260,8 +268,6 @@
              (with-eval-after-load "org-faces"
                                    (defun my/create-keyword-face (main-color)
                                      `((t :weight bold
-                                          :box (:line-width 2 :color ,main-color)
-                                          :background ,my/background
                                           :foreground ,main-color)))
 
                                    (defface my/org-red (my/create-keyword-face my/red)
@@ -441,23 +447,27 @@
                 (save-some-buffers t)
                 (kill-emacs))))
 
-(use-package nerd-icons)
+(use-package nerd-icons
+             :ensure t)
 
 (use-package nerd-icons-completion
+             :ensure t
              :config
              (nerd-icons-completion-mode))
 
 (use-package nerd-icons-ibuffer
+             :ensure t
              :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
 (use-package nerd-icons-dired
+             :ensure t
              :hook
              (dired-mode . nerd-icons-dired-mode))
 
 (unless (display-graphic-p)
   (xterm-mouse-mode 1)
-  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
-  (global-set-key (kbd "<mouse-5>") 'scroll-up-line)
+  (global-set-key (kbd "<wheel-up>") 'scroll-down-line)
+  (global-set-key (kbd "<wheel-down>") 'scroll-up-line)
   )
 
 (custom-set-variables
