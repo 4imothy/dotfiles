@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+dark-mode
+
+if [[ "$(dark-mode status)" == "off" ]]; then
+    emacsclient --eval "(progn (setq catppuccin-flavor 'latte) (catppuccin-reload))" > /dev/null 2>&1
+else
+    emacsclient --eval "(progn (setq catppuccin-flavor 'frappe) (catppuccin-reload))" > /dev/null 2>&1
+fi
