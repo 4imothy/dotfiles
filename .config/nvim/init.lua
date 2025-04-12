@@ -42,6 +42,7 @@ end
 
 vim.opt.signcolumn = 'yes'
 vim.opt.number = true
+vim.opt.equalalways = true
 vim.opt.relativenumber = true
 vim.opt.encoding= 'UTF-8'
 vim.opt.ignorecase = true

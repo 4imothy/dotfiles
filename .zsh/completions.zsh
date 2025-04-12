@@ -19,6 +19,7 @@ if [ $SUGGESTIONS -eq 1 ]; then
     url="https://raw.githubusercontent.com/zsh-users/zsh-autosuggestions/master/zsh-autosuggestions.zsh"
     dir="$ZDOTDIR/external"
     file=$dir/zsh-autosuggestions.zsh
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
 
     if [ ! -d "$dir" ]; then
         mkdir -p "$dir"

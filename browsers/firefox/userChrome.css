@@ -4,6 +4,7 @@
     --my-nav-bar-rshift: 70vw;
     --my-nav-bar-dshift: 36px;
     --my-bookmarks-height: 15px;
+    --tab-min-height: 3vh !important;
 }
 
 #tabbrowser-tabs .tab-text{
@@ -27,7 +28,6 @@
 }
 
 #tabbrowser-tabs {
-    --tab-min-height: 2vh !important;
     border: none !important;
     box-shadow: none !important;
 }
@@ -56,14 +56,18 @@
     display: none !important;
 }
 
+/*
 #unified-extensions-button{
     width: 0;
     padding-inline: 0 !important
 }
+*/
 
+/*
 #unified-extensions-button > .toolbarbutton-icon {
     width: 0 !important;
 }
+*/
 
 #page-action-buttons {
     display: none !important;

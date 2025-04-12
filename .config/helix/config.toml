@@ -1,15 +1,10 @@
-# theme = "solarized_dark"
-# theme = "everforest_light"
-theme = "everforest_dark_no_italics"
-# theme = "papercolor-light"
-# theme = "adwaita-dark"
+theme = "catppuccin_latte"
 
 [editor]
 line-number = "relative"
 mouse = false
-cursorline = true
 auto-pairs = false # turn off auto closing paren and brack
-bufferline = "multiple" 
+bufferline = "always"
 
 [editor.cursor-shape]
 insert = "bar"
