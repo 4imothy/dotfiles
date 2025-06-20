@@ -5,15 +5,38 @@
 ;;; Code:
 ;; useful for quickly debugging emacs
 ;; (setq debug-on-error t)
-(require 'package)
-(require 'use-package)
-(setq use-package-always-ensure t)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
 
 ;; packages
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+(setq straight-check-for-modifications nil)
+
+(setq treesit-language-source-alist
+      '((typst "https://github.com/uben0/tree-sitter-typst")
+        (python "https://github.com/tree-sitter/tree-sitter-python")))
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)))
+
+(dolist (lang (mapcar #'car treesit-language-source-alist))
+  (unless (treesit-language-available-p lang)
+    (treesit-install-language-grammar lang)))
+
 (use-package emacs
   :hook
   ((window-setup-hook . toggle-frame-maximized)
@@ -90,7 +113,7 @@
     (server-start)))
 
 (use-package ibuffer
-  :ensure t
+  :straight t
   :bind ("C-x C-b" . ibuffer)
   :config
   (defun my/clear-buffers ()
@@ -104,7 +127,7 @@
   (define-key ibuffer-mode-map (kbd "C-c k") 'my/clear-buffers))
 
 (use-package catppuccin-theme
-  :ensure t
+  :straight t
   :init
   (setq catppuccin-flavor
         (if (string= (string-trim (shell-command-to-string "dark-mode status")) "on")
@@ -129,9 +152,14 @@
       ("general" . ,my/purple)
       ("school" . ,my/blue)
       ("birthdays" . ,my/blue)
-      ("holidays" . ,my/blue)
-      ("work" . ,my/green)
-      ("csds_391" . ,my/pink)))
+      ("csds_343" . ,my/blue)
+      ("csds_456" . ,my/yellow)
+      ("csds_435" . ,my/purple)
+      ("csds_570" . ,my/pink)
+      ("econ_341" . ,my/green)
+      ("math_324" . ,my/teal)
+      ("csds_391" . ,my/pink)
+      ("contract" . ,my/pink)))
   )
 
 (use-package vertico
@@ -335,7 +363,7 @@
                 (kill-emacs))))
 
 (use-package org-superstar
-  :ensure t
+  :straight t
   :custom
   (org-superstar-item-bullet-alist
    '((?- . ?•)))
@@ -346,18 +374,53 @@
   ("C-." . 'avy-goto-char))
 
 (use-package nerd-icons
-  :ensure t)
+  :straight t)
 (use-package nerd-icons-completion
-  :ensure t
+  :straight t
   :config
   (nerd-icons-completion-mode))
 (use-package nerd-icons-ibuffer
-  :ensure t
+  :straight t
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 (use-package nerd-icons-dired
-  :ensure t
+  :straight t
   :hook
   (dired-mode . nerd-icons-dired-mode))
+
+(use-package eglot
+  :straight t
+  :hook
+  (typst-ts-mode . eglot-ensure)
+  (python-ts-mode . eglot-ensure)
+  :custom
+  (eglot-ignored-server-capabilities '(:documentHighlightProvider))
+  (eglot-report-progress nil)
+  (eglot-code-action-indications nil)
+  (eglot-autoshutdown t)
+  (eglot-extend-to-xref nil)
+  (eglot-diagnostic-frontend 'flycheck)
+  (eglot-events-buffer-config '(:size 0 :format short))
+  (eglot-stay-out-of '(minibuffer-echo-area))
+  :config
+  (add-to-list 'eglot-server-programs
+               '(python-ts-mode . ("pyright-langserver" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(typst-ts-mode . ("tinymist" :initializationOptions nil))))
+
+(use-package flycheck
+  :straight t
+  :config
+  (global-flycheck-mode))
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
+(use-package flycheck-inline
+  :straight t
+  :after flycheck
+  :hook
+  (flycheck-mode . flycheck-inline-mode))
 
 (use-package corfu
   :custom
@@ -376,10 +439,26 @@
   (corfu-popupinfo-mode))
 
 (use-package cape
-  :ensure t
+  :straight t
   :init
   (add-hook 'completion-at-point-functions (cape-capf-prefix-length #'cape-dabbrev 4))
-  (add-hook 'completion-at-point-functions #'cape-file))
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (defun my/eglot-cape-setup ()
+    (setq-local completion-at-point-functions
+                (list #'cape-file
+                      (cape-capf-prefix-length #'cape-dabbrev 4)
+                      #'eglot-completion-at-point)))
+  :hook
+  (eglot-managed-mode . my/eglot-cape-setup))
+
+(use-package typst-ts-mode
+  :straight '(:type git :host codeberg :repo "meow_king/typst-ts-mode"))
+(use-package pyvenv
+  :bind
+  ("C-c p p a" . 'pyvenv-activate)
+  ("C-c p p d" . 'pyvenv-deactivate)
+  :config
+  (pyvenv-mode 1))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

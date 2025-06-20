@@ -35,7 +35,7 @@ function float_notes()
     end
 end
 
-local function selectionCount()
+local function selection_count()
     local count = vim.fn.wordcount()
 	print('W: ' .. tostring(count.visual_words) .. ' C: ' .. tostring(count.visual_chars))
 end
@@ -158,6 +158,15 @@ function _G.toggle_column()
   _G.column_visible = not _G.column_visible
 end
 
+function surround_word() -- TODO this should just take one character so you don't have to press enter on the input
+  local char = vim.fn.input('character: ')
+  if char == "" then return end
+  vim.cmd('normal! viw"zy')
+  local word = vim.fn.getreg('z')
+  local surrounded = char .. word .. char
+  vim.fn.setreg('z', surrounded)
+  vim.cmd('normal! viw"zp')
+end
 
 setkey('n', '<leader>n', vim.cmd.bnext)
 setkey('n', '<leader>p', vim.cmd.bprevious)
@@ -171,9 +180,12 @@ setkey('n', '<leader>d', require('telescope.builtin').diagnostics)
 setkey('n', '<leader>s', require('telescope.builtin').lsp_document_symbols)
 setkey('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find)
 setkey('n', '<leader>-', require('oil').open_float)
-setkey('v', '<leader>w', selectionCount, { noremap = true, silent = true })
+setkey('v', '<leader>w', selection_count, { noremap = true, silent = true })
 setkey('n', '<leader><leader>d', toggle_diagnostics)
 setkey('n', '<leader><leader>n', toggle_column)
+setkey('n', '<leader>r', surround_word, { noremap = true, silent = true })
+
+
 
 
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -225,13 +237,3 @@ for _, spell_file in ipairs(vim.fn.glob(spell_path .. '/*.add', 1, 1)) do
     vim.cmd('silent exec \'mkspell! \' .. fnameescape(\'' .. spell_file .. '\')')
   end
 end
-
--- vim.cmd('colorscheme quiet')
---
--- vim.api.nvim_set_hl(0, 'Normal', { fg = '#D3D3D3', bg = '#2C2C2C' })
--- vim.api.nvim_set_hl(0, 'Comment', { fg = '#A9A9A9', italic = true })
--- vim.api.nvim_set_hl(0, 'Keyword', { fg = '#BEBEBE', bold = true })
--- vim.api.nvim_set_hl(0, 'String', { fg = '#C0C0C0' })
---
--- vim.api.nvim_set_hl(0, 'StatusLine', { fg = '#D3D3D3', bg = '#4B4B4B' })
--- vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#A9A9A9', bg = '#3C3C3C' })

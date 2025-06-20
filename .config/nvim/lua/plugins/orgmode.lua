@@ -1,21 +1,24 @@
 local org_dir = '~/Documents/org/'
 
--- TODO tag options, rewrite all the other notes stuff in org
--- TODO want to change the line format in org agenda
 return {
     'nvim-orgmode/orgmode',
     event = 'VeryLazy',
-    enabled = false,
     ft = { 'org' },
     config = function()
         require('orgmode').setup({
-            org_agenda_files = '~/Documents/org/**',
-            org_default_notes_file = org_dir .. 'todos.org',
+            org_default_notes_file = org_dir .. 'tasks.org',
+            org_agenda_files = org_dir .. 'tasks.org',
             org_startup_folded = 'content',
-            org_todo_keywords = {'TODO(t)', 'DOING(g)', '|', 'DONE(d)'},
+            org_todo_keywords = {'TODO(t)', 'DOING(g)', 'WAITING', 'DAY', 'EVENT(e)', 'REMINDER(r)', '|', 'DONE(d)'},
+
             org_todo_keyword_faces = {
-                TODO = ':foreground blue',
-                DOING = ':foreground cyan', -- TODO this doesn't work unless we first open org mode from a capture
+                TODO = ':foreground red',
+                DOING = ':foreground yellow',
+                TODO = ':foreground green',
+                WAITING = ':foreground pink',
+                DAY = ':foreground blue',
+                EVENT = ':foreground purple',
+                REMINDER = ':foreground blue',
             },
             org_log_done = false,
             org_hide_leading_stars = true,
@@ -35,12 +38,23 @@ return {
                 },
             },
             org_agenda_custom_commands = {
-                {
-                    description = 'Agenda for the week',
-                    key = 'w',
-                    command = 'agenda',
-                    args = { span = 'week' }
-                },
+                d = {
+                    description = 'dashboard',
+                    types = {
+                        {
+                            type = 'agenda',
+                            org_agenda_overriding_header = 'My daily agenda',
+                            org_agenda_span = 'day'
+                        },
+                        {
+                            type = 'agenda',
+                            org_agenda_overriding_header = 'Whole week overview',
+                            org_agenda_span = 'week',
+                            org_agenda_start_on_weekday = 1,
+                            org_agenda_remove_tags = true
+                        },
+                    }
+                }
             }
         })
     end,

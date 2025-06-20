@@ -1,68 +1,50 @@
-theme = "catppuccin_latte"
+# TODO when quitting helix, the editor from above the prompt it was launched with still show
+# TODO after opening a insert-output mouse no longer works
+theme = 'catppuccin_latte'
 
 [editor]
-line-number = "relative"
-mouse = false
-auto-pairs = false # turn off auto closing paren and brack
-bufferline = "always"
+line-number = 'relative'
+mouse = true
+auto-pairs = false
+bufferline = 'always'
 
 [editor.cursor-shape]
-insert = "bar"
-normal = "block"
-select = "underline"
+normal = 'block'
+insert = 'underline'
+select = 'underline'
 
 [editor.file-picker]
 hidden = false
 
 [editor.statusline]
-left = ["spacer","mode", "spinner"]
-center = ["file-name", "file-type", "file-line-ending"]
-right = ["diagnostics", "position", "position-percentage", "spacer"]
-mode.normal = "NORMAL"
-mode.insert = "INSERT"
-mode.select = "SELECT"
+left = ['spacer', 'file-type', 'spacer', 'version-control', 'spinner']
+center = ['file-name', 'file-line-ending']
+right = ['diagnostics', 'position', 'position-percentage', 'spacer']
 
 [editor.indent-guides]
 render = true
-character = "|"
+character = '|'
 
 [editor.soft-wrap]
 enable = true
-wrap-indicator = ""
+wrap-indicator = ''
 
 [keys.normal]
-# esc = ["collapse_selection", "keep_primary_selection"]
-minus = "repeat_last_motion" # - to repeat
+minus = 'repeat_last_motion'
+C-g = [
+    ':write-all',
+    ':new',
+    ':insert-output lg',
+    ':buffer-close!',
+    ':redraw',
+    ':reload-all'
+]
+C-y = [
+    ':sh rm -f /tmp/unique-file',
+    ':insert-output yazi %{buffer_name} --chooser-file=/tmp/unique-file',
+    ':open %sh{cat /tmp/unique-file}',
+    ':redraw',
+]
 
-# install location /opt/homebrew/cellar/helix
-# how installed languages (https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers)
-# JavaScript
-#   npm install -g typescript typescript-language-server
-#   put the typescript-language-server in /usr/local/bin
-#   to use create jsconfig.json or tsconfig.json
-# Python3
-#   pip3 install python-lsp-server[all]
-#   put the pylsp in /opt/homebrew/bin
-#   or pip install ruff
-#   pip install ruff-lsp
-# Markdown
-#   brew install marksman
-#   installed to /opt/homebrew/Cellar/marksman
-# Rust (https://www.rust-lang.org/learn/get-started)
-#   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # this placed file in ~/.cargo/
-#   To uninstall run: rustup self uninstall # from https://rust-lang.github.io/rustup/installation/index.html
-#   for lsp: rustup component add rust-analyzer
-#   locate its location with: rustup which rust-analyzer
-#   add that path to $PATH I created rust_start() function in ~/loaded_scripts/path_config.zsh to do this
-# Go
-#   brew install go
-#   go install golang.org/x/tools/gopls@latest
-#   add $HOME/bin/go to $PATH
-# Latex
-#   brew install texlab
-# wgsl
-#   cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer
-# zig
-#   brew install zig
-#   LSP:
-#     brew install zls
+[keys.normal.g]
+x = ':buffer-close'
