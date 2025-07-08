@@ -68,11 +68,10 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     source $MYVIMRC
 endif
 
-" TODO vim-lsp slows down editor for large files, try ALE or vim9lsp
-" I guess swap to neovim, IDK but that is kind of annoying
+let g:mapleader = ","
 call plug#begin()
 
-Plug 'sainnhe/everforest'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'hrsh7th/vim-vsnip'
@@ -85,6 +84,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
+execute 'source' fnameescape(g:my_vim_dir . '/treegrep.vim')
 
 call plug#end()
 
@@ -96,33 +96,29 @@ command! -bang -nargs=* Rg
 inoremap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 snoremap <expr> <Tab> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : (pumvisible() ? asyncomplete#close_popup() : "\<Tab>")
 
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-
 if $COLORTERM == 'truecolor'
     if has('termguicolors')
         set termguicolors
     endif
-    let g:everforest_background='soft'
-    let g:everforest_better_performance=1
-    let g:airline_theme='everforest'
 
-    colorscheme everforest
+    colorscheme catppuccin_latte
 else
     colorscheme desert
 endif
 
 for f in globpath('~/.vim', '*.vim', 0, 1, 0)
+    if fnamemodify(f, ':t') !=# 'treegrep.vim'
         execute 'source' f
+    endif
 endfor
 
-let g:mapleader = ","
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 
 nnoremap <leader>n :bnext<cr>
 nnoremap <leader>p :bprevious<cr>
 nnoremap <leader>x :bdelete<cr>
-nnoremap <leader>t :terminal ++curwin<cr>
+" nnoremap <leader>t :terminal ++curwin<cr>
 nnoremap <leader>u :call EnterUndotree()<cr>
 noremap <leader>c :call ToggleComment()<CR>
 noremap <leader>s <Plug>(easymotion-s)

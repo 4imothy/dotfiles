@@ -243,6 +243,10 @@
      ("+" (:strike-through t))))
   (org-highlight-latex-and-related '(latex))
   :config
+  (font-lock-add-keywords
+    'org-mode
+    '(("^[[:space:]]*\\(-\\) "
+       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
   (setq org-default-priority ?C)
   (with-eval-after-load "org-faces"
     (defun my/create-keyword-face (main-color)
@@ -333,13 +337,6 @@
               (lambda (&rest _)
                 (save-some-buffers t)
                 (kill-emacs))))
-
-(use-package org-superstar
-  :ensure t
-  :custom
-  (org-superstar-item-bullet-alist
-   '((?- . ?•)))
-  :hook (org-mode . org-superstar-mode))
 
 (use-package avy
   :bind

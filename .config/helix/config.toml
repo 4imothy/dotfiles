@@ -1,5 +1,3 @@
-# TODO when quitting helix, the editor from above the prompt it was launched with still show
-# TODO after opening a insert-output mouse no longer works
 theme = 'catppuccin_latte'
 
 [editor]
@@ -37,13 +35,25 @@ C-g = [
     ':insert-output lg',
     ':buffer-close!',
     ':redraw',
-    ':reload-all'
+    ':reload-all',
+    ':set mouse false',
+    ':set mouse true',
 ]
 C-y = [
     ':sh rm -f /tmp/unique-file',
     ':insert-output yazi %{buffer_name} --chooser-file=/tmp/unique-file',
     ':open %sh{cat /tmp/unique-file}',
     ':redraw',
+    ':set mouse false',
+    ':set mouse true',
+]
+C-r = [
+    ':sh rm -f /tmp/tgrep-select',
+    ':insert-output tgrep --menu --selection-file=/tmp/tgrep-select --repeat-file=/tmp/tgrep-repeat > /dev/tty',
+    ':open %sh{ f=$(sed -n 1p /tmp/tgrep-select); l=$(sed -n 2p /tmp/tgrep-select); [ -n "$l" ] && echo "$f:$l" || echo "$f"; }',
+    ':redraw',
+    ':set mouse false',
+    ':set mouse true',
 ]
 
 [keys.normal.g]

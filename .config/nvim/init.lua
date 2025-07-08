@@ -185,9 +185,6 @@ setkey('n', '<leader><leader>d', toggle_diagnostics)
 setkey('n', '<leader><leader>n', toggle_column)
 setkey('n', '<leader>r', surround_word, { noremap = true, silent = true })
 
-
-
-
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('trim_trailing_whitespace', {}),
     callback = function()
