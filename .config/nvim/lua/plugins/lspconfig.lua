@@ -6,30 +6,18 @@ return {
     },
     config = function()
         local capabilities = require('blink.cmp').get_lsp_capabilities()
-        local lspconfig = require('lspconfig')
-        lspconfig.pyright.setup({
+        vim.lsp.config('*', {
             capabilities = capabilities
         })
-        lspconfig.racket_langserver.setup {
-            capabilities = capabilities
-        }
-        lspconfig.tinymist.setup {
-            capabilities = capabilities
-        }
-        lspconfig.clangd.setup({
-            capabilities = capabilities
-        })
-        lspconfig.rust_analyzer.setup({
-            capabilities = capabilities
-        })
-        lspconfig.texlab.setup({
-            capabilities = capabilities
-        })
-        lspconfig.hls.setup({
-            capabilities = capabilities
-        })
-        lspconfig.ltex.setup({
-            capabilities = capabilities,
+        vim.lsp.enable('pyright')
+        vim.lsp.enable('racket_langserver')
+        vim.lsp.enable('tinymist')
+        vim.lsp.enable('clangd')
+        vim.lsp.enable('rust_analyzer')
+        vim.lsp.enable('texlab')
+        vim.lsp.enable('hls')
+        vim.lsp.enable('ltex')
+        vim.lsp.config['ltex'] = {
             filetypes= { 'bib', 'gitcommit', 'markdown', 'org', 'plaintex', 'tex', 'html', 'txt'},
             settings = {
                 ltex = {
@@ -45,7 +33,7 @@ return {
                     },
                 },
             }
-        })
+        }
         -- lspconfig.harper_ls.setup({
         --     capabilities = capabilities
         -- })

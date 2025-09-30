@@ -7,6 +7,8 @@ return {
                 'c',
                 'cpp',
                 'cmake',
+                'html',
+                'css',
                 'go',
                 'rust',
                 'json',

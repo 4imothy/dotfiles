@@ -1,5 +1,6 @@
 return {
     '4imothy/treegrep',
+    -- dir = '~/Projects/treegrep',
     build = function()
         require('treegrep').build_tgrep()
     end,

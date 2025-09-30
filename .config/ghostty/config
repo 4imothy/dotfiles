@@ -8,7 +8,7 @@ adjust-underline-thickness = 1
 window-padding-x = 5
 window-padding-y = 5
 confirm-close-surface = false
-theme = dark:catppuccin-frappe,light:catppuccin-latte
+theme = dark:Catppuccin Frappe,light:Catppuccin Latte
 
 cursor-style = block
 cursor-style-blink = false
