@@ -101,7 +101,7 @@ if $COLORTERM == 'truecolor'
         set termguicolors
     endif
 
-    colorscheme catppuccin_latte
+    colorscheme catppuccin_frappe
 else
     colorscheme desert
 endif

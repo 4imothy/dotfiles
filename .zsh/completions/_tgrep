@@ -15,32 +15,40 @@ _tgrep() {
 
     local context curcontext="$curcontext" state line
     _arguments "${_arguments_options[@]}" : \
-'*-e+[the regex expression]::_default' \
-'*--regexp=[the regex expression]::_default' \
+'*-e+[the regex expression]::' \
+'*--regexp=[the regex expression]::' \
 '-p+[the path to search, if not provided, search the current directory]::_files' \
 '--path=[the path to search, if not provided, search the current directory]::_files' \
 '*--glob=[rules match .gitignore globs, but ! has inverted meaning, overrides other ignore logic]::_default' \
-'--searcher=[executable to do the searching]::(rg tgrep)' \
-'--char-style=[style of characters to use]::(ascii single double heavy rounded none)' \
-'--editor=[command used to open selections]::_default' \
-'--open-like=[command line syntax for opening a file at a line]::(vi hx code jed default)' \
-'--completions=[generate completions for given shell]:shell:(bash elvish fish powershell zsh)' \
-'--selection-file=[file to write selection to (first line\: file path, second line\: line number if applicable)]::_files' \
-'--repeat-file=[file where arguments are saved]::_files' \
-'--threads=[set the appropriate number of threads to use]::_default' \
 '--max-depth=[the max depth to search]::_default' \
 '--prefix-len=[number of characters to show before a match]::_default' \
 '--max-length=[set the max length for a matched line]::_default' \
+'--threads=[set the appropriate number of threads to use]::_default' \
 '--long-branch-each=[number of files to print on each branch]::_default' \
-'--long-branch[multiple files from the same directory are shown on the same branch]' \
-'--plugin-support[]' \
+'--editor=[command used to open selections]::_default' \
+'--open-like=[command line syntax for opening a file at a line]::(vi hx code jed default)' \
+'--char-style=[style of characters to use]::(single rounded heavy double ascii none)' \
+'--file-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
+'--dir-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
+'--text-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
+'--line-number-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
+'--branch-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
+'--match-colors=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
+'--selected-indicator-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
+'--selected-bg-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
+'--completions=[generate completions for given shell]::(bash elvish fish powershell zsh)' \
+'--searcher=[executable to do the searching]::(rg tgrep)' \
+'--selection-file=[file to write selection to (first line\: file path, second line\: line number if applicable)]::_files' \
+'--repeat-file=[file where arguments are saved]::_files' \
+'--menu[provide arguments and select results through an interface]' \
+'-s[results are shown in a selection interface for opening]' \
+'--select[results are shown in a selection interface for opening]' \
+'-f[if an expression is given, hide matched content, otherwise, show the files that would be searched]' \
+'--files[if an expression is given, hide matched content, otherwise, show the files that would be searched]' \
 '-.[search hidden files]' \
 '--hidden[search hidden files]' \
-'--repeat[repeats the last saved search]' \
 '-n[show line number of match]' \
 '--line-number[show line number of match]' \
-'-f[if a pattern is given hide matched content, otherwise show the files that would be searched]' \
-'--files[if a pattern is given hide matched content, otherwise show the files that would be searched]' \
 '--links[search linked paths]' \
 '--no-ignore[don'\''t use ignore files]' \
 '-c[display number of files matched in directory and number of lines matched in a file]' \
@@ -48,16 +56,15 @@ _tgrep() {
 '--no-color[don'\''t use colors]' \
 '--no-bold[don'\''t bold anything]' \
 '--overview[conclude results with an overview]' \
-'-s[results are shown in a selection interface for opening]' \
-'--select[results are shown in a selection interface for opening]' \
-'--menu[provide arguments and select result through an interface]' \
 '--trim[trim whitespace at the beginning of lines]' \
 '--pcre2[enable PCRE2]' \
-'-h[Print help]' \
-'--help[Print help]' \
-'-V[Print version]' \
-'--version[Print version]' \
-'::positional regexp -- the regex expression:_default' \
+'--long-branch[multiple files from the same directory are shown on the same branch]' \
+'--repeat[repeats the last saved search]' \
+'-h[print help]' \
+'--help[print help]' \
+'-V[print version]' \
+'--version[print version]' \
+'::positional regexp -- the regex expression:' \
 '::positional target -- the path to search, if not provided, search the current directory:_files' \
 && ret=0
 }

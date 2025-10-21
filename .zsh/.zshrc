@@ -2,7 +2,7 @@ export HISTFILE="$HOME/.zsh_history"
 export EDITOR=nvim
 export NOTES_EDITOR=emacs
 export SHOW_BRANCH_IN_PROMPT=0
-export SHOW_BRANCH_IN_RPROMPT=1
+export SHOW_BRANCH_IN_RPROMPT=0
 export PAR_DIR_PRINT_LIMIT=2
 export CLICOLOR=1
 export LSCOLORS=fxfxcxdxbxegedabagacfx
@@ -26,7 +26,7 @@ export ACPP_OMP_LINK_LINE="\
 export VI_CHANGE_CURSOR_SHAPE=0
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
-export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --char-style=rounded"
+export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --searcher=treegrep"
 
 bindkey -v
 setopt SHARE_HISTORY

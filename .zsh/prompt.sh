@@ -93,7 +93,8 @@ update_prompt() {
         branch="$(colored_branch) "
     fi
 
-    full="$(virtualenv_info)$(path)$branch$(line_indicator)$(final_char)$(fg_color)"
+    # full="$(virtualenv_info)$(path)$branch$(line_indicator)$(final_char)$(fg_color)"
+    full="$(virtualenv_info)$(path)$branch$(line_indicator)$(final_char)"
     PROMPT="%B${full}"
     set_rp
     tput cnorm

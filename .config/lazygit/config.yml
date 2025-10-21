@@ -1,6 +1,7 @@
 gui:
   showBottomLine: false
   screenMode: 'half'
+  nerdFontsVersion: "3"
   theme:
     selectedLineBgColor:
       - 'black'
