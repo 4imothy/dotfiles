@@ -28,7 +28,7 @@ export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
 export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --searcher=treegrep"
 
-bindkey -v
+bindkey -e
 setopt SHARE_HISTORY
 
 add_to_array() {
