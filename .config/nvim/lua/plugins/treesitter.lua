@@ -13,6 +13,8 @@ return {
                 'rust',
                 'json',
                 'yaml',
+                'javascript',
+                'html',
                 'lua',
                 'python',
                 'vimdoc',

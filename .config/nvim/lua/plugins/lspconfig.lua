@@ -10,6 +10,12 @@ return {
             capabilities = capabilities
         })
         vim.lsp.enable('pyright')
+        vim.lsp.enable('gopls')
+        vim.lsp.enable('ts_ls')
+        vim.lsp.config['ts_ls'] = {
+            cmd = { 'typescript-language-server', '--stdio' },
+            filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+        }
         vim.lsp.enable('racket_langserver')
         vim.lsp.enable('tinymist')
         vim.lsp.enable('clangd')
@@ -35,23 +41,23 @@ return {
             }
         }
         -- lspconfig.harper_ls.setup({
-        --     capabilities = capabilities
-        -- })
+            --     capabilities = capabilities
+            -- })
 
-        vim.api.nvim_create_autocmd('LspAttach', {
-            group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-            callback = function(ev)
-                local opts = { buffer = ev.buf }
-                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-                vim.keymap.set('n', 'gn', vim.lsp.buf.rename, opts)
-                vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-                vim.keymap.set({ 'n', 'v' }, 'ga', vim.lsp.buf.code_action, opts)
-            end,
-        })
+            vim.api.nvim_create_autocmd('LspAttach', {
+                group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+                callback = function(ev)
+                    local opts = { buffer = ev.buf }
+                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+                    vim.keymap.set('n', 'gn', vim.lsp.buf.rename, opts)
+                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+                    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+                    vim.keymap.set({ 'n', 'v' }, 'ga', vim.lsp.buf.code_action, opts)
+                end,
+            })
 
-        vim.cmd [[
-            autocmd BufWritePre * lua if vim.api.nvim_win_get_width(0) >= 80 then vim.lsp.buf.format() end
-        ]]
-    end,
-}
+            -- vim.cmd [[
+            --     autocmd BufWritePre * lua if vim.api.nvim_win_get_width(0) >= 80 then vim.lsp.buf.format() end
+            -- ]]
+        end,
+    }

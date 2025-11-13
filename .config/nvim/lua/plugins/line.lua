@@ -49,7 +49,6 @@ return {
                     {
                         'buffers',
                         icons_enabled = false,
-                        max_length = vim.o.columns * 2 / 3,
                         symbols = {
                             alternate_file = '',
                             directory = '',
