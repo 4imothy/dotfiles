@@ -170,6 +170,7 @@
                                              (directory-files org-directory)))
                       (selected-file (completing-read "Search Orgs: " org-files)))
                  (find-file (expand-file-name selected-file org-directory)))))
+  (:map org-mode-map ("C-c n" . my/org-normalize-region))
   :custom
   (org-outline-path-complete-in-steps nil)
   (org-refile-targets '((org-default-notes-file . (:maxlevel . 1))))
@@ -275,6 +276,21 @@
             ("REMINDER" . my/org-blue)
             ))
     )
+
+    (defun my/org-normalize-region (beg end)
+      (interactive "r")
+      (save-excursion
+        (save-restriction
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (re-search-forward "[“”]" nil t)
+                 (replace-match "\"" t t))
+          (goto-char (point-min))
+          (while (re-search-forward "[‘’]" nil t)
+                 (replace-match "'" t t))
+          (goto-char (point-min))
+          (while (re-search-forward "…" nil t)
+                 (replace-match "..." t t)))))
 
   (defun my/timestamp-format ()
     "Custom function to format timestamps for TODO items."
