@@ -24,6 +24,7 @@ return {
                 'racket',
                 'comment',
                 'kdl',
+                'sql',
             },
             highlight = {
                 enable = true,

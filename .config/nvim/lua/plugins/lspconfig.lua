@@ -6,8 +6,15 @@ return {
     },
     config = function()
         local capabilities = require('blink.cmp').get_lsp_capabilities()
+        local navic = require('nvim-navic')
+        local on_attach = function(client, bufnr)
+            if client.server_capabilities.documentSymbolProvider then
+                navic.attach(client, bufnr)
+            end
+        end
         vim.lsp.config('*', {
-            capabilities = capabilities
+            capabilities = capabilities,
+            on_attach = on_attach
         })
         vim.lsp.enable('pyright')
         vim.lsp.enable('gopls')
@@ -15,6 +22,8 @@ return {
         vim.lsp.config['ts_ls'] = {
             cmd = { 'typescript-language-server', '--stdio' },
             filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+            capabilities = capabilities,
+            on_attach = on_attach,
         }
         vim.lsp.enable('racket_langserver')
         vim.lsp.enable('tinymist')
@@ -25,6 +34,8 @@ return {
         vim.lsp.enable('ltex')
         vim.lsp.config['ltex'] = {
             filetypes= { 'bib', 'gitcommit', 'markdown', 'org', 'plaintex', 'tex', 'html', 'txt'},
+            capabilities = capabilities,
+            on_attach = on_attach,
             settings = {
                 ltex = {
                     language = 'auto',

@@ -39,7 +39,7 @@ return {
                 --     symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'},
                 -- }},
                 lualine_b = {'b:gitsigns_head', {'diff', source = diff_source}},
-                lualine_c = {{'filename', path = 1}},
+                lualine_c = {{'filename', path = 1}, {'navic'}},
                 lualine_x = {'encoding', 'filetype'},
                 lualine_y = {'progress'},
                 lualine_z = {}
