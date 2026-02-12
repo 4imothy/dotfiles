@@ -25,7 +25,6 @@ generate_todo_alias() {
     for keyword in "${to_add[@]}"; do
         cmd+=" --regexp '\\b${keyword}\\b'"
     done
-    cmd+=" --searcher=treegrep"
     alias todo="$cmd"
 }
 generate_todo_alias
