@@ -15,19 +15,27 @@ _tgrep() {
 
     local context curcontext="$curcontext" state line
     _arguments "${_arguments_options[@]}" : \
-'*-e+[the regex expression]::' \
-'*--regexp=[the regex expression]::' \
+'*-e+[a regex expression to search for]::' \
+'*--regexp=[a regex expression to search for]::' \
 '-p+[the path to search, if not provided, search the current directory]::_files' \
 '--path=[the path to search, if not provided, search the current directory]::_files' \
+'*-g+[rules match .gitignore globs, but ! has inverted meaning, overrides other ignore logic]::_default' \
 '*--glob=[rules match .gitignore globs, but ! has inverted meaning, overrides other ignore logic]::_default' \
+'-d+[the max depth to search]::_default' \
 '--max-depth=[the max depth to search]::_default' \
-'--prefix-len=[number of characters to show before a match]::_default' \
+'-C+[number of lines to show before and after each match]::_default' \
+'--context=[number of lines to show before and after each match]::_default' \
+'-B+[number of lines to show before each match]::_default' \
+'--before-context=[number of lines to show before each match]::_default' \
+'-A+[number of lines to show after each match]::_default' \
+'--after-context=[number of lines to show after each match]::_default' \
 '--max-length=[set the max length for a matched line]::_default' \
 '--threads=[set the appropriate number of threads to use]::_default' \
-'--long-branch-each=[number of files to print on each branch]::_default' \
 '--editor=[command used to open selections]::_default' \
 '--open-like=[command line syntax for opening a file at a line]::(vi hx code jed default)' \
-'--char-style=[style of characters to use]::(single rounded heavy double ascii none)' \
+'--completions=[generate completions for given shell]::(bash elvish fish powershell zsh)' \
+'--selection-file=[file to write selection to (first line\: file path, second line\: line number if applicable)]::_files' \
+'--repeat-file=[file where arguments are saved]::_files' \
 '--file-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
 '--dir-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
 '--text-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
@@ -36,11 +44,34 @@ _tgrep() {
 '--match-colors=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
 '--selected-indicator-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
 '--selected-bg-color=[black, white, red, green, yellow, blue, magenta, cyan, grey, rgb(_._._), ansi(_)]::_default' \
-'--completions=[generate completions for given shell]::(bash elvish fish powershell zsh)' \
-'--searcher=[executable to do the searching]::(rg tgrep)' \
-'--selection-file=[file to write selection to (first line\: file path, second line\: line number if applicable)]::_files' \
-'--repeat-file=[file where arguments are saved]::_files' \
-'--menu[provide arguments and select results through an interface]' \
+'--prefix-len=[number of characters to show before a match]::_default' \
+'--long-branch-each=[number of files to print on each branch]::_default' \
+'--char-vertical=[vertical branch character]::_default' \
+'--char-horizontal=[horizontal branch character]::_default' \
+'--char-top-left=[top-left corner character]::_default' \
+'--char-top-right=[top-right corner character]::_default' \
+'--char-bottom-left=[bottom-left corner character]::_default' \
+'--char-bottom-right=[bottom-right corner character]::_default' \
+'--char-tee=[tee branch character]::_default' \
+'--char-ellipsis=[folding indicator character]::_default' \
+'--selected-indicator=[selected indicator characters]::_default' \
+'*--key-down=[move down]::_default' \
+'*--key-up=[move up]::_default' \
+'*--key-big-down=[big jump down]::_default' \
+'*--key-big-up=[big jump up]::_default' \
+'*--key-down-path=[next path]::_default' \
+'*--key-up-path=[previous path]::_default' \
+'*--key-down-same-depth=[next path at same depth]::_default' \
+'*--key-up-same-depth=[previous path at same depth]::_default' \
+'*--key-top=[go to top]::_default' \
+'*--key-bottom=[go to bottom]::_default' \
+'*--key-page-down=[page down]::_default' \
+'*--key-page-up=[page up]::_default' \
+'*--key-center=[center cursor]::_default' \
+'*--key-help=[show help]::_default' \
+'*--key-quit=[quit]::_default' \
+'*--key-open=[open selection]::_default' \
+'*--key-fold=[fold/unfold path]::_default' \
 '-s[results are shown in a selection interface for opening]' \
 '--select[results are shown in a selection interface for opening]' \
 '-f[if an expression is given, hide matched content, otherwise, show the files that would be searched]' \
@@ -49,22 +80,24 @@ _tgrep() {
 '--hidden[search hidden files]' \
 '-n[show line number of match]' \
 '--line-number[show line number of match]' \
-'--links[search linked paths]' \
-'--no-ignore[don'\''t use ignore files]' \
 '-c[display number of files matched in directory and number of lines matched in a file]' \
 '--count[display number of files matched in directory and number of lines matched in a file]' \
-'--no-color[don'\''t use colors]' \
-'--no-bold[don'\''t bold anything]' \
+'-l[search linked paths]' \
+'--links[search linked paths]' \
+'-o[conclude results with an overview]' \
 '--overview[conclude results with an overview]' \
+'--menu[provide arguments and select results through an interface]' \
+'--no-ignore[don'\''t use ignore files]' \
 '--trim[trim whitespace at the beginning of lines]' \
-'--pcre2[enable PCRE2]' \
 '--long-branch[multiple files from the same directory are shown on the same branch]' \
 '--repeat[repeats the last saved search]' \
+'--no-color[don'\''t use colors]' \
+'--no-bold[don'\''t bold anything]' \
 '-h[print help]' \
 '--help[print help]' \
 '-V[print version]' \
 '--version[print version]' \
-'::positional regexp -- the regex expression:' \
+'::positional regexp -- a regex expression to search for:' \
 '::positional target -- the path to search, if not provided, search the current directory:_files' \
 && ret=0
 }

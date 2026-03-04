@@ -163,6 +163,7 @@
   :bind
   ("C-c c" . org-capture)
   ("C-c d" . (lambda () (interactive) (org-agenda nil "d")))
+  ("C-c j" . my/diary)
   ("C-c o" . (lambda ()
                (interactive)
                (let* ((org-files (seq-filter (lambda (file)
@@ -343,6 +344,22 @@
                  `(face (:foreground ,color))))))
           (forward-line 1)))))
   (add-hook 'org-agenda-finalize-hook #'my/org-agenda-custom-color)
+
+  (defun my/diary ()
+    "Open this month's diary file and jump to today's entry."
+    (interactive)
+    (let* ((dir (expand-file-name "diary" org-directory))
+           (file (expand-file-name (format-time-string "%Y-%m.org") dir))
+           (heading (format-time-string "%A %-d")))
+      (unless (file-directory-p dir)
+        (make-directory dir t))
+      (find-file file)
+      (goto-char (point-min))
+      (unless (re-search-forward (concat "^\\* " (regexp-quote heading)) nil t)
+        (goto-char (point-max))
+        (unless (bobp) (insert "\n"))
+        (insert "* " heading "\n"))
+      (goto-char (point-max))))
   )
 
 (defun org-capture-full ()
