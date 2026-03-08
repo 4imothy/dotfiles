@@ -10,7 +10,8 @@ return {
             repeat_file = '/tmp/tgrep-repeat',
         })
         vim.keymap.set('n', '<leader>tt', function() require('treegrep').tgrep_with('--menu') end)
-        vim.keymap.set('n', '<leader>tr', function() require('treegrep').tgrep_with('--repeat') end)
+        vim.keymap.set('n', '<leader>tr', function() require('treegrep').tgrep_with('--repeat --select') end)
+        vim.keymap.set('n', '<leader>tm', function() require('treegrep').tgrep_with('--menu --repeat') end)
         vim.keymap.set('n', '<leader>tf', function() require('treegrep').tgrep_with('--files --select') end)
     end,
 }
