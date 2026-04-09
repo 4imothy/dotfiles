@@ -1,3 +1,4 @@
+vim.loader.enable()
 -- vim.cmd('source ~/Projects/dotfiles/.vim/treegrep.vim')
 
 local notes_win = nil
@@ -11,8 +12,8 @@ function float_notes()
         reset_notes_win()
     else
         local buf = vim.api.nvim_create_buf(false, false)
-        local width = vim.api.nvim_get_option('columns')
-        local height = vim.api.nvim_get_option('lines')
+        local width = vim.o.columns
+        local height = vim.o.lines
         local win_height = math.ceil(height * 0.8 - 4)
         local win_width = math.ceil(width * 0.8)
         local opts = {
@@ -26,7 +27,7 @@ function float_notes()
         }
 
         notes_win = vim.api.nvim_open_win(buf, true, opts)
-        vim.api.nvim_buf_set_option(buf, 'modifiable', true)
+        vim.api.nvim_set_option_value('modifiable', true, { buf = buf })
         vim.cmd('Neorg workspace notes')
         vim.cmd([[
         autocmd WinLeave <buffer> :lua reset_notes_win()
@@ -77,25 +78,11 @@ vim.opt.guicursor = 'a:block,i:hor1'
 vim.opt.foldlevelstart = 99
 vim.opt.timeout = false
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 vim.g.mapleader = ','
 vim.g.tex_flavor = 'tex'
 
-vim.lsp.set_log_level('off')
-
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable',
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 vim.diagnostic.config({
     virtual_text = true,
@@ -103,16 +90,13 @@ vim.diagnostic.config({
         local s, h = vim.diagnostic.severity, 'DiagnosticSign'
         return {
             text = { [s.ERROR] = '󰅚', [s.WARN] = '󰀪', [s.HINT] = '󰌶', [s.INFO] = '' },
-            signhl = { [s.ERROR] = h .. 'Error', [s.WARN] = h .. 'Warn', [s.HINT] = h .. 'Hint', [s.INFO] = h .. 'Info' },
+            texthl = { [s.ERROR] = h .. 'Error', [s.WARN] = h .. 'Warn', [s.HINT] = h .. 'Hint', [s.INFO] = h .. 'Info' },
             numhl = { [s.ERROR] = h .. 'Error', [s.WARN] = h .. 'Warn', [s.HINT] = h .. 'Hint', [s.INFO] = h .. 'Info' }
         }
     end)()
 })
 
-require('lazy').setup('plugins', {
-    checker = { enabled = false },
-    change_detection = { notify = false },
-})
+require('pack')
 
 -- vim.api.nvim_create_autocmd('VimEnter', {
 -- 	callback = vim.schedule_wrap(function(data)
@@ -129,17 +113,10 @@ local function setkey(mode, l, r, opts)
     vim.keymap.set(mode, l, r, opts)
 end
 
-_G.diagnostics_enabled = true
-
 function _G.toggle_diagnostics()
-  if _G.diagnostics_enabled then
-    vim.diagnostic.disable()
-    print('Diagnostics disabled')
-  else
-    vim.diagnostic.enable()
-    print('Diagnostics enabled')
-  end
-  _G.diagnostics_enabled = not _G.diagnostics_enabled
+  local enabled = vim.diagnostic.is_enabled()
+  vim.diagnostic.enable(nil, { enabled = not enabled })
+  print('Diagnostics ' .. (enabled and 'disabled' or 'enabled'))
 end
 
 _G.column_visible = true
@@ -171,7 +148,7 @@ end
 setkey('n', '<leader>n', vim.cmd.bnext)
 setkey('n', '<leader>p', vim.cmd.bprevious)
 setkey('n', '<leader>x', vim.cmd.bdelete)
-setkey('n', '<leader>u', vim.cmd.UndotreeToggle)
+setkey('n', '<leader>u', vim.cmd.Undotree)
 setkey('n', '<leader>\\', vim.cmd.nohlsearch)
 setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('globals').rg_files_command } ) end )
 setkey('n', '<leader>f', require('telescope.builtin').live_grep)
@@ -212,7 +189,7 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.opt.smoothscroll = true
         vim.opt.spelllang:append('en_us', 'en_gb')
         vim.opt.wrap = true
-        local opts = { noremap = true, buffer = true }
+        local opts = { noremap = true, buffer = 0 }
         vim.keymap.set({ 'n', 'v' }, 'j', 'gj', opts)
         vim.keymap.set({ 'n', 'v' }, 'k', 'gk', opts)
     end
