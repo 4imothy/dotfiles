@@ -17,3 +17,4 @@ shell-integration-features = no-cursor
 macos-titlebar-style = hidden
 macos-option-as-alt = true
 # custom-shader = ~/.config/ghostty/background.glsl
+keybind = shift+enter=text:\x1b\r

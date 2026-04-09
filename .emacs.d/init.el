@@ -357,7 +357,7 @@
       (goto-char (point-min))
       (unless (re-search-forward (concat "^\\* " (regexp-quote heading)) nil t)
         (goto-char (point-max))
-        (unless (bobp) (insert "\n"))
+        (unless (bolp) (insert "\n"))
         (insert "* " heading "\n"))
       (goto-char (point-max))))
   )

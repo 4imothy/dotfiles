@@ -8,6 +8,7 @@ alias tree="tgrep --tree"
 alias ltree="tgrep --tree --long-branch"
 alias run="python3 run.py"
 alias reload="source $ZDOTDIR/.zshrc"
+alias fmtclip="cargo +nightly fmt && cargo +nightly clippy"
 
 alias gs='git status'
 alias ga='git add'
