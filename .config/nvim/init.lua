@@ -1,5 +1,4 @@
 vim.loader.enable()
--- vim.cmd('source ~/Projects/dotfiles/.vim/treegrep.vim')
 
 local notes_win = nil
 function reset_notes_win()
@@ -213,3 +212,5 @@ for _, spell_file in ipairs(vim.fn.glob(spell_path .. '/*.add', 1, 1)) do
 end
 
 vim.cmd [[ autocmd BufRead,BufNewFile *.js set filetype=javascriptreact ]]
+
+require('treegrep_config')

@@ -17,15 +17,9 @@ local hooks = vim.api.nvim_create_autocmd({'PackChanged'}, {
 })
 
 vim.pack.add({
-    {
-        src = gh .. '4imothy/treegrep',
-        name = 'treegrep',
-    },
-})
-
-vim.pack.add({
     gh .. 'nvim-lua/plenary.nvim',
     gh .. 'nvim-tree/nvim-web-devicons',
+    gh .. '4imothy/treegrep',
 
     { src = gh .. 'saghen/blink.cmp', version = 'v1' },
 
@@ -267,15 +261,6 @@ hipatterns.setup({
         },
     },
 })
-
-require('treegrep').setup({
-    selection_file = '/tmp/tgrep-select',
-    repeat_file = '/tmp/tgrep-repeat',
-})
-vim.keymap.set('n', '<leader>tt', function() require('treegrep').tgrep_with('--menu --live') end)
-vim.keymap.set('n', '<leader>tr', function() require('treegrep').tgrep_with('--repeat --select --live') end)
-vim.keymap.set('n', '<leader>tm', function() require('treegrep').tgrep_with('--menu --repeat --live') end)
-vim.keymap.set('n', '<leader>tf', function() require('treegrep').tgrep_with('--files --select --live') end)
 
 local parsers = {
     { 'cpp',        gh .. 'tree-sitter/tree-sitter-cpp' },

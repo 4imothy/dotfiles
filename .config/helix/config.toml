@@ -47,14 +47,14 @@ C-y = [
     ':set mouse false',
     ':set mouse true',
 ]
-space.t = [
+C-r = [
+    ':sh rm -f /tmp/tgrep-select',
     ':insert-output tgrep --menu --live --selection-file=/tmp/tgrep-select --repeat-file=/tmp/tgrep-repeat > /dev/tty',
     ':open %sh{ f=$(sed -n 1p /tmp/tgrep-select); l=$(sed -n 2p /tmp/tgrep-select); [ -n "$l" ] && echo "$f:$l" || echo "$f"; }',
     ':redraw',
     ':set-option mouse false',
     ':set-option mouse true',
 ]
-
 
 [keys.normal.g]
 x = ':buffer-close'
