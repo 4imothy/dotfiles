@@ -115,8 +115,8 @@ end
 
 function _G.toggle_diagnostics()
   local enabled = vim.diagnostic.is_enabled()
-  vim.diagnostic.enable(nil, { enabled = not enabled })
-  print('Diagnostics ' .. (enabled and 'disabled' or 'enabled'))
+  vim.diagnostic.enable(not enabled)
+  print("Diagnostics " .. (enabled and "disabled" or "enabled"))
 end
 
 _G.column_visible = true
@@ -148,7 +148,7 @@ end
 setkey('n', '<leader>n', vim.cmd.bnext)
 setkey('n', '<leader>p', vim.cmd.bprevious)
 setkey('n', '<leader>x', vim.cmd.bdelete)
-setkey('n', '<leader>u', vim.cmd.Undotree)
+setkey('n', '<leader>u', function() require('undotree').open({ command = 'leftabove 30vnew' }) end)
 setkey('n', '<leader>\\', vim.cmd.nohlsearch)
 setkey('n', '<leader>e', function() require('telescope.builtin').find_files( { find_command = require('globals').rg_files_command } ) end )
 setkey('n', '<leader>f', require('telescope.builtin').live_grep)

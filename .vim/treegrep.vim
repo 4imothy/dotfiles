@@ -1,4 +1,5 @@
 Plug '4imothy/treegrep', {'do': {-> TgrepBuild()}}
+" Plug '~/Projects/treegrep', {'do': {-> TgrepBuild()}}
 
 let g:tgrep_selection_file = '/tmp/tgrep-select'
 let g:tgrep_repeat_file = '/tmp/tgrep-repeat'

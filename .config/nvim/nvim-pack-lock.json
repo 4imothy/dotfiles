@@ -67,7 +67,7 @@
       "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
     "treegrep": {
-      "rev": "34c57f593e2c0b2eeb770067649e3d857a9973e6",
+      "rev": "b678383e79688f3c084c656c34bfaa32d0e76a52",
       "src": "https://github.com/4imothy/treegrep"
     },
     "trouble.nvim": {

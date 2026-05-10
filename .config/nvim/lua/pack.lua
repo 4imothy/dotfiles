@@ -1,4 +1,28 @@
 local gh = 'https://github.com/'
+
+-- vim.opt.rtp:prepend(vim.fn.expand('~/Projects/treegrep'))
+-- require('treegrep').build_tgrep()
+
+local hooks = vim.api.nvim_create_autocmd({'PackChanged'}, {
+    callback = function(ev)
+        local active, name, kind = ev.data.active, ev.data.spec.name, ev.data.kind
+
+        if name == 'treegrep' and (kind == 'install' or kind == 'update') then
+            if not active then
+                vim.cmd.packadd('treegrep')
+            end
+            require('treegrep').build_tgrep()
+        end
+    end,
+})
+
+vim.pack.add({
+    {
+        src = gh .. '4imothy/treegrep',
+        name = 'treegrep',
+    },
+})
+
 vim.pack.add({
     gh .. 'nvim-lua/plenary.nvim',
     gh .. 'nvim-tree/nvim-web-devicons',
@@ -17,10 +41,7 @@ vim.pack.add({
     gh .. 'echasnovski/mini.hipatterns',
 
     gh .. 'nvim-telescope/telescope.nvim',
-    gh .. '4imothy/treegrep',
     gh .. 'folke/trouble.nvim',
-
-    { src = gh .. 'nvim-treesitter/nvim-treesitter', version = 'main' },
 
     gh .. 'nvim-orgmode/orgmode',
 })
@@ -133,6 +154,18 @@ vim.lsp.config['ltex'] = {
     },
 }
 vim.lsp.enable('ltex')
+vim.lsp.config['rust_analyzer'] = {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            documentSymbol = {
+                hierarchical = true,
+            },
+        },
+    },
+}
+
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
@@ -239,28 +272,59 @@ require('treegrep').setup({
     selection_file = '/tmp/tgrep-select',
     repeat_file = '/tmp/tgrep-repeat',
 })
-vim.keymap.set('n', '<leader>tt', function() require('treegrep').tgrep_with('--menu') end)
-vim.keymap.set('n', '<leader>tr', function() require('treegrep').tgrep_with('--repeat --select') end)
-vim.keymap.set('n', '<leader>tm', function() require('treegrep').tgrep_with('--menu --repeat') end)
-vim.keymap.set('n', '<leader>tf', function() require('treegrep').tgrep_with('--files --select') end)
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'PackChanged',
-    once = true,
-    callback = function(ev)
-        if ev.data and ev.data.name == 'treegrep' and ev.data.kind == 'install' then
-            require('treegrep').build_tgrep()
-        end
-    end,
-})
+vim.keymap.set('n', '<leader>tt', function() require('treegrep').tgrep_with('--menu --live') end)
+vim.keymap.set('n', '<leader>tr', function() require('treegrep').tgrep_with('--repeat --select --live') end)
+vim.keymap.set('n', '<leader>tm', function() require('treegrep').tgrep_with('--menu --repeat --live') end)
+vim.keymap.set('n', '<leader>tf', function() require('treegrep').tgrep_with('--files --select --live') end)
 
-local ts = require('nvim-treesitter')
-if ts.install then
-    ts.install({
-        'lua', 'cpp', 'cmake', 'html', 'css', 'go', 'rust', 'json', 'yaml',
-        'javascript', 'python', 'wgsl', 'typst', 'latex', 'haskell',
-        'comment', 'kdl', 'sql',
-    })
+local parsers = {
+    { 'cpp',        gh .. 'tree-sitter/tree-sitter-cpp' },
+    { 'cmake',      gh .. 'uyha/tree-sitter-cmake' },
+    { 'html',       gh .. 'tree-sitter/tree-sitter-html' },
+    { 'css',        gh .. 'tree-sitter/tree-sitter-css' },
+    { 'go',         gh .. 'tree-sitter/tree-sitter-go' },
+    { 'rust',       gh .. 'tree-sitter/tree-sitter-rust' },
+    { 'json',       gh .. 'tree-sitter/tree-sitter-json' },
+    { 'yaml',       gh .. 'tree-sitter-grammars/tree-sitter-yaml' },
+    { 'javascript', gh .. 'tree-sitter/tree-sitter-javascript' },
+    { 'python',     gh .. 'tree-sitter/tree-sitter-python' },
+    { 'typst',      gh .. 'uben0/tree-sitter-typst' },
+    { 'latex',      gh .. 'latex-lsp/tree-sitter-latex' },
+    { 'haskell',    gh .. 'tree-sitter/tree-sitter-haskell' },
+    { 'comment',    gh .. 'stsewd/tree-sitter-comment' },
+    { 'sql',        gh .. 'derekstride/tree-sitter-sql' },
+    { 'kdl',        gh .. 'amaanq/tree-sitter-kdl' },
+    { 'wgsl',       gh .. 'szebniok/tree-sitter-wgsl' },
+}
+
+local parser_dir = vim.fn.stdpath('data') .. '/site/parser'
+local queries_dir = vim.fn.stdpath('data') .. '/site/queries'
+vim.fn.mkdir(parser_dir, 'p')
+vim.opt.rtp:append(vim.fn.stdpath('data') .. '/site')
+
+local function install_parser(lang, repo)
+    local out = parser_dir .. '/' .. lang .. '.so'
+    if vim.fn.filereadable(out) == 1 then return end
+    vim.notify('Installing parser: ' .. lang, vim.log.levels.INFO)
+    local tmp = vim.fn.tempname()
+    vim.fn.system({ 'git', 'clone', '--depth', '1', repo, tmp })
+    vim.fn.system({ 'tree-sitter', 'build', '--output', out, tmp })
+    local src = tmp .. '/queries'
+    if vim.fn.isdirectory(src) == 1 then
+        local dst = queries_dir .. '/' .. lang
+        vim.fn.mkdir(dst, 'p')
+        vim.fn.system({ 'cp', '-r', src .. '/.', dst })
+    end
+    vim.fn.delete(tmp, 'rf')
 end
+
+vim.api.nvim_create_user_command('TSInstallAll', function()
+    for _, p in ipairs(parsers) do
+        install_parser(p[1], p[2])
+    end
+    vim.notify('All parsers installed', vim.log.levels.INFO)
+end, { desc = 'Install all treesitter parsers' })
+
 local max_filesize = 100 * 1024
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(ev)
