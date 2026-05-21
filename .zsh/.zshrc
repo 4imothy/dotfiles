@@ -26,7 +26,7 @@ export ACPP_OMP_LINK_LINE="\
 export VI_CHANGE_CURSOR_SHAPE=0
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
-export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden"
+export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --live"
 
 bindkey -e
 setopt SHARE_HISTORY

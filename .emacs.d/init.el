@@ -423,3 +423,43 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(use-package treegrep
+  :ensure nil
+  :load-path "~/Projects/treegrep/plugin/"
+  :preface
+  (let ((src (expand-file-name "~/Projects/treegrep/plugin/treegrep.el")))
+    (when (file-newer-than-file-p src (concat src "c"))
+      (byte-compile-file src)))
+  :custom
+  (tgrep-selection-file "/tmp/tgrep-select")
+  (tgrep-repeat-file    "/tmp/tgrep-repeat")
+  (tgrep-terminal
+   (lambda (cmd)
+     (when-let ((old (get-buffer "*tgrep*")))
+       (when-let ((p (get-buffer-process old)))
+         (set-process-query-on-exit-flag p nil)
+         (delete-process p))
+       (kill-buffer old))
+     (let ((buf (get-buffer-create "*tgrep*")))
+       (switch-to-buffer buf)
+       (term-mode)
+       (setq-local scroll-margin 0)
+       (setq-local scroll-conservatively 0)
+       (setq-local term-suppress-hard-newline t)
+       (setq-local show-trailing-whitespace nil)
+       (setq-local display-line-numbers nil)
+       (setq-local truncate-lines t)
+       (let ((term-exec-hook nil))
+         (term-exec buf "tgrep" shell-file-name nil (list shell-command-switch cmd)))
+       (term-char-mode)
+       (let ((proc (get-buffer-process buf)))
+         (set-process-query-on-exit-flag proc nil)
+         proc))))
+  :config
+  (require 'term)
+  ;; (tgrep-build)
+  :bind
+  ("C-c t t" . (lambda () (interactive) (delete-other-windows) (tgrep-with "--menu --path=~/Projects/treegrep/")))
+  ("C-c t r" . (lambda () (interactive) (delete-other-windows) (tgrep-with "--repeat --select")))
+  ("C-c t f" . (lambda () (interactive) (delete-other-windows) (tgrep-with "--files --select --path=~/Projects/treegrep/"))))
