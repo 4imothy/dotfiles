@@ -4,7 +4,7 @@ gui:
   nerdFontsVersion: "3"
   theme:
     selectedLineBgColor:
-      - 'black'
+      - 'grey'
 keybinding:
   universal:
     filteringMenu: '<c-t>'
