@@ -147,7 +147,7 @@ vim.lsp.config['ltex'] = {
         },
     },
 }
-vim.lsp.enable('ltex')
+-- vim.lsp.enable('ltex')
 vim.lsp.config['rust_analyzer'] = {
     capabilities = capabilities,
     on_attach = on_attach,
@@ -320,36 +320,66 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
-local org_dir = '~/Documents/org/'
+local todo_file = vim.env.TODO_FILE or vim.fn.expand('~/org/tasks.org')
+local org_dir = vim.fn.fnamemodify(todo_file, ':h') .. '/'
+
+local flavor = dark_mode_status == 'on' and 'frappe' or 'latte'
+local ok_pal, palettes = pcall(require, 'catppuccin.palettes')
+local p = ok_pal and palettes.get_palette(flavor) or {}
+local function face(color)
+    return color and (':foreground ' .. color .. ' :weight bold') or ''
+end
+
 require('orgmode').setup({
-    org_default_notes_file = org_dir .. 'tasks.org',
-    org_agenda_files = org_dir .. 'tasks.org',
-    org_startup_folded = 'content',
-    org_todo_keywords = { 'TODO(t)', 'DOING(g)', 'WAITING', 'DAY', 'EVENT(e)', 'REMINDER(r)', '|', 'DONE(d)' },
+    org_default_notes_file = todo_file,
+    org_agenda_files = todo_file,
+    org_startup_folded = 'overview',
+    org_startup_indented = true,
+    org_todo_keywords = { 'TODO(t)', 'DAY', 'REMINDER(r)', '|', 'DONE(d)' },
     org_todo_keyword_faces = {
-        TODO = ':foreground red',
-        DOING = ':foreground yellow',
-        WAITING = ':foreground pink',
-        DAY = ':foreground blue',
-        EVENT = ':foreground purple',
-        REMINDER = ':foreground blue',
+        TODO = face(p.red),
+        DAY = face(p.blue),
+        REMINDER = face(p.blue),
     },
     org_log_done = false,
     org_hide_leading_stars = true,
+    org_hide_emphasis_markers = true,
+    org_ellipsis = '⤵',
     org_tags_column = 0,
+    org_agenda_remove_tags = false,
+    ui = { folds = { colored = true } },
     mappings = { prefix = '<leader>c' },
     org_capture_templates = {
-        t = 'todo',
-        tt = { description = 'todo', template = '* TODO %?' },
-        ti = { description = 'timed TODO', template = '* TODO %?\n SCHEDULED: %^t' },
+        t = { description = 'Todo', template = '* TODO %?' },
+        e = { description = 'Event', template = '* EVENT %?' },
+        i = { description = 'Timed todo', template = '* TODO %?\n DEADLINE: %^t' },
     },
     org_agenda_custom_commands = {
         d = {
-            description = 'dashboard',
+            description = 'Dashboard',
             types = {
-                { type = 'agenda', org_agenda_overriding_header = 'My daily agenda', org_agenda_span = 'day' },
-                { type = 'agenda', org_agenda_overriding_header = 'Whole week overview', org_agenda_span = 'week', org_agenda_start_on_weekday = 1, org_agenda_remove_tags = true },
+                { type = 'tags', match = '/DAY', org_agenda_overriding_header = 'Day' },
+                { type = 'agenda', org_agenda_span = 'day', org_agenda_overriding_header = 'Today' },
+                { type = 'tags', match = '/TODO|DOING', org_agenda_overriding_header = 'Tasks', org_agenda_sorting_strategy = { 'priority-down', 'time-up' } },
+                { type = 'tags', match = '/WAITING', org_agenda_overriding_header = 'Waiting' },
+                { type = 'tags', match = '/EVENT', org_agenda_overriding_header = 'Events' },
+                { type = 'agenda', org_agenda_span = 10, org_agenda_start_day = '+1d', org_agenda_overriding_header = 'Upcoming' },
+                { type = 'tags', match = '/REMINDER', org_agenda_overriding_header = 'Reminders' },
             },
         },
     },
 })
+
+require('orgmode.colors.highlights').define_highlights()
+
+if p.blue then
+    vim.api.nvim_set_hl(0, '@org.bold', { fg = p.blue, bold = true })
+end
+
+vim.keymap.set('n', '<leader>cf', function()
+    require('telescope.builtin').find_files({
+        cwd = org_dir,
+        prompt_title = 'Org Files',
+        find_command = { 'rg', '--files', '--max-depth', '1', '--glob', '*.org' },
+    })
+end, { desc = 'Find org file' })
