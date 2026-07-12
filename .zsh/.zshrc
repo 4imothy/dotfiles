@@ -30,6 +30,7 @@ export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --live"
 
 bindkey -e
 setopt SHARE_HISTORY
+setopt IGNORE_EOF
 
 add_to_array() {
    if [[ ! " $1 " =~ " $2" ]]; then
