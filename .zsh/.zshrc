@@ -26,7 +26,10 @@ export ACPP_OMP_LINK_LINE="\
 export VI_CHANGE_CURSOR_SHAPE=0
 export VI_CHANGE_CURSOR_COLOR=0
 export SUGGESTIONS=1
-export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --live"
+export TREEGREP_DEFAULT_OPTS="--glob=!.git --hidden --live --auto-open"
+if [[ "$(dark-mode status)" == "off" ]]; then
+    export TREEGREP_DEFAULT_OPTS="$TREEGREP_DEFAULT_OPTS --selected-bg-color=grey"
+fi
 
 bindkey -e
 setopt SHARE_HISTORY
