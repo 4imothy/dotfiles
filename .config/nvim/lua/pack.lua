@@ -38,6 +38,7 @@ vim.pack.add({
     gh .. 'folke/trouble.nvim',
 
     gh .. 'nvim-orgmode/orgmode',
+    gh .. 'folke/snacks.nvim',
 })
 
 local dark_mode_status = vim.fn.system('dark-mode status'):gsub('%s+', '')
@@ -66,6 +67,16 @@ require('blink.cmp').setup({
     },
     sources = {
         default = { 'snippets', 'lsp', 'path', 'buffer' },
+        per_filetype = {
+            org = { 'orgmode', 'path', 'snippets', 'buffer' },
+        },
+        providers = {
+            orgmode = {
+                name = 'Orgmode',
+                module = 'orgmode.org.autocompletion.blink',
+                fallbacks = { 'buffer' },
+            },
+        },
     },
 })
 
@@ -366,6 +377,15 @@ require('orgmode').setup({
                 { type = 'agenda', org_agenda_span = 10, org_agenda_start_day = '+1d', org_agenda_overriding_header = 'Upcoming' },
                 { type = 'tags', match = '/REMINDER', org_agenda_overriding_header = 'Reminders' },
             },
+        },
+    },
+})
+
+require('snacks').setup({
+    image = {
+        doc = {
+            inline = true,
+            float = false,
         },
     },
 })
