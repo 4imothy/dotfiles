@@ -400,6 +400,6 @@ vim.keymap.set('n', '<leader>cf', function()
     require('telescope.builtin').find_files({
         cwd = org_dir,
         prompt_title = 'Org Files',
-        find_command = { 'rg', '--files', '--max-depth', '1', '--glob', '*.org' },
+        find_command = { 'rg', '--files', '--max-depth', '2', '--glob', '*.org' },
     })
 end, { desc = 'Find org file' })
