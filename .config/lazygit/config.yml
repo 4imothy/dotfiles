@@ -5,6 +5,7 @@ gui:
   theme:
     selectedLineBgColor:
       - 'grey'
+promptToReturnFromSubprocess: false
 keybinding:
   universal:
     filteringMenu: '<c-t>'
