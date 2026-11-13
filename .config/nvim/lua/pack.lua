@@ -21,7 +21,7 @@ vim.pack.add({
     gh .. 'nvim-tree/nvim-web-devicons',
     gh .. '4imothy/treegrep',
 
-    { src = gh .. 'saghen/blink.cmp', version = 'v1' },
+    { src = gh .. 'saghen/blink.cmp', version = vim.version.range('1.*') },
 
     gh .. 'neovim/nvim-lspconfig',
     gh .. 'SmiteshP/nvim-navic',
@@ -346,9 +346,10 @@ require('orgmode').setup({
     org_agenda_files = todo_file,
     org_startup_folded = 'overview',
     org_startup_indented = true,
-    org_todo_keywords = { 'TODO(t)', 'DAY', 'REMINDER(r)', '|', 'DONE(d)' },
+    org_todo_keywords = { 'TODO(t)', 'EVENT(e)', 'DAY', 'REMINDER(r)', '|', 'DONE(d)' },
     org_todo_keyword_faces = {
         TODO = face(p.red),
+        EVENT = face(p.mauve),
         DAY = face(p.blue),
         REMINDER = face(p.blue),
     },

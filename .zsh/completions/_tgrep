@@ -15,6 +15,7 @@ _tgrep() {
 
     local context curcontext="$curcontext" state line
     _arguments "${_arguments_options[@]}" : \
+'--input-cmd=[command whose output is read in place of stdin]::_cmdstring' \
 '--live-delay=[milliseconds to wait after the last keystroke before triggering a live search]::_default' \
 '-C+[number of lines to show before and after each match]::_default' \
 '--context=[number of lines to show before and after each match]::_default' \
@@ -70,8 +71,9 @@ _tgrep() {
 '*-e+[a regex expression to search for (saved for repeat)]::' \
 '*--regexp=[a regex expression to search for (saved for repeat)]::' \
 '*--regexp-glob=[search for a regex expression only in files matching a glob (saved for repeat)]:glob=regexp:_default' \
-'-p+[the path to search, if not provided, search the current directory (saved for repeat)]::_files' \
-'--path=[the path to search, if not provided, search the current directory (saved for repeat)]::_files' \
+'*-p+[the paths to search, if none provided, search the current directory (saved for repeat)]::_files' \
+'*--path=[the paths to search, if none provided, search the current directory (saved for repeat)]::_files' \
+'--input-type=[read input as this type (saved for repeat)]::(paths)' \
 '*-g+[rules match .gitignore globs, but ! has inverted meaning, overrides other ignore logic (saved for repeat)]::_default' \
 '*--glob=[rules match .gitignore globs, but ! has inverted meaning, overrides other ignore logic (saved for repeat)]::_default' \
 '-d+[the max depth to search (saved for repeat)]::_default' \
@@ -115,7 +117,7 @@ _tgrep() {
 '--overview-only[only show the overview, not the results (saved for repeat)]' \
 '--pcre2[use PCRE2 instead of the default regex engine (saved for repeat)]' \
 '::positional_regexp -- a regex expression to search for:' \
-'::positional_path -- the path to search, if not provided, search the current directory:_files' \
+'*::positional_path -- the paths to search, if none provided, search the current directory:_files' \
 && ret=0
 }
 
